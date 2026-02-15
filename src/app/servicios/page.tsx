@@ -4,26 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
 
-const servicesList = [
-    {
-        title: "Desarrollo Web Fullstack",
-        icon: "code",
-        description: "Creación de aplicaciones web modernas, rápidas y seguras. Utilizamos React, Next.js y Node.js para entregar soluciones de alta calidad.",
-        features: ["Arquitectura escalable", "Optimización SEO", "Diseño Responsivo", "Integración de APIs"]
-    },
-    {
-        title: "Arquitectura de Software",
-        icon: "laptop",
-        description: "Diseño de infraestructuras robustas y escalables para proyectos de gran envergadura. Aseguramos mantenibilidad y rendimiento.",
-        features: ["Microservicios", "Diseño de Bases de Datos", "Cloud Computing", "Seguridad"]
-    },
-    {
-        title: "Integración de Sistemas",
-        icon: "database",
-        description: "Integramos diferentes plataformas y servicios para que tus datos fluyan de manera eficiente entre todas tus herramientas.",
-        features: ["Webhooks", "ETL", "Pagos Online", "CRMs"]
-    }
-];
+const servicesList: any[] = [];
 
 export default function ServicesPage() {
     return (
