@@ -89,7 +89,7 @@ export default function PortfolioPage() {
                         <Button
                             nameBtn="Hablemos de tu idea"
                             variant="outlined"
-                            style={{ borderColor: '#fff', color: '#fff', borderWeight: '2px' }}
+                            style={{ borderColor: '#fff', color: '#fff', borderWidth: '2px' }}
                             radius="12px"
                         />
                     </Link>
