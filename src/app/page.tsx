@@ -10,7 +10,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6 animate-fade-right">
             <h1 className="text-5xl lg:text-7xl font-extrabold text-white leading-tight">
-              Transformamos <span className="text-blue-400">Ideas</span> en Software de <span className="text-blue-400">Alto Impacto</span>
+              Transformamos <span className="text-blue-400">ideas</span> en <span className="text-blue-400">soluciones reales</span>
             </h1>
             <p className="text-xl text-slate-300 max-w-lg">
               Soluciones tecnológicas personalizadas para empresas y emprendedores. Especialistas en desarrollo web, arquitectura de sistemas y diseño de software.
