@@ -39,9 +39,6 @@ const Footer = () => {
                     <div>
                         <h3 className="text-white font-bold mb-6 uppercase tracking-wider text-xs">Especialidades</h3>
                         <ul className="space-y-3 text-sm">
-                            <li className="text-slate-500">Desarrollo Web Fullstack</li>
-                            <li className="text-slate-500">Arquitectura de Software</li>
-                            <li className="text-slate-500">Consultoría Técnica</li>
                             <li className="text-slate-500">Sistemas de Gestión</li>
                         </ul>
                     </div>

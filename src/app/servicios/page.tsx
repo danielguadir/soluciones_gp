@@ -18,12 +18,6 @@ const servicesList = [
         features: ["Microservicios", "Diseño de Bases de Datos", "Cloud Computing", "Seguridad"]
     },
     {
-        title: "Consultoría Técnica",
-        icon: "info-circled",
-        description: "Asesoramiento especializado para la toma de decisiones tecnológicas estratégicas. Aumentamos la eficiencia de tu equipo.",
-        features: ["Elección de Stack", "Auditoría de Código", "Mejora de Procesos", "Mentoria"]
-    },
-    {
         title: "Integración de Sistemas",
         icon: "database",
         description: "Integramos diferentes plataformas y servicios para que tus datos fluyan de manera eficiente entre todas tus herramientas.",

@@ -13,7 +13,7 @@ export default function HomePage() {
               Transformamos <span className="text-blue-400">Ideas</span> en Software de <span className="text-blue-400">Alto Impacto</span>
             </h1>
             <p className="text-xl text-slate-300 max-w-lg">
-              Soluciones tecnológicas personalizadas para empresas y emprendedores. Especialistas en desarrollo web, arquitectura de sistemas y consultoría técnica.
+              Soluciones tecnológicas personalizadas para empresas y emprendedores. Especialistas en desarrollo web, arquitectura de sistemas y diseño de software.
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
               <Link href="/contacto">
@@ -67,7 +67,6 @@ export default function HomePage() {
           {[
             { title: "Desarrollo Web", icon: "laptop", desc: "Sitios rápidos, responsivos y optimizados para SEO con Next.js." },
             { title: "Apps de Negocio", icon: "database", desc: "Sistemas de gestión interna y dashboards personalizados." },
-            { title: "Consultoría", icon: "info-circled", desc: "Asesoría técnica para optimizar procesos y elegir tecnología." },
           ].map((service, i) => (
             <Card key={i} className="hover:shadow-lg transition-all border border-white/5 bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:border-blue-500/30">
               <div className="flex flex-col gap-4">
