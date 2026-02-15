@@ -10,28 +10,19 @@ import inquiryRoutes from './routes/inquiry.routes';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Rutas
-// Rutas
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 
 app.get('/api', (req, res) => {
-    res.send('API de Servicios Personal esta corriendo en Vercel');
+    res.send('API de Servicios GP esta corriendo en Vercel (Flattened)');
 });
-
-// Para local
-if (!process.env.VERCEL) {
-    app.listen(PORT, () => {
-        console.log(`Servidor corriendo en el puerto ${PORT}`);
-    });
-}
 
 export default app;

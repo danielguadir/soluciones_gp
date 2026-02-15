@@ -21,7 +21,7 @@ export default function PortfolioPage() {
             <section className="bg-gray-50 py-20 border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 italic">
-                        Mi <span className="text-blue-600">Portafolio</span> de Proyectos
+                        Mi <span className="text-blue-600">Portafolio</span>
                     </h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto italic">
                         Una colección de soluciones tecnológicas diseñadas para resolver problemas reales con arquitecturas escalables y mantenibles.

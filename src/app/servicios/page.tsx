@@ -38,7 +38,7 @@ export default function ServicesPage() {
             <section className="bg-gray-50 py-20 border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
-                        Servicios Profesionales de <span className="text-blue-600">Ingeniería</span>
+                        Servicios
                     </h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto italic">
                         Ofrecemos soluciones integrales con un enfoque en la calidad, la escalabilidad y el éxito a largo plazo de tu negocio.
