@@ -3,9 +3,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import authRoutes from './routes/auth.routes';
-import serviceRoutes from './routes/service.routes';
-import inquiryRoutes from './routes/inquiry.routes';
+import authRoutes from '../server/routes/auth.routes';
+import serviceRoutes from '../server/routes/service.routes';
+import inquiryRoutes from '../server/routes/inquiry.routes';
 
 dotenv.config();
 
