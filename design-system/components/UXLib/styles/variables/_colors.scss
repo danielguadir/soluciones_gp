@@ -7,53 +7,40 @@
     --font-size-base: #{$font-size-base};
     --font-size-lg: #{$font-size-lg};
     --font-size-xl: #{$font-size-xl};
-    /* Primitive Colors - Dark Neutral Aesthetic */
-    --color-brand-primary: #0f172a;
-    /* Dark Slate (Navy) */
-    --color-brand-secondary: #1e293b;
-    /* Slate-800 */
 
-    --color-slate-50: #f1f5f9;
-    --color-slate-100: #e2e8f0;
-    --color-slate-200: #cbd5e1;
-    --color-slate-300: #94a3b8;
-    --color-slate-400: #64748b;
-    --color-slate-500: #475569;
-    --color-slate-600: #334155;
-    --color-slate-700: #1e293b;
-    --color-slate-800: #0f172a;
-    --color-slate-900: #020617;
-    --color-slate-950: #020617ef;
+    /* Primitive Colors - Premium Navy Theme */
+    --color-brand-primary: #3b82f6;
+    /* Radiant Blue */
+    --color-brand-secondary: #0f172a;
+    /* Deep Navy */
+
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+    --color-slate-950: #020617;
 
     --color-white: #ffffff;
     --color-black: #000000;
 
-    /* Semantic Variables - Light Theme (Default) */
+    /* Semantic Variables - Forced Dark Theme Aesthetic */
     --primary-color: var(--color-brand-primary);
-    --primary-color-hover: #1e293b;
-    --primary-color-active: #020617;
+    --primary-color-hover: #60a5fa;
+    --primary-color-active: #2563eb;
     --primary-text: var(--color-white);
 
-    --bg-color: var(--color-slate-50);
-    --surface-color: var(--color-white);
-    --text-primary: var(--color-slate-900);
-    --text-secondary: var(--color-slate-600);
-
-    --border-color: var(--color-slate-200);
-}
-
-[data-theme='dark'] {
-    /* Semantic Variables - Dark Theme */
-    --primary-color: var(--color-brand-primary);
-    /* Often lighter in dark mode, but keeping consistant for now */
-    --primary-color-hover: #2b358fbd;
-    --primary-color-active: #2225dac5;
-    --primary-text: var(--color-white);
-
-    --bg-color: var(--color-slate-950);
-    --surface-color: var(--color-slate-900);
-    --text-primary: var(--color-slate-100);
+    --bg-color: var(--color-slate-900);
+    --surface-color: #1e293b;
+    --text-primary: var(--color-slate-50);
     --text-secondary: var(--color-slate-400);
 
-    --border-color: var(--color-slate-700);
+    --border-color: rgba(255, 255, 255, 0.1);
 }
+
+/* No data-theme='dark' needed as it is 'nivel general' now */

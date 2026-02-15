@@ -8,20 +8,21 @@ module.exports = {
         extend: {
             colors: {
                 brand: {
-                    primary: "#0f172a",
-                    secondary: "#1e293b",
+                    primary: "#3b82f6",
+                    secondary: "#0f172a",
                 },
                 blue: {
-                    50: "#f8fafc",
-                    100: "#f1f5f9",
-                    200: "#e2e8f0",
-                    300: "#cbd5e1",
-                    400: "#94a3b8",
-                    500: "#64748b",
-                    600: "#0f172a", /* Main Brand Color */
-                    700: "#020617",
-                    800: "#01040a",
-                    900: "#000000",
+                    50: "#eff6ff",
+                    100: "#dbeafe",
+                    200: "#bfdbfe",
+                    300: "#93c5fd",
+                    400: "#60a5fa",
+                    500: "#3b82f6",
+                    600: "#1d4ed8",
+                    700: "#1e40af",
+                    800: "#1e3a8a",
+                    900: "#1e3a8a",
+                    950: "#0f172a", /* Main Brand Navy */
                 }
             },
         },

@@ -3,24 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f172a;
+  /* Main Navy (Footer Color) */
+  --foreground: #f8fafc;
+  /* Clear Slate */
 
-  /* Brand colors matching the new dark-neutral aesthetic */
-  --color-brand-primary: #0f172a;
-  --color-brand-secondary: #1e293b;
-}
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Brand colors */
+  --color-brand-primary: #3b82f6;
+  /* Vibrant Accent Blue */
+  --color-brand-secondary: #0f172a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom selection color */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #fff;
 }
