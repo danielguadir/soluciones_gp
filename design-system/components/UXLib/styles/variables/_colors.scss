@@ -36,11 +36,12 @@
     --primary-text: var(--color-white);
 
     --bg-color: var(--color-slate-900);
-    --surface-color: #1e293b;
+    --surface-color: var(--color-slate-900);
+    /* Matches Brand Primary / Footer */
     --text-primary: var(--color-slate-50);
     --text-secondary: var(--color-slate-400);
 
-    --border-color: rgba(255, 255, 255, 0.1);
+    --border-color: rgba(255, 255, 255, 0.05);
 }
 
 /* No data-theme='dark' needed as it is 'nivel general' now */
