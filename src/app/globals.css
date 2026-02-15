@@ -6,9 +6,9 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Brand colors matching the palette requested by the user */
-  --color-brand-primary: #2d4a53;
-  --color-brand-secondary: #1e353b;
+  /* Brand colors matching the new dark-neutral aesthetic */
+  --color-brand-primary: #0f172a;
+  --color-brand-secondary: #1e293b;
 }
 
 

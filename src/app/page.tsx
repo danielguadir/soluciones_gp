@@ -93,7 +93,7 @@ export default function HomePage() {
             <Button
               nameBtn="Chat por WhatsApp"
               variant="contained"
-              style={{ backgroundColor: '#fff', color: '#2d4a53', fontWeight: 'bold' }}
+              style={{ backgroundColor: '#fff', color: '#0f172a', fontWeight: 'bold' }}
               radius="12px"
             />
           </Link>
