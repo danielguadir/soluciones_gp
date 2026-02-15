@@ -8,30 +8,28 @@
     --font-size-lg: #{$font-size-lg};
     --font-size-xl: #{$font-size-xl};
     /* Primitive Colors */
-    --color-brand-primary: #2563eb;
-    /* Blue 600 */
-    --color-brand-secondary: #1e40af;
-    /* Blue 800 */
+    --color-brand-primary: #2d4a53; /* Blue-Grey-Green (Slate/Teal) */
+    --color-brand-secondary: #1e353b; /* Darker Slate */
 
-    --color-slate-50: #f8fafc;
-    --color-slate-100: #f1f5f9;
-    --color-slate-200: #e2e8f0;
-    --color-slate-300: #cbd5e1;
-    --color-slate-400: #94a3b8;
-    --color-slate-500: #64748b;
-    --color-slate-600: #475569;
-    --color-slate-700: #334155;
-    --color-slate-800: #1e293b;
-    --color-slate-900: #0f172a;
-    --color-slate-950: #0f38ee98;
+    --color-slate-50: #f1f5f9;
+    --color-slate-100: #e2e8f0;
+    --color-slate-200: #cbd5e1;
+    --color-slate-300: #94a3b8;
+    --color-slate-400: #64748b;
+    --color-slate-500: #475569;
+    --color-slate-600: #334155;
+    --color-slate-700: #1e293b;
+    --color-slate-800: #0f172a;
+    --color-slate-900: #020617;
+    --color-slate-950: #020617ef;
 
     --color-white: #ffffff;
     --color-black: #000000;
 
     /* Semantic Variables - Light Theme (Default) */
     --primary-color: var(--color-brand-primary);
-    --primary-color-hover: #1d4ed8;
-    --primary-color-active: #1e40af;
+    --primary-color-hover: #3a5f6a;
+    --primary-color-active: #1e353b;
     --primary-text: var(--color-white);
 
     --bg-color: var(--color-slate-50);
