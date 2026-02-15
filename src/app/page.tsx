@@ -54,32 +54,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services Preview */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="text-center mb-16 flex flex-col gap-4">
-          <h2 className="text-4xl font-bold text-white italic">Especialidades</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto italic">
-            Nuestros servicios están diseñados para escalar junto con tu negocio, asegurando mantenibilidad y rendimiento a largo plazo.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { title: "Desarrollo Web", icon: "laptop", desc: "Sitios rápidos, responsivos y optimizados para SEO con Next.js." },
-            { title: "Apps de Negocio", icon: "database", desc: "Sistemas de gestión interna y dashboards personalizados." },
-          ].map((service, i) => (
-            <Card key={i} className="hover:shadow-lg transition-all border border-white/5 bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:border-blue-500/30">
-              <div className="flex flex-col gap-4">
-                <div className="w-10 h-10 bg-blue-950 text-blue-400 rounded-lg flex items-center justify-center">
-                  <Svg icon={service.icon} fontSize="20px" />
-                </div>
-                <h3 className="text-lg font-bold text-white">{service.title}</h3>
-                <p className="text-sm text-slate-400">{service.desc}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="bg-slate-900/50 border-y border-white/5 mt-20">
