@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Usuario (Solo para el Admin por ahora)
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hash
+  name      String?
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+}
+
+// Tus Servicios (Lo que ofreces)
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Decimal? // Opcional, si quieres mostrar "Desde $..."
+  imageUrl    String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Mensajes de contacto (Inquiries)
+model Inquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false) // Para marcar si ya lo leíste
+  createdAt DateTime @default(now())
+}

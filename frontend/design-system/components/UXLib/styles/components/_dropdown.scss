@@ -1,0 +1,99 @@
+@use '../variables/colors' as *;
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    &__trigger {
+        cursor: pointer;
+
+        &-btn {
+            background: none;
+            border: none;
+            padding: 4px 8px;
+            color: var(--text-secondary);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--bg-color);
+                color: var(--primary-color);
+            }
+        }
+    }
+
+    &__menu {
+        position: absolute;
+        top: 100%;
+        min-width: 160px;
+        background-color: var(--surface-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 4px 0;
+        z-index: 100;
+        margin-top: 4px;
+
+        &--align-right {
+            right: 0;
+        }
+
+        &--align-left {
+            left: 0;
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        color: var(--text-primary);
+
+        &:hover {
+            background-color: var(--bg-color);
+        }
+
+        &-icon {
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+        &--danger {
+            color: var(--color-red-600);
+
+            &:hover {
+                background-color: var(--color-red-50);
+            }
+        }
+
+        &--warning {
+            color: var(--color-orange-600);
+
+            &:hover {
+                background-color: var(--color-orange-50);
+            }
+        }
+    }
+}
+
+// Dark mode adjustments
+[data-theme='dark'] {
+    .dropdown__menu {
+        background-color: var(--color-slate-900);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .dropdown__item:hover {
+        background-color: var(--color-slate-800);
+    }
+
+    .dropdown__item--danger:hover {
+        background-color: rgba(239, 68, 68, 0.1);
+    }
+}

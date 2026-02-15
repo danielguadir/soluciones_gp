@@ -1,0 +1,124 @@
+@use '../variables/colors' as *;
+
+.divider {
+    /* Component CSS Custom Properties */
+    --divider-color: var(--border-color);
+    --divider-thickness: 1px;
+    --divider-spacing: 1rem;
+
+    border: none;
+    margin: 0;
+
+    /* Horizontal orientation */
+    &--horizontal {
+        width: 100%;
+        height: var(--divider-thickness);
+        background-color: var(--divider-color);
+        margin: var(--divider-spacing) 0;
+    }
+
+    /* Vertical orientation */
+    &--vertical {
+        width: var(--divider-thickness);
+        height: 100%;
+        min-height: 1rem;
+        background-color: var(--divider-color);
+        margin: 0 var(--divider-spacing);
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    /* Variants */
+    &--solid {
+        &.divider--horizontal {
+            background-color: var(--divider-color);
+        }
+
+        &.divider--vertical {
+            background-color: var(--divider-color);
+        }
+    }
+
+    &--dashed {
+        background-color: transparent;
+
+        &.divider--horizontal {
+            border-top: var(--divider-thickness) dashed var(--divider-color);
+            height: 0;
+        }
+
+        &.divider--vertical {
+            border-left: var(--divider-thickness) dashed var(--divider-color);
+            width: 0;
+        }
+    }
+
+    &--dotted {
+        background-color: transparent;
+
+        &.divider--horizontal {
+            border-top: var(--divider-thickness) dotted var(--divider-color);
+            height: 0;
+        }
+
+        &.divider--vertical {
+            border-left: var(--divider-thickness) dotted var(--divider-color);
+            width: 0;
+        }
+    }
+
+    /* With label */
+    &--with-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background-color: transparent;
+        height: auto;
+    }
+
+    &__line {
+        flex: 1;
+        height: var(--divider-thickness);
+        background-color: var(--divider-color);
+
+        .divider--dashed & {
+            background-color: transparent;
+            border-top: var(--divider-thickness) dashed var(--divider-color);
+            height: 0;
+        }
+
+        .divider--dotted & {
+            background-color: transparent;
+            border-top: var(--divider-thickness) dotted var(--divider-color);
+            height: 0;
+        }
+    }
+
+    &__label {
+        flex-shrink: 0;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        padding: 0 0.5rem;
+    }
+
+    /* Label positions */
+    &--label-left {
+        .divider__line:first-child {
+            flex: 0 0 10%;
+        }
+    }
+
+    &--label-right {
+        .divider__line:last-child {
+            flex: 0 0 10%;
+        }
+    }
+
+    &--label-center {
+        .divider__line {
+            flex: 1;
+        }
+    }
+}
+
+/* Dark mode adjustments - divider uses semantic --border-color which auto-updates */

@@ -1,0 +1,143 @@
+@use '../variables/colors' as *;
+
+.card {
+    /* Component CSS Custom Properties */
+    --card-bg: var(--surface-color);
+    --card-border-color: var(--border-color);
+    --card-border-radius: 8px;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --card-transition: all 0.2s ease;
+
+    background-color: var(--card-bg);
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    transition: var(--card-transition);
+
+    /* Variants */
+    &--elevated {
+        box-shadow: var(--card-shadow);
+    }
+
+    &--outlined {
+        border: 1px solid var(--card-border-color);
+        box-shadow: none;
+    }
+
+    &--filled {
+        background-color: var(--bg-color);
+        box-shadow: none;
+    }
+
+    /* Sizes */
+    &--small {
+        --card-padding: 0.75rem;
+    }
+
+    &--medium {
+        --card-padding: 1rem;
+    }
+
+    &--large {
+        --card-padding: 1.5rem;
+    }
+
+    /* Clickable state */
+    &--clickable {
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    }
+
+    /* Media section */
+    &__media {
+        width: 100%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+    }
+
+    /* Header section */
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: var(--card-padding);
+        gap: 1rem;
+
+        &-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        &-actions {
+            flex-shrink: 0;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.4;
+    }
+
+    &__subtitle {
+        margin: 0.25rem 0 0 0;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+    }
+
+    /* Content section */
+    &__content {
+        padding: 0 var(--card-padding) var(--card-padding);
+        color: var(--text-primary);
+    }
+
+    /* When there's no header, add top padding to content */
+    &__media+&__content {
+        padding-top: var(--card-padding);
+    }
+
+    /* Direct child content when it's the first element */
+    &:has(> .card__content:first-child)>.card__content:first-child {
+        padding-top: var(--card-padding);
+    }
+
+    /* Footer section */
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.5rem;
+        padding: var(--card-padding);
+        border-top: 1px solid var(--card-border-color);
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] {
+    .card {
+        --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+}

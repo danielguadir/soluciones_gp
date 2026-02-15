@@ -1,0 +1,210 @@
+@use '../variables/colors' as *;
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    position: relative; // Para posicionar el overlay relativo a la tabla
+}
+
+.table-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+    border-radius: 8px;
+}
+
+.table-loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--color-slate-200);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+.table-loading-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.table {
+    /* Component CSS Custom Properties */
+    --table-bg: var(--surface-color);
+    --table-header-bg: var(--bg-color);
+    --table-border-color: var(--border-color);
+    --table-row-hover-bg: var(--color-slate-100);
+    --table-stripe-bg: var(--color-slate-50);
+    --table-transition: all 0.15s ease;
+
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: var(--table-bg);
+
+    &--full-width {
+        width: 100%;
+    }
+
+    /* Header */
+    &__head {
+        background-color: var(--table-header-bg);
+    }
+
+    &__header {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-primary);
+        white-space: nowrap;
+        border-bottom: 2px solid var(--table-border-color);
+
+        &--sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: var(--table-transition);
+
+            &:hover {
+                background-color: var(--table-row-hover-bg);
+            }
+
+            &:focus-visible {
+                outline: 2px solid var(--primary-color);
+                outline-offset: -2px;
+            }
+        }
+
+        &-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+
+    &__sort-icon {
+        flex-shrink: 0;
+        opacity: 0.6;
+        transition: opacity 0.15s ease;
+
+        .table__header--sortable:hover & {
+            opacity: 1;
+        }
+    }
+
+    /* Body */
+    &__row {
+        transition: var(--table-transition);
+
+        &--clickable {
+            cursor: pointer;
+
+            &:focus-visible {
+                outline: 2px solid var(--primary-color);
+                outline-offset: -2px;
+            }
+        }
+
+        &--empty {
+            .table__cell {
+                text-align: center;
+                color: var(--text-secondary);
+                padding: 2rem 1rem;
+            }
+        }
+    }
+
+    &__cell {
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--table-border-color);
+        vertical-align: middle;
+
+        &--empty {
+            font-style: italic;
+        }
+    }
+
+    /* Sizes */
+    &--small {
+
+        .table__header,
+        .table__cell {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    &--medium {
+
+        .table__header,
+        .table__cell {
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    &--large {
+
+        .table__header,
+        .table__cell {
+            padding: 1rem 1.25rem;
+            font-size: 1.0625rem;
+        }
+    }
+
+    /* Striped rows */
+    &--striped {
+        .table__body .table__row:nth-child(even) {
+            background-color: var(--table-stripe-bg);
+        }
+    }
+
+    /* Hoverable rows */
+    &--hoverable {
+        .table__body .table__row:not(.table__row--empty):hover {
+            background-color: var(--table-row-hover-bg);
+        }
+    }
+
+    /* Bordered */
+    &--bordered {
+        border: 1px solid var(--table-border-color);
+        border-radius: 8px;
+        overflow: hidden;
+
+        .table__header,
+        .table__cell {
+            border-left: 1px solid var(--table-border-color);
+
+            &:first-child {
+                border-left: none;
+            }
+        }
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] {
+    .table {
+        --table-row-hover-bg: var(--color-slate-800);
+        --table-stripe-bg: var(--color-slate-900);
+    }
+}

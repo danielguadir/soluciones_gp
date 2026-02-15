@@ -1,0 +1,204 @@
+@use '../variables/colors' as *;
+
+.wrapper-stepper {
+    /* Component CSS Custom Properties */
+    --wizard-primary: var(--primary-color);
+    --wizard-primary-text: var(--primary-text);
+    --wizard-bg: var(--surface-color);
+    --wizard-border-radius: 5pt;
+    --wizard-default-color: var(--color-slate-400);
+    --wizard-transition: all 500ms ease;
+
+    background-color: var(--wizard-bg);
+    padding: 12pt;
+    box-shadow: 0 0pt 12pt rgba(0, 0, 0, 0.19);
+    border-radius: var(--wizard-border-radius);
+    min-width: 290px;
+    max-height: 636px;
+    width: var(--wizard-size);
+    height: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+    z-index: 7;
+}
+
+.tx-primary-1 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.wrapper-head {
+    display: grid;
+    justify-items: center;
+    position: relative;
+
+    .wrapper-close {
+        position: absolute;
+        right: -12px;
+        top: -12px;
+        cursor: pointer;
+    }
+
+    .wrapper-close:hover {
+        opacity: 0.9;
+    }
+
+    .wrapper-close:active {
+        filter: brightness(70%);
+    }
+}
+
+.wrapper-title {
+    display: grid;
+    justify-content: center;
+    padding: 8pt;
+    font-size: 18pt;
+    color: var(--primary-color);
+    margin-bottom: 5pt;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: var(--wizard-stepWidth);
+    position: relative;
+    z-index: 0;
+    margin-bottom: 24pt;
+
+    &-progress {
+        position: absolute;
+        background-color: var(--wizard-default-color, #94a3b8);
+        height: 2pt;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+
+        &-bar {
+            position: absolute;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            transition: var(--wizard-transition);
+        }
+    }
+}
+
+.stepper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--wizard-default-color, #94a3b8);
+    transition: var(--wizard-transition);
+
+    &-counter {
+        height: var(--wizard-itemCounter);
+        width: var(--wizard-itemCounter);
+        display: grid;
+        place-items: center;
+        background-color: var(--wizard-bg);
+        border-radius: 100%;
+        border: 2pt solid var(--wizard-default-color, #94a3b8);
+        position: relative;
+
+        .icon-success {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0);
+            width: 24pt;
+            transition: var(--wizard-transition);
+        }
+
+        .number {
+            font-size: var(--wizard-iconNumSize);
+            transition: var(--wizard-transition);
+            position: absolute;
+        }
+    }
+
+    &-title {
+        position: absolute;
+        font-size: 12pt;
+        bottom: -18pt;
+    }
+}
+
+.stepper-item.success {
+    .stepper-item-counter {
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
+        color: var(--primary-text);
+        font-weight: 600;
+
+        .icon-success {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .number {
+            opacity: 0;
+            transform: scale(0);
+        }
+    }
+
+    .stepper-item-title {
+        color: var(--primary-color);
+    }
+}
+
+.stepper-item.current {
+    .stepper-item-counter {
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
+        color: var(--primary-text);
+        font-weight: 600;
+    }
+
+    .stepper-item-title {
+        color: var(--text-secondary);
+    }
+}
+
+.stepper-pane {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.stepper-content {
+    position: relative;
+    overflow-y: hidden;
+    width: 100%;
+    flex: 1;
+    padding: 10px 8px;
+    height: 100%;
+}
+
+.stepper-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.stepper-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.stepper-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 6pt;
+    margin: 0 4pt;
+}
+
+.WizardHr {
+    width: 100%;
+    border: 1px solid var(--primary-color);
+    border-radius: 3pt;
+}

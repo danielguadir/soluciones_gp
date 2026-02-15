@@ -1,0 +1,174 @@
+@use '../variables/colors' as *;
+
+.pagination {
+    /* Component CSS Custom Properties */
+    --pagination-bg: var(--surface-color);
+    --pagination-text-color: var(--text-primary);
+    --pagination-border-color: var(--border-color);
+    --pagination-active-bg: var(--primary-color);
+    --pagination-active-text: var(--primary-text);
+    --pagination-hover-bg: var(--color-slate-100);
+    --pagination-disabled-opacity: 0.5;
+    --pagination-gap: 0.25rem;
+    --pagination-transition: all 0.15s ease;
+
+    display: flex;
+    align-items: center;
+    gap: var(--pagination-gap);
+
+    &--disabled {
+        opacity: var(--pagination-disabled-opacity);
+        pointer-events: none;
+    }
+
+    /* Buttons */
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.5rem;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: var(--pagination-text-color);
+        cursor: pointer;
+        transition: var(--pagination-transition);
+
+        &:hover:not(:disabled) {
+            background-color: var(--pagination-hover-bg);
+        }
+
+        &:disabled {
+            opacity: var(--pagination-disabled-opacity);
+            cursor: not-allowed;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    }
+
+    /* Page numbers container */
+    &__pages {
+        display: flex;
+        align-items: center;
+        gap: var(--pagination-gap);
+    }
+
+    /* Individual page buttons */
+    &__page {
+        min-width: 2rem;
+        height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.25rem 0.5rem;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: var(--pagination-text-color);
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: var(--pagination-transition);
+
+        &:hover:not(:disabled):not(.pagination__page--active) {
+            background-color: var(--pagination-hover-bg);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        &--active {
+            background-color: var(--pagination-active-bg);
+            color: var(--pagination-active-text);
+            font-weight: 600;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    /* Ellipsis */
+    &__ellipsis {
+        padding: 0.25rem;
+        color: var(--text-secondary);
+        user-select: none;
+    }
+
+    /* Simple variant info */
+    &__info {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    /* Sizes */
+    &--small {
+        --pagination-gap: 0.125rem;
+
+        .pagination__btn {
+            padding: 0.25rem;
+        }
+
+        .pagination__page {
+            min-width: 1.5rem;
+            height: 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        .pagination__info {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+    }
+
+    &--large {
+        --pagination-gap: 0.375rem;
+
+        .pagination__btn {
+            padding: 0.625rem;
+        }
+
+        .pagination__page {
+            min-width: 2.5rem;
+            height: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .pagination__info {
+            font-size: 1rem;
+            padding: 0.625rem 1rem;
+        }
+    }
+
+    /* Variants */
+    &--outlined {
+
+        .pagination__btn,
+        .pagination__page {
+            border-color: var(--pagination-border-color);
+        }
+
+        .pagination__page--active {
+            border-color: var(--pagination-active-bg);
+        }
+    }
+
+    &--simple {
+        .pagination__btn {
+            padding: 0.5rem 0.75rem;
+        }
+    }
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] {
+    .pagination {
+        --pagination-hover-bg: var(--color-slate-800);
+    }
+}
