@@ -14,7 +14,7 @@ const Footer = () => {
                     {/* Brand section */}
                     <div className="col-span-1 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 mb-6 group">
-                            <div className="w-[73px] h-[73px] group-hover:scale-110 transition-transform">
+                            <div className="w-[146px] h-[146px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
                                 <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-xl font-bold text-white italic">Servicios GP</span>
@@ -51,7 +51,7 @@ const Footer = () => {
                             <div className="flex items-center gap-3 font-semibold text-white group">
                                 <Svg icon="whatsapp" fontSize="20px" color="#25D366" />
                                 <a href="https://wa.me/573148029030" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    +57 314 802 9030
+                                    Desarrollo Web
                                 </a>
                             </div>
                             <div className="flex flex-col gap-2">
