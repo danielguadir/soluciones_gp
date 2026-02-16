@@ -14,7 +14,7 @@ const Footer = () => {
                     {/* Brand section */}
                     <div className="col-span-1 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 mb-6 group">
-                            <div className="w-[146px] h-[146px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+                            <div className="w-[133px] h-[133px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
                                 <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-xl font-bold text-white italic">Servicios GP</span>

@@ -23,11 +23,11 @@ const Navbar = () => {
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-[146px] h-[146px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+                        <Link href="/" className="flex items-center gap-2 group -ml-2">
+                            <div className="w-[133px] h-[133px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
                                 <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
-                            <span className="text-xl font-bold text-white hidden sm:block italic">
+                            <span className="text-xl font-bold text-white hidden sm:block italic -ml-4">
                                 Servicios GP
                             </span>
                         </Link>

@@ -79,9 +79,9 @@ export default function HomePage() {
               </div>
             </div>
             <div className="flex justify-center lg:justify-end">
-              <div className="w-full max-w-sm aspect-video bg-[#0f172a] rounded-2xl border border-white/5 flex items-center justify-center p-8 group hover:border-blue-500/30 transition-all">
+              <div className="w-full max-w-sm flex items-center justify-center p-8 group transition-all">
                 <div className="flex flex-col items-center text-center gap-4">
-                  <div className="w-[104px] h-[104px] group-hover:scale-110 transition-transform">
+                  <div className="w-[208px] h-[208px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
                     <img src="/images/icono_math.png" alt="Math" className="w-full h-full object-contain" />
                   </div>
                 </div>
