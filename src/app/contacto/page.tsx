@@ -29,10 +29,7 @@ export default function ContactPage() {
                     {/* Info Section */}
                     <div className="flex flex-col gap-10">
                         <div>
-                            <h1 className="text-5xl font-extrabold text-white mb-6 italic">Hablemos de tu <span className="text-blue-400">Próximo Proyecto</span></h1>
-                            <p className="text-xl text-slate-400 leading-relaxed italic">
-                                Estamos listos para ayudarte a escalar tu negocio con tecnología de punta. Cuéntanos tu idea y la haremos realidad.
-                            </p>
+                            <h1 className="text-5xl font-extrabold text-white mb-6 italic">Hablemos</h1>
                         </div>
 
                         <div className="space-y-8">
