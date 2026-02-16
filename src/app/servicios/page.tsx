@@ -7,16 +7,9 @@ import { Button, Card, Svg } from "@/components";
 const servicesList = [
     {
         title: "Clases de Matemáticas Personalizadas",
-        icon: "monitor", // Representando clases online/presenciales con herramientas digitales
-        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico integral para niveles de Bachillerato y Universitario. Nuestro método se enfoca en la comprensión lógica profunda para que no solo pases el examen, sino que domines la materia.",
-        features: [
-            "Bachillerato: Álgebra, Trig y Geometría",
-            "Cálculo: Diferencial, Integral y Varios",
-            "Álgebra Lineal y Probabilidad",
-            "Preparación para Exámenes de Admisión",
-            "Material de Apoyo Digital",
-            "Seguimiento de Progreso Individual"
-        ]
+        icon: "monitor",
+        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.",
+        features: []
     }
 ];
 
@@ -62,16 +55,7 @@ export default function ServicesPage() {
                                         ))}
                                     </div>
 
-                                    <Link href={`/contacto?service=${encodeURIComponent(service.title)}`}>
-                                        <Button
-                                            nameBtn="Consultar por este servicio"
-                                            variant="outlined"
-                                            radius="8px"
-                                            icon="mail"
-                                            iconPosition="left"
-                                            style={{ borderColor: 'rgba(255,255,255,0.1)', color: '#fff' }}
-                                        />
-                                    </Link>
+
                                 </div>
                             </Card>
                         ))}

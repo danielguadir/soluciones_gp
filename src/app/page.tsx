@@ -66,7 +66,7 @@ export default function HomePage() {
               <span className="text-blue-400 font-bold tracking-widest uppercase text-sm">Nuevo Servicio Educativo</span>
               <h2 className="text-4xl lg:text-5xl font-bold text-white italic">Domina las Matemáticas</h2>
               <p className="text-lg text-slate-400 leading-relaxed">
-                ¿Problemas con Cálculo o Álgebra? Ofrecemos clases personalizadas para niveles de Bachillerato y Universidad. Aprendizaje real y resultados garantizados.
+                Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="https://wa.me/573148029030" target="_blank">
@@ -79,7 +79,7 @@ export default function HomePage() {
                 </Link>
                 <Link href="/servicios">
                   <Button
-                    nameBtn="Ver Temarios"
+                    nameBtn="Ver Más"
                     variant="outlined"
                     radius="12px"
                     style={{ padding: '14px 28px', borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
@@ -92,14 +92,6 @@ export default function HomePage() {
                 <div className="flex flex-col items-center text-center gap-4">
                   <div className="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Svg icon="monitor" fontSize="32px" />
-                  </div>
-                  <span className="text-white font-semibold text-lg italic">Bachillerato & Universidad</span>
-                  <div className="text-slate-500 text-xs flex gap-4">
-                    <span>Álgebra</span>
-                    <span>•</span>
-                    <span>Cálculo</span>
-                    <span>•</span>
-                    <span>Geometría</span>
                   </div>
                 </div>
               </div>
