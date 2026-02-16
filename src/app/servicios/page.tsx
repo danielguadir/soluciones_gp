@@ -10,6 +10,12 @@ const servicesList = [
         icon: "monitor",
         description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.",
         features: []
+    },
+    {
+        title: "Desarrollo Web",
+        icon: "code",
+        description: "Diseño de Pagina Web y Dominio",
+        features: []
     }
 ];
 
