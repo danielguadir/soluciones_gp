@@ -23,8 +23,8 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">
-                                GP
+                            <div className="w-10 h-10 group-hover:scale-110 transition-transform">
+                                <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-xl font-bold text-white hidden sm:block italic">
                                 Servicios GP

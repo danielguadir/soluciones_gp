@@ -14,8 +14,8 @@ const Footer = () => {
                     {/* Brand section */}
                     <div className="col-span-1 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 mb-6 group">
-                            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform">
-                                GP
+                            <div className="w-10 h-10 group-hover:scale-110 transition-transform">
+                                <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-xl font-bold text-white italic">Servicios GP</span>
                         </Link>

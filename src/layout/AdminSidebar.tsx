@@ -19,8 +19,8 @@ const AdminSidebar = () => {
         <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col sticky top-0">
             <div className="p-6 border-b border-gray-800">
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-                        GP
+                    <div className="w-8 h-8 group-hover:scale-110 transition-transform">
+                        <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                     </div>
                     <span className="text-lg font-bold tracking-tight">Admin GP</span>
                 </Link>
@@ -34,8 +34,8 @@ const AdminSidebar = () => {
                             key={item.name}
                             href={item.href}
                             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${isActive
-                                    ? "bg-blue-600 text-white shadow-lg shadow-blue-900/40"
-                                    : "text-gray-400 hover:text-white hover:bg-gray-800"
+                                ? "bg-blue-600 text-white shadow-lg shadow-blue-900/40"
+                                : "text-gray-400 hover:text-white hover:bg-gray-800"
                                 }`}
                         >
                             <Svg

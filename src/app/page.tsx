@@ -91,8 +91,8 @@ export default function HomePage() {
             <div className="flex justify-center lg:justify-end">
               <div className="w-full max-w-sm aspect-video bg-[#0f172a] rounded-2xl border border-white/5 flex items-center justify-center p-8 group hover:border-blue-500/30 transition-all">
                 <div className="flex flex-col items-center text-center gap-4">
-                  <div className="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Svg icon="monitor" fontSize="32px" />
+                  <div className="w-20 h-20 group-hover:scale-110 transition-transform">
+                    <img src="/images/icono_math.png" alt="Math" className="w-full h-full object-contain" />
                   </div>
                 </div>
               </div>
