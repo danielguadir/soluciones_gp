@@ -52,7 +52,10 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Email</h3>
-                                    <p className="text-blue-400 font-medium text-lg">contacto@serviciosgp.com</p>
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-blue-400 font-medium text-lg">danielguadir98@gmail.com</p>
+                                        <p className="text-blue-400 font-medium text-lg text-[13px]">daniel.guadir@correounivalle.edu.co</p>
+                                    </div>
                                     <p className="text-slate-500 text-sm mt-1 italic">Para propuestas detalladas</p>
                                 </div>
                             </div>
@@ -63,7 +66,10 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Ubicación</h3>
-                                    <p className="text-slate-400 text-lg">Bogotá, Colombia</p>
+                                    <div className="flex flex-col gap-1">
+                                        <p className="text-slate-400 text-lg">Valle del Cauca - Cali</p>
+                                        <p className="text-slate-400 text-lg">Nariño - Cumbal</p>
+                                    </div>
                                     <p className="text-slate-500 text-sm mt-1 italic">Servicio remoto a todo el mundo</p>
                                 </div>
                             </div>
