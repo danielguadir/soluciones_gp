@@ -20,7 +20,7 @@ const Footer = () => {
                             <span className="text-xl font-bold text-white italic">Servicios GP</span>
                         </Link>
                         <p className="text-sm leading-relaxed text-slate-500">
-                            Soluciones integrales de software y servicios tecnológicos personalizados para potenciar tu negocio con arquitecturas de alto nivel.
+                            Soluciones y servicios
                         </p>
                     </div>
 
