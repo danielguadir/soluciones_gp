@@ -55,10 +55,6 @@ const Footer = () => {
                                 </a>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <div className="flex items-center gap-3">
-                                    <Svg icon="mail" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                    <span>contacto@serviciosgp.com</span>
-                                </div>
                                 <div className="flex items-center gap-3 text-[12px]">
                                     <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
                                     <span>danielguadir98@gmail.com</span>

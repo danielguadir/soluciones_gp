@@ -81,9 +81,9 @@ export default function PortfolioPage() {
             {/* Curiosity CTA */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
                 <div className="bg-slate-900/80 border border-white/5 rounded-[40px] p-12 text-center text-white shadow-2xl">
-                    <h2 className="text-3xl font-bold mb-6 italic">¿Tienes un reto tecnológico para nosotros?</h2>
+                    <h2 className="text-3xl font-bold mb-6 italic">¿Tienes un reto?</h2>
                     <p className="text-slate-400 mb-10 text-lg max-w-2xl mx-auto">
-                        Estamos listos para aplicar nuestra experiencia en el desarrollo de tu próximo sistema de alta complejidad.
+                        ¡Estamos listos!
                     </p>
                     <Link href="/contacto">
                         <Button
