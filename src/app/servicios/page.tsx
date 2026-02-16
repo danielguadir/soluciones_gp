@@ -23,7 +23,7 @@ export default function ServicesPage() {
                         Servicios
                     </h1>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto italic">
-                        Ofrecemos soluciones integrales con un enfoque en la calidad, la escalabilidad y el éxito a largo plazo de tu negocio.
+                        Soluciones integrales con un enfoque en la calidad, la escalabilidad y el éxito a largo plazo
                     </p>
                 </div>
             </section>
@@ -68,7 +68,7 @@ export default function ServicesPage() {
                 <div className="max-w-4xl mx-auto px-4 text-center text-white">
                     <h2 className="text-3xl font-bold mb-6 italic">¿Tienes un requerimiento especial?</h2>
                     <p className="text-slate-400 mb-10 text-lg">
-                        Si no ves exactamente lo que necesitas, contáctanos. Personalizamos nuestras soluciones para cada cliente.
+                        Contáctanos
                     </p>
                     <div className="flex flex-wrap justify-center gap-6">
                         <Link href="https://wa.me/573148029030" target="_blank">

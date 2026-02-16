@@ -54,13 +54,29 @@ const Footer = () => {
                                     +57 314 802 9030
                                 </a>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Svg icon="mail" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                <span>contacto@serviciosgp.com</span>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex items-center gap-3">
+                                    <Svg icon="mail" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <span>contacto@serviciosgp.com</span>
+                                </div>
+                                <div className="flex items-center gap-3 text-[12px]">
+                                    <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <span>danielguadir98@gmail.com</span>
+                                </div>
+                                <div className="flex items-center gap-3 text-[12px]">
+                                    <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <span>daniel.guadir@correounivalle.edu.co</span>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                <span>Bogotá, Colombia</span>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex items-center gap-3">
+                                    <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <span>Valle del Cauca - Cali</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <span>Nariño - Cumbal</span>
+                                </div>
                             </div>
                             <div className="flex gap-4 mt-8">
                                 <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all border border-white/5">
