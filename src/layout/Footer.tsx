@@ -40,7 +40,7 @@ const Footer = () => {
                         <h3 className="text-white font-bold mb-6 uppercase tracking-wider text-xs">Especialidades</h3>
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/servicios" className="hover:text-blue-400 transition-colors">Clases de Matemáticas</Link></li>
-                            <li className="text-slate-500">Sistemas de Gestión</li>
+                            <li><Link href="/servicios" className="hover:text-blue-400 transition-colors">Desarrollo Web</Link></li>
                         </ul>
                     </div>
 
@@ -51,7 +51,7 @@ const Footer = () => {
                             <div className="flex items-center gap-3 font-semibold text-white group">
                                 <Svg icon="whatsapp" fontSize="20px" color="#25D366" />
                                 <a href="https://wa.me/573148029030" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    Desarrollo Web
+                                    +57 314 802 9030
                                 </a>
                             </div>
                             <div className="flex flex-col gap-2">
