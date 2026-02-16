@@ -6,15 +6,15 @@ import { Button, Card, Svg } from "@/components";
 
 const servicesList = [
     {
-        title: "Clases de Matemáticas Personalizadas",
-        icon: "/images/icono_math.png",
-        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.",
-        features: []
-    },
-    {
         title: "Desarrollo Web",
         icon: "code",
         description: "Diseño de Pagina Web y Dominio",
+        features: []
+    },
+    {
+        title: "Clases de Matemáticas",
+        icon: "/images/icono_math.png",
+        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.",
         features: []
     }
 ];
@@ -41,7 +41,7 @@ export default function ServicesPage() {
                         {servicesList.map((service, index) => (
                             <Card key={index} className="p-8 border border-white/5 bg-white/5 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 rounded-2xl group hover:border-blue-500/20">
                                 <div className="flex flex-col gap-6">
-                                    <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20 overflow-hidden">
+                                    <div className="w-[73px] h-[73px] bg-blue-600 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20 overflow-hidden">
                                         {service.icon.includes('/') ? (
                                             <img src={service.icon} alt={service.title} className="w-full h-full object-cover p-2" />
                                         ) : (

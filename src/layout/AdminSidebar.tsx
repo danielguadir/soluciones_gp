@@ -19,7 +19,7 @@ const AdminSidebar = () => {
         <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col sticky top-0">
             <div className="p-6 border-b border-gray-800">
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="w-8 h-8 group-hover:scale-110 transition-transform">
+                    <div className="w-[42px] h-[42px] group-hover:scale-110 transition-transform">
                         <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                     </div>
                     <span className="text-lg font-bold tracking-tight">Admin GP</span>

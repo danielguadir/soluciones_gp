@@ -40,16 +40,6 @@ export default function HomePage() {
             <div className="relative w-full max-w-md">
               <div className="absolute -top-4 -left-4 w-72 h-72 bg-blue-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob"></div>
               <div className="absolute -bottom-8 -right-4 w-72 h-72 bg-indigo-500/10 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-              <Card className="relative bg-white/5 backdrop-blur-md border border-white/10 shadow-2xl p-8 rounded-2xl">
-                <div className="flex flex-col gap-4">
-                  <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white">
-                    <Svg icon="code" fontSize="24px" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">Desarrollo a Medida</h3>
-                  <p className="text-slate-400 text-sm">Creamos aplicaciones escalables utilizando las últimas tecnologías del mercado.</p>
-                  <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
-                </div>
-              </Card>
             </div>
           </div>
         </div>
@@ -91,7 +81,7 @@ export default function HomePage() {
             <div className="flex justify-center lg:justify-end">
               <div className="w-full max-w-sm aspect-video bg-[#0f172a] rounded-2xl border border-white/5 flex items-center justify-center p-8 group hover:border-blue-500/30 transition-all">
                 <div className="flex flex-col items-center text-center gap-4">
-                  <div className="w-20 h-20 group-hover:scale-110 transition-transform">
+                  <div className="w-[104px] h-[104px] group-hover:scale-110 transition-transform">
                     <img src="/images/icono_math.png" alt="Math" className="w-full h-full object-contain" />
                   </div>
                 </div>

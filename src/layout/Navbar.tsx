@@ -23,7 +23,7 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-10 h-10 group-hover:scale-110 transition-transform">
+                            <div className="w-[52px] h-[52px] group-hover:scale-110 transition-transform">
                                 <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                             </div>
                             <span className="text-xl font-bold text-white hidden sm:block italic">
