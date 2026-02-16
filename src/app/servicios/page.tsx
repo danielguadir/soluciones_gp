@@ -4,7 +4,21 @@ import React from "react";
 import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
 
-const servicesList: any[] = [];
+const servicesList = [
+    {
+        title: "Clases de Matemáticas Personalizadas",
+        icon: "monitor", // Representando clases online/presenciales con herramientas digitales
+        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico integral para niveles de Bachillerato y Universitario. Nuestro método se enfoca en la comprensión lógica profunda para que no solo pases el examen, sino que domines la materia.",
+        features: [
+            "Bachillerato: Álgebra, Trig y Geometría",
+            "Cálculo: Diferencial, Integral y Varios",
+            "Álgebra Lineal y Probabilidad",
+            "Preparación para Exámenes de Admisión",
+            "Material de Apoyo Digital",
+            "Seguimiento de Progreso Individual"
+        ]
+    }
+];
 
 export default function ServicesPage() {
     return (
