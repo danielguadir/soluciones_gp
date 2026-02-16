@@ -72,8 +72,6 @@ export default function ContactPage() {
                         <div className="p-8 bg-blue-600/10 border border-blue-500/20 rounded-3xl text-white mt-10 shadow-2xl backdrop-blur-sm">
                             <h4 className="text-2xl font-bold mb-4 text-blue-400">¿Por qué elegirnos?</h4>
                             <ul className="space-y-3 text-slate-300">
-                                <li className="flex gap-2">✓ Arquitecturas escalables de alto nivel</li>
-                                <li className="flex gap-2">✓ Código limpio y mantenibilidad total</li>
                                 <li className="flex gap-2">✓ Acompañamiento estratégico constante</li>
                             </ul>
                         </div>
@@ -130,13 +128,13 @@ export default function ContactPage() {
                                     value={formData.mensaje}
                                     onChange={handleChange}
                                     className="w-full p-4 bg-slate-900/50 border border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none text-white placeholder:text-slate-600"
-                                    placeholder="Describe brevemente tu proyecto o consulta..."
+                                    placeholder="describe brevemente"
                                     required
                                 ></textarea>
                             </div>
 
                             <Button
-                                nameBtn="Enviar Propuesta"
+                                nameBtn="enviar mensaje"
                                 variant="contained"
                                 radius="12px"
                                 style={{ height: '56px', marginTop: '12px', fontWeight: 'bold' }}
