@@ -24,7 +24,7 @@ export default function PortfolioPage() {
                         Mi <span className="text-blue-400">Portafolio</span>
                     </h1>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto italic">
-                        Una colección de soluciones tecnológicas diseñadas para resolver problemas reales con arquitecturas escalables y mantenibles.
+                        Soluciones diseñadas para resolver problemas
                     </p>
                 </div>
             </section>

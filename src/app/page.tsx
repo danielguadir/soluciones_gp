@@ -13,7 +13,8 @@ export default function HomePage() {
               Transformamos <span className="text-blue-400">ideas</span> en <span className="text-blue-400">soluciones reales</span>
             </h1>
             <p className="text-xl text-slate-300 max-w-lg">
-              Soluciones tecnológicas personalizadas para empresas y emprendedores. Especialistas en desarrollo web, arquitectura de sistemas y diseño de software.
+              Soluciones personalizadas.
+              Desarrollo web
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
               <Link href="/contacto">
