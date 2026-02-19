@@ -42,7 +42,7 @@ export default function ContactPage() {
                                     <a href="https://wa.me/573148029030" target="_blank" className="text-green-400 font-medium text-lg hover:underline transition-all">
                                         +57 314 802 9030
                                     </a>
-                                    <p className="text-slate-500 text-sm mt-1 italic">Respuesta inmediata</p>
+                                    <p className="text-slate-500 text-sm mt-1 italic"></p>
                                 </div>
                             </div>
 
@@ -70,7 +70,7 @@ export default function ContactPage() {
                                         <p className="text-slate-400 text-lg">Valle del Cauca - Cali</p>
                                         <p className="text-slate-400 text-lg">Nariño - Cumbal</p>
                                     </div>
-                                    <p className="text-slate-500 text-sm mt-1 italic">Servicio remoto a todo el mundo</p>
+                                    <p className="text-slate-500 text-sm mt-1 italic"></p>
                                 </div>
                             </div>
                         </div>

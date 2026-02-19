@@ -87,7 +87,7 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-600 uppercase tracking-widest font-bold">
-                    <p>© {currentYear} Servicios GP. Tecnología de Alto Nivel.</p>
+                    <p>© {currentYear} Servicios GP.</p>
 
                     <div className="flex gap-6">
                         <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>

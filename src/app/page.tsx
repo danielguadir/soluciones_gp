@@ -19,7 +19,7 @@ export default function HomePage() {
             <div className="flex flex-wrap gap-4 mt-4">
               <Link href="/contacto">
                 <Button
-                  nameBtn="Empezar Proyecto"
+                  nameBtn="Empezar"
                   variant="contained"
                   radius="12px"
                   style={{ padding: '16px 32px' }}
@@ -57,7 +57,7 @@ export default function HomePage() {
               <span className="text-blue-400 font-bold tracking-widest uppercase text-sm">Nuevo Servicio Educativo</span>
               <h2 className="text-4xl lg:text-5xl font-bold text-white italic">Domina las Matemáticas</h2>
               <p className="text-lg text-slate-400 leading-relaxed">
-                Transformamos la dificultad en dominio. Ofrecemos refuerzo académico.
+                Aprendamos matematicas juntos.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="https://wa.me/573148029030" target="_blank">
@@ -96,7 +96,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-white">
             <h2 className="text-3xl font-bold mb-2 italic">¿Listo para dar el siguiente paso?</h2>
-            <p className="text-slate-400">Contáctanos hoy mismo y hablemos sobre tu proyecto.</p>
+            <p className="text-slate-400">Contácto.</p>
           </div>
           <Link href="https://wa.me/573148029030" target="_blank">
             <Button
