@@ -38,7 +38,7 @@ export default function ContactPage() {
                                     <Svg icon="whatsapp" fontSize="24px" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold mb-1 text-white">WhatsApp Directo</h3>
+                                    <h3 className="text-xl font-bold mb-1 text-white">WhatsApp</h3>
                                     <a href="https://wa.me/573148029030" target="_blank" className="text-green-400 font-medium text-lg hover:underline transition-all">
                                         +57 314 802 9030
                                     </a>
