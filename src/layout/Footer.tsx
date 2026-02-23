@@ -13,14 +13,25 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
                     {/* Brand section */}
                     <div className="col-span-1 md:col-span-1">
-                        <Link href="/" className="flex items-center gap-2 mb-6 group">
-                            <div className="w-[133px] h-[133px] group-hover:scale-110 transition-transform drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">
-                                <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
+                        <Link href="/" className="flex items-center gap-3 mb-6 group">
+                            <div className="relative w-10 h-10 flex items-center justify-center">
+                                <div className="absolute inset-0 bg-blue-500/10 rounded-lg blur-md group-hover:bg-blue-500/20 transition-all duration-500"></div>
+                                <div className="relative w-full h-full p-1 bg-slate-900/50 border border-white/5 rounded-lg backdrop-blur-sm group-hover:border-blue-500/30 transition-all duration-300">
+                                    <img
+                                        src="/images/icono_tec.png"
+                                        alt="GP"
+                                        className="w-full h-full object-contain"
+                                    />
+                                </div>
                             </div>
-                            <span className="text-xl font-bold text-white italic">Servicios GP</span>
+                            <div className="flex flex-col">
+                                <span className="text-lg font-black text-white tracking-tighter leading-none">
+                                    SERVICIOS <span className="text-blue-500">GP</span>
+                                </span>
+                            </div>
                         </Link>
-                        <p className="text-sm leading-relaxed text-slate-500">
-                            Soluciones y servicios
+                        <p className="text-xs leading-relaxed text-slate-500 max-w-[200px]">
+                            Soluciones integrales que combinan el rigor matemático con la innovación tecnológica.
                         </p>
                     </div>
 

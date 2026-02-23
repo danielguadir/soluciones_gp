@@ -5,6 +5,7 @@ import "@/design-system/components/UXLib/styles/cmpStyles.scss";
 
 import Navbar from "@/layout/Navbar";
 import Footer from "@/layout/Footer";
+import WhatsAppButton from "@/components/layout/WhatsAppButton";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
