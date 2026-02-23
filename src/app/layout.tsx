@@ -5,7 +5,7 @@ import "@/design-system/components/UXLib/styles/cmpStyles.scss";
 
 import Navbar from "@/layout/Navbar";
 import Footer from "@/layout/Footer";
-import WhatsAppButton from "@/components/layout/WhatsAppButton";
+import WhatsAppButton from "@/layout/WhatsAppButton";
 
 const inter = Inter({
   subsets: ["latin"],
