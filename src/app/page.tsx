@@ -18,7 +18,7 @@ export default function HomePage() {
     },
     {
       title: "Soluciones Matemáticas",
-      desc: "Modelado matemático y algoritmos avanzados para optimización técnica.",
+      desc: " Clases de Matemáticas.",
       icon: "target",
       color: "cyan"
     }
@@ -47,13 +47,13 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter">
-                DONDE LA <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">CIENCIA</span> <br />
-                ENCUENTRA LA <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-500 text-glow">WEB</span>
+                TRANSFORMAMOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">IDEAS EN </span> <br />
+                SOLUCIONES <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-500 text-glow"></span>
               </h1>
 
               <p className="text-xl text-slate-400 max-w-xl leading-relaxed">
-                Transformamos desafíos matemáticos y técnicos en experiencias digitales de alto impacto.
-                Soluciones personalizadas con arquitectura de vanguardia.
+                Transformamos desafíos en experiencias.
+                Soluciones.
               </p>
 
               <div className="flex flex-wrap gap-5 mt-4">
@@ -73,21 +73,6 @@ export default function HomePage() {
                     style={{ padding: '20px 40px', fontSize: '1.1rem', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', backgroundColor: 'rgba(255,255,255,0.02)' }}
                   />
                 </Link>
-              </div>
-
-              <div className="flex items-center gap-8 mt-8 border-t border-white/5 pt-8">
-                <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white leading-none">10+</span>
-                  <span className="text-xs text-slate-500 uppercase tracking-widest mt-1">Años Exp.</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white leading-none">100%</span>
-                  <span className="text-xs text-slate-500 uppercase tracking-widest mt-1">Satisfacción</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl font-bold text-white leading-none">24/7</span>
-                  <span className="text-xs text-slate-500 uppercase tracking-widest mt-1">Soporte</span>
-                </div>
               </div>
             </div>
 
@@ -140,7 +125,7 @@ export default function HomePage() {
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">Nuestros Pilares</h2>
             <div className="w-20 h-1.5 bg-blue-500 rounded-full mb-8"></div>
             <p className="text-slate-400 max-w-2xl text-lg">
-              Ofrecemos un enfoque integral donde cada línea de código está respaldada por una lógica sólida y un diseño centrado en el usuario.
+              Enfoque integral .
             </p>
           </div>
 
