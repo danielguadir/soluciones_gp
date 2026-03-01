@@ -152,7 +152,9 @@ function CuriositiesContent() {
                                         className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300"
                                         title="Compartir en Facebook"
                                     >
-                                        <Svg icon="facebook" fontSize="18px" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                                        </svg>
                                     </button>
                                     <button
                                         onClick={() => shareOnWhatsApp(item.title)}
