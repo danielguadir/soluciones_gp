@@ -15,6 +15,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "IMPULSOGP - Soluciones Técnicas",
   description: "Optimización y soluciones técnicas avanzadas con IMPULSOGP",
+  icons: {
+    icon: "/images/icono_tec.png",
+  },
 };
 
 export default function RootLayout({
