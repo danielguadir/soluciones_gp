@@ -46,8 +46,8 @@ export default function HomePage() {
                 Innovación Tecnológica
               </div>
 
-              <h1 className="text-6xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter">
-                TRANSFORMAMOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">IDEAS EN </span> <br />
+              <h1 className="text-4xl sm:text-6xl lg:text-8xl font-black text-white leading-[1.1] sm:leading-[0.9] tracking-tighter">
+                TRANSFORMAMOS <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">IDEAS EN </span> <br className="hidden sm:block" />
                 SOLUCIONES <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-500 text-glow"></span>
               </h1>
 

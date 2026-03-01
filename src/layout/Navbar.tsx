@@ -56,14 +56,6 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
-                        <Link href="/login">
-                            <Button
-                                nameBtn="Admin"
-                                variant="outlined"
-                                radius="8px"
-                                style={{ borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
-                            />
-                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -92,16 +84,6 @@ const Navbar = () => {
                                 {link.name}
                             </Link>
                         ))}
-                        <div className="pt-4 pb-2 px-3">
-                            <Link href="/login" onClick={() => setIsOpen(false)}>
-                                <Button
-                                    nameBtn="Acceso Admin"
-                                    variant="outlined"
-                                    radius="8px"
-                                    style={{ width: "100%", borderColor: 'rgba(255,255,255,0.2)', color: '#fff' }}
-                                />
-                            </Link>
-                        </div>
                     </div>
                 </div>
             )}
