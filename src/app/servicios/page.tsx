@@ -73,6 +73,40 @@ export default function ServicesPage() {
                 </div>
             </section>
 
+            {/* Featured Projects Showcase */}
+            <section className="py-24 bg-slate-900/30">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                        <div className="max-w-2xl text-left">
+                            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 italic text-left">Nuestro Trabajo en <span className="text-blue-400">Acción</span></h2>
+                            <p className="text-slate-400 text-lg text-left">
+                                Visualiza cómo transformamos ideas en plataformas robustas y funcionales a través de nuestros proyectos más recientes.
+                            </p>
+                        </div>
+                        <Link href="/portafolio">
+                            <Button nameBtn="Ver Portafolio Completo" variant="outlined" radius="10px" icon="plus" />
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {[
+                            { img: "/images/portfolio/nature-sumaq/tienda11.png", title: "E-commerce Nature Sumaq", cat: "Diseño Web & UX" },
+                            { img: "/images/portfolio/inventario/auth_inventario.png", title: "Sistema de Inventario", cat: "Desarrollo de Software" },
+                            { img: "/images/portfolio/agrodistrib/tienda-agro.png", title: "Plataforma AgroDistrib", cat: "Soluciones Empresariales" }
+                        ].map((item, idx) => (
+                            <div key={idx} className="group relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/5 hover:border-blue-500/30 transition-all duration-500 shadow-2xl">
+                                <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                                <div className="absolute bottom-0 left-0 p-6 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform text-left">
+                                    <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block text-left">{item.cat}</span>
+                                    <h3 className="text-white font-bold text-xl text-left">{item.title}</h3>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Contact CTA */}
             <section className="bg-slate-900/40 border-y border-white/5 py-16">
                 <div className="max-w-4xl mx-auto px-4 text-center text-white">
