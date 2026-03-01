@@ -11,12 +11,6 @@ export default function HomePage() {
       color: "blue"
     },
     {
-      title: "Análisis de Datos",
-      desc: "Convertimos datos complejos en información accionable para tu negocio.",
-      icon: "chart-pie",
-      color: "indigo"
-    },
-    {
       title: "Soluciones Matemáticas",
       desc: " Clases de Matemáticas.",
       icon: "target",
@@ -129,7 +123,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {featuredServices.map((service, idx) => (
               <div
                 key={idx}

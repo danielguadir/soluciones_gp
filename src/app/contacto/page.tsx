@@ -53,7 +53,7 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Email</h3>
                                     <div className="flex flex-col gap-1">
-                                        <p className="text-blue-400 font-medium text-lg">danielguadir98@gmail.com</p>
+                                        <p className="text-blue-400 font-medium text-lg">gaviria.alex@gmail.com</p>
                                         <p className="text-blue-400 font-medium text-lg text-[13px]">daniel.guadir@correounivalle.edu.co</p>
                                     </div>
                                     <p className="text-slate-500 text-sm mt-1 italic">Para propuestas detalladas</p>

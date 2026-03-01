@@ -65,15 +65,13 @@ const Footer = () => {
                                     +57 314 802 9030
                                 </a>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <div className="flex items-center gap-3 text-[12px]">
-                                    <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                    <span>danielguadir98@gmail.com</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-[12px]">
-                                    <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                    <span>daniel.guadir@correounivalle.edu.co</span>
-                                </div>
+                            <div className="flex items-center gap-3 text-[12px]">
+                                <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                <span>gaviria.alex@gmail.com</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-[12px]">
+                                <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                <span>daniel.guadir@correounivalle.edu.co</span>
                             </div>
                             <div className="flex flex-col gap-2">
                                 <div className="flex items-center gap-3">
