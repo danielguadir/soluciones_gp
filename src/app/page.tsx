@@ -48,37 +48,32 @@ export default function HomePage() {
                 Transformamos desafíos en experiencias.
                 Soluciones.
               </p>
-
-              <p className="text-xl text-slate-400 max-w-xl leading-relaxed">
-                Transformamos desafíos en experiencias.
-                Soluciones.
-              </p>
             </div>
 
-            <div className="relative animate-fade-left">
-              <div className="relative w-full aspect-square max-w-2xl mx-auto flex items-center justify-center">
+            <div className="relative animate-fade-left mt-10 lg:mt-0">
+              <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square max-w-2xl mx-auto flex items-center justify-center">
                 {/* Glow effects around the image */}
-                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-[80%] bg-blue-500/20 blur-[80px] rounded-full animate-pulse"></div>
-                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-[80%] bg-indigo-500/20 blur-[80px] rounded-full animate-pulse animation-delay-2000"></div>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-cyan-500/10 blur-[60px] rounded-full"></div>
+                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-[80%] bg-blue-500/30 blur-[100px] rounded-full animate-pulse"></div>
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-[80%] bg-indigo-500/30 blur-[100px] rounded-full animate-pulse animation-delay-2000"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-cyan-500/15 blur-[80px] rounded-full"></div>
 
                 {/* Main Hero Image */}
-                <div className="relative z-10 w-full h-full p-4 group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="relative z-10 w-full h-full p-2 sm:p-4 group">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/15 to-transparent rounded-[30px] sm:rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                   <img
-                    src="/images/hero/inicio_pw.png"
+                    src="/images/hero/inicio1_pw.png"
                     alt="ImpulsoGP Hero"
-                    className="w-full h-full object-contain rounded-[40px] shadow-2xl transform transition-all duration-700 group-hover:scale-[1.02] group-hover:-rotate-1"
+                    className="w-full h-full object-contain sm:object-cover lg:object-contain rounded-[30px] sm:rounded-[40px] shadow-2xl transform transition-all duration-1000 group-hover:scale-[1.03] group-hover:-rotate-1"
                   />
 
                   {/* Animated side highlights */}
-                  <div className="absolute top-1/4 -left-2 w-1 h-1/2 bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-50 blur-sm"></div>
-                  <div className="absolute top-1/4 -right-2 w-1 h-1/2 bg-gradient-to-b from-transparent via-indigo-400 to-transparent opacity-50 blur-sm"></div>
+                  <div className="absolute top-1/4 -left-2 w-1.5 h-1/2 bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-60 blur-md"></div>
+                  <div className="absolute top-1/4 -right-2 w-1.5 h-1/2 bg-gradient-to-b from-transparent via-indigo-400 to-transparent opacity-60 blur-md"></div>
                 </div>
 
                 {/* Decorative floating elements */}
-                <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl animate-blob"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl animate-blob animation-delay-4000"></div>
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl animate-blob"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl animate-blob animation-delay-4000"></div>
               </div>
             </div>
           </div>
