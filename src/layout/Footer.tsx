@@ -30,9 +30,6 @@ const Footer = () => {
                                 </span>
                             </div>
                         </Link>
-                        <p className="text-xs leading-relaxed text-slate-500 max-w-[200px]">
-                            Soluciones integrales que combinan el rigor matemático con la innovación tecnológica.
-                        </p>
                     </div>
 
                     {/* Quick Links */}
