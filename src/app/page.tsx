@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#0f172a] bg-grid-white">
+      <section className="relative min-h-[70vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-[#0f172a] bg-grid-white py-16 lg:py-0">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute top-[10%] left-[5%] w-72 h-72 bg-blue-600/20 rounded-full blur-[120px] animate-blob"></div>
@@ -30,8 +30,8 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="flex flex-col gap-8 animate-fade-right relative z-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div className="flex flex-col gap-6 lg:gap-8 animate-fade-right relative z-20">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase w-fit">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
@@ -50,8 +50,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="relative animate-fade-left mt-10 lg:mt-0">
-              <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square max-w-2xl mx-auto flex items-center justify-center">
+            <div className="relative animate-fade-left mt-6 lg:mt-0">
+              <div className="relative w-full aspect-[4/3] sm:aspect-video lg:aspect-square max-w-2xl mx-auto flex items-center justify-center">
                 {/* Glow effects around the image */}
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-[80%] bg-blue-500/30 blur-[100px] rounded-full animate-pulse"></div>
                 <div className="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-[80%] bg-indigo-500/30 blur-[100px] rounded-full animate-pulse animation-delay-2000"></div>
