@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { curiosities } from "@/data/curiosities";
 import { Svg } from "@/components/UXLib/Svg/Svg";
@@ -19,14 +20,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         };
     }
 
+    const shortDescription = item.content[0].substring(0, 160) + "...";
+    const absoluteImageUrl = `https://www.impulsogp.com${item.image}`;
+
     return {
         title: `${item.title} | IMPULSOGP`,
-        description: item.content[0].substring(0, 160) + "...",
+        description: shortDescription,
         openGraph: {
             title: `${item.title} | IMPULSOGP`,
-            description: item.content[0].substring(0, 160) + "...",
+            description: shortDescription,
             type: "article",
             url: `https://www.impulsogp.com/curiosidades/${id}`,
+            images: [
+                {
+                    url: absoluteImageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: item.title,
+                }
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: `${item.title} | IMPULSOGP`,
+            description: shortDescription,
+            images: [absoluteImageUrl],
         }
     };
 }
@@ -67,6 +85,16 @@ export default function CuriosityDetail({ params }: Props) {
                         <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 italic text-left leading-tight">
                             {item.title}
                         </h1>
+
+                        <div className="w-full relative h-[300px] sm:h-[400px] mb-10 rounded-3xl overflow-hidden border border-white/10 group-hover:border-blue-500/30 transition-colors shadow-2xl">
+                            <Image
+                                src={item.image}
+                                alt={item.title}
+                                fill
+                                className="object-cover"
+                                priority
+                            />
+                        </div>
 
                         <div className="space-y-6">
                             {item.content.map((p, i) => (
