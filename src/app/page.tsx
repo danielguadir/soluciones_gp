@@ -49,62 +49,36 @@ export default function HomePage() {
                 Soluciones.
               </p>
 
-              <div className="flex flex-wrap gap-5 mt-4">
-                <Link href="/contacto">
-                  <Button
-                    nameBtn="Iniciar Proyecto"
-                    variant="contained"
-                    radius="16px"
-                    style={{ padding: '20px 40px', fontSize: '1.1rem', fontWeight: 'bold', boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.4)' }}
-                  />
-                </Link>
-                <Link href="/servicios">
-                  <Button
-                    nameBtn="Explorar Servicios"
-                    variant="outlined"
-                    radius="16px"
-                    style={{ padding: '20px 40px', fontSize: '1.1rem', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', backgroundColor: 'rgba(255,255,255,0.02)' }}
-                  />
-                </Link>
-              </div>
+              <p className="text-xl text-slate-400 max-w-xl leading-relaxed">
+                Transformamos desafíos en experiencias.
+                Soluciones.
+              </p>
             </div>
 
-            <div className="relative hidden lg:block animate-fade-left">
-              <div className="relative w-full aspect-square max-w-xl mx-auto">
-                {/* Decorative Rings */}
-                <div className="absolute inset-0 border-2 border-white/5 rounded-full scale-110 animate-pulse"></div>
-                <div className="absolute inset-0 border border-blue-500/10 rounded-full scale-125"></div>
+            <div className="relative animate-fade-left">
+              <div className="relative w-full aspect-square max-w-2xl mx-auto flex items-center justify-center">
+                {/* Glow effects around the image */}
+                <div className="absolute top-1/2 left-0 -translate-y-1/2 w-32 h-[80%] bg-blue-500/20 blur-[80px] rounded-full animate-pulse"></div>
+                <div className="absolute top-1/2 right-0 -translate-y-1/2 w-32 h-[80%] bg-indigo-500/20 blur-[80px] rounded-full animate-pulse animation-delay-2000"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-32 bg-cyan-500/10 blur-[60px] rounded-full"></div>
 
-                {/* Main Visuals using existing icons */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] glass-panel rounded-3xl p-8 flex items-center justify-center transform rotate-3 hover:rotate-0 transition-transform duration-700 shadow-2xl">
-                  <div className="grid grid-cols-2 gap-4 w-full h-full">
-                    <div className="bg-blue-500/10 rounded-2xl p-6 flex flex-col items-center justify-center border border-white/5 group hover:border-blue-500/30 transition-colors">
-                      <img src="/images/icono_tec.png" alt="Tecnología" className="w-24 h-24 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-blue-400 text-[10px] mt-4 font-bold tracking-widest uppercase">Tech Stack</span>
-                    </div>
-                    <div className="bg-indigo-500/10 rounded-2xl p-6 flex flex-col items-center justify-center border border-white/5 group hover:border-indigo-500/30 transition-colors">
-                      <img src="/images/icono_math.png" alt="Matemáticas" className="w-24 h-24 object-contain group-hover:scale-110 transition-transform" />
-                      <span className="text-indigo-400 text-[10px] mt-4 font-bold tracking-widest uppercase">Algorithms</span>
-                    </div>
-                    <div className="col-span-2 bg-slate-800/50 rounded-2xl p-6 flex items-center justify-between border border-white/5 group hover:border-cyan-500/30 transition-colors">
-                      <div className="flex flex-col">
-                        <span className="text-white font-bold">IMPULSOGP</span>
-                        <span className="text-slate-500 text-xs">Excellence in Engineering</span>
-                      </div>
-                      <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                        <Svg icon="ok" color="#06b6d4" />
-                      </div>
-                    </div>
-                  </div>
+                {/* Main Hero Image */}
+                <div className="relative z-10 w-full h-full p-4 group">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  <img
+                    src="/images/hero/inicio_pw.png"
+                    alt="ImpulsoGP Hero"
+                    className="w-full h-full object-contain rounded-[40px] shadow-2xl transform transition-all duration-700 group-hover:scale-[1.02] group-hover:-rotate-1"
+                  />
+
+                  {/* Animated side highlights */}
+                  <div className="absolute top-1/4 -left-2 w-1 h-1/2 bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-50 blur-sm"></div>
+                  <div className="absolute top-1/4 -right-2 w-1 h-1/2 bg-gradient-to-b from-transparent via-indigo-400 to-transparent opacity-50 blur-sm"></div>
                 </div>
 
-                {/* Floating Tags */}
-                <div className="absolute -top-4 right-10 px-4 py-2 bg-slate-900 border border-white/10 rounded-full text-xs text-white font-medium shadow-xl animate-bounce">
-                  React / Next.js
-                </div>
-                <div className="absolute bottom-10 -left-4 px-4 py-2 bg-slate-900 border border-white/10 rounded-full text-xs text-white font-medium shadow-xl">
-                  Advanced Math
-                </div>
+                {/* Decorative floating elements */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-500/5 rounded-full blur-2xl animate-blob"></div>
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl animate-blob animation-delay-4000"></div>
               </div>
             </div>
           </div>
@@ -123,24 +97,35 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {featuredServices.map((service, idx) => (
-              <div
-                key={idx}
-                className="group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className={`w-16 h-16 rounded-2xl bg-${service.color}-500/10 flex items-center justify-center mb-8 group-hover:bg-${service.color}-500/20 transition-colors`}>
-                  <Svg icon={service.icon} fontSize="32px" color={service.color === 'blue' ? '#3b82f6' : service.color === 'indigo' ? '#6366f1' : '#06b6d4'} />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
-                <p className="text-slate-400 mb-8 leading-relaxed">
-                  {service.desc}
-                </p>
-                <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
-                  Ver detalles
-                  <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-                </Link>
+            {/* Service 1: Web Development */}
+            <div className="group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-8 group-hover:bg-blue-500/20 transition-colors">
+                <Svg icon="cog" fontSize="32px" color="#3b82f6" />
               </div>
-            ))}
+              <h3 className="text-2xl font-bold text-white mb-4">Desarrollo Web</h3>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Desarrollo de pagina web de su negocio, tienda o emprendimiento.
+              </p>
+              <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
+                Ver detalles
+                <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
+
+            {/* Service 2: Math Solutions */}
+            <div className="group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-2">
+              <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-8 group-hover:bg-cyan-500/20 transition-colors">
+                <Svg icon="target" fontSize="32px" color="#06b6d4" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4">Soluciones Matemáticas</h3>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Clases de Matemáticas.
+              </p>
+              <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
+                Ver detalles
+                <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
