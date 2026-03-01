@@ -76,3 +76,22 @@ Los componentes de la librería (`UXLib`) usan SCSS para estilos más complejos,
 1. **Componente atomizado**: Definido en `design-system/components/UXLib`.
 2. **Exportación**: Agregado a `design-system/index.ts`.
 3. **Uso**: Importado en cualquier página de `src/app` usando el alias `@/design-system`.
+
+---
+
+## 6. Arquitectura SEO y Componentes de Servidor
+
+Para garantizar un SEO perfecto al compartir enlaces en redes sociales (Facebook, WhatsApp, LinkedIn), la aplicación utiliza estrategias avanzadas de Next.js:
+
+### Rutas Dinámicas y SSG (`generateStaticParams`)
+Las páginas de contenido dinámico (ej: `/curiosidades/[id]/page.tsx`) se pre-renderizan de forma estática en el momento de compilación (Static Site Generation - SSG) usando la función `generateStaticParams`. Esto elimina los tiempos de carga del servidor y previene errores 500 bajo carga.
+
+### Metadatos OpenGraph (`generateMetadata`)
+Cada página principal o ruta dinámica exporta una función `generateMetadata` (que corre exclusivamente en el servidor). Esta función inyecta las etiquetas `og:title`, `og:description` y `og:image` únicas en el `<head>` del HTML antes de enviarlo al cliente.
+
+### Límites Cliente/Servidor (Client vs Server Components)
+Dado que las funciones interactivas como `onClick` no pueden correr en el servidor:
+- **Componentes Servidor (Server Components)**: Encargados del esqueleto HTML, SEO (`generateMetadata`) y carga de datos.
+- **Componentes Cliente (Client Components)**: Contienen la directiva `"use client";` (ej: `SocialShareButtons.tsx`, o `Svg.tsx`). Manejan la interactividad (clics, estados de React).
+
+**Regla estricta:** Un componente de Servidor de Next.js fallará si intenta renderizar directamente un manejador de eventos `onClick` en uno de sus nodos sin delegarlo a un Client Component.
