@@ -24,9 +24,9 @@ const Navbar = () => {
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link href="/" className="flex items-center gap-3 group">
-                            <div className="relative w-12 h-12 flex items-center justify-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center">
                                 <div className="absolute inset-0 bg-blue-500/20 rounded-xl blur-lg group-hover:bg-blue-500/40 transition-all duration-500"></div>
-                                <div className="relative w-full h-full p-1 bg-slate-900/50 border border-white/10 rounded-xl backdrop-blur-sm group-hover:border-blue-500/50 transition-all duration-300">
+                                <div className="relative w-full h-full p-0.5 bg-slate-900/50 border border-white/10 rounded-xl backdrop-blur-sm group-hover:border-blue-500/50 transition-all duration-300">
                                     <img
                                         src="/images/icono_tec.png"
                                         alt="GP"
