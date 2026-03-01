@@ -89,7 +89,7 @@ export default function HomePage() {
                     </div>
                     <div className="col-span-2 bg-slate-800/50 rounded-2xl p-6 flex items-center justify-between border border-white/5 group hover:border-cyan-500/30 transition-colors">
                       <div className="flex flex-col">
-                        <span className="text-white font-bold">Soluciones GP</span>
+                        <span className="text-white font-bold">IMPULSOGP</span>
                         <span className="text-slate-500 text-xs">Excellence in Engineering</span>
                       </div>
                       <div className="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center">

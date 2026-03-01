@@ -13,8 +13,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Servicios GP - Platform",
-  description: "Plataforma integrada de servicios con Design System escalable",
+  title: "IMPULSOGP - Soluciones Técnicas",
+  description: "Optimización y soluciones técnicas avanzadas con IMPULSOGP",
 };
 
 export default function RootLayout({

@@ -36,10 +36,7 @@ const Navbar = () => {
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-xl font-black text-white tracking-tighter leading-none group-hover:text-blue-400 transition-colors">
-                                    SERVICIOS <span className="text-blue-500">GP</span>
-                                </span>
-                                <span className="text-[10px] text-slate-400 font-medium tracking-[0.2em] uppercase leading-none mt-1">
-                                    Tecnología & Ciencia
+                                    IMPULSO<span className="text-blue-500">GP</span>
                                 </span>
                             </div>
                         </Link>

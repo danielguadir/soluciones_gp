@@ -26,7 +26,7 @@ const Footer = () => {
                             </div>
                             <div className="flex flex-col">
                                 <span className="text-lg font-black text-white tracking-tighter leading-none">
-                                    SERVICIOS <span className="text-blue-500">GP</span>
+                                    IMPULSO<span className="text-blue-500">GP</span>
                                 </span>
                             </div>
                         </Link>
@@ -96,7 +96,7 @@ const Footer = () => {
                 </div>
 
                 <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-600 uppercase tracking-widest font-bold">
-                    <p>© {currentYear} Servicios GP.</p>
+                    <p>© {currentYear} IMPULSOGP.</p>
 
                     <div className="flex gap-6">
                         <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
