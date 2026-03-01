@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button, Card, Svg } from "@/components";
 
 import { curiosities, type Category } from "@/data/curiosities";
@@ -82,6 +83,18 @@ function CuriositiesContent() {
                             </div>
 
                             <div className="relative z-10">
+                                {/* Thumbnail Image */}
+                                <div className="w-full relative h-[250px] sm:h-[350px] mb-8 rounded-3xl overflow-hidden border border-white/10 group-hover:border-blue-500/30 transition-colors shadow-2xl">
+                                    <Link href={`/curiosidades/${item.id}`}>
+                                        <Image
+                                            src={item.image}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </Link>
+                                </div>
+
                                 <div className="flex items-center gap-4 mb-6 text-left">
                                     <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full uppercase tracking-widest border border-blue-500/20">
                                         {item.category}
@@ -90,7 +103,7 @@ function CuriositiesContent() {
                                         {item.date}
                                     </span>
                                 </div>
-                                <h2 className="text-3xl font-bold text-white mb-8 group-hover:text-blue-400 transition-colors italic text-left">
+                                <h2 className="text-3xl font-bold text-white mb-8 group-hover:text-blue-400 transition-colors italic text-left cursor-pointer" onClick={() => router.push(`/curiosidades/${item.id}`)}>
                                     {item.title}
                                 </h2>
                                 <div className="space-y-6">
@@ -103,6 +116,12 @@ function CuriositiesContent() {
 
                                 {/* Social Sharing Buttons */}
                                 <div className="mt-12 pt-8 border-t border-white/5 flex items-center justify-center gap-4">
+                                    <Link
+                                        href={`/curiosidades/${item.id}`}
+                                        className="px-6 py-2 bg-blue-600/20 text-blue-400 font-bold rounded-full border border-blue-500/30 hover:bg-blue-600 hover:text-white transition-all duration-300 mr-auto"
+                                    >
+                                        Leer Artículo Completo
+                                    </Link>
                                     <button
                                         onClick={() => shareOnFacebook(item.id, item.title)}
                                         className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-300"
