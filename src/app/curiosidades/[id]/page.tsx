@@ -10,6 +10,12 @@ interface Props {
     params: { id: string };
 }
 
+export async function generateStaticParams() {
+    return curiosities.map((curiosity) => ({
+        id: curiosity.id.toString(),
+    }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const id = parseInt(params.id);
     const item = curiosities.find(c => c.id === id);

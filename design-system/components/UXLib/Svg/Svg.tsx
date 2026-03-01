@@ -1,3 +1,5 @@
+"use client";
+
 import type { CSSProperties, KeyboardEvent } from "react";
 import type { SvgProps } from "./Svg.types";
 import "./fontello/css/fontello.css";
