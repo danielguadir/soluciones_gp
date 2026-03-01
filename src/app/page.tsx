@@ -112,7 +112,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Services Section */}
-      <section className="py-32 bg-[#0f172a]">
+      <section className="py-32 bg-[#0f172a] border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">Nuestros Pilares</h2>
@@ -145,39 +145,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-blue-600"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-800 opacity-90"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
-          <div className="text-white max-w-xl">
-            <h2 className="text-4xl lg:text-5xl font-black mb-6 leading-tight italic">¿Listo para escalar tu visión técnica?</h2>
-            <p className="text-blue-100 text-lg opacity-80">Hablemos sobre cómo nuestras soluciones pueden transformar tu empresa hoy mismo.</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="https://wa.me/573148029030" target="_blank">
-              <Button
-                nameBtn="Enviar WhatsApp"
-                variant="contained"
-                style={{ backgroundColor: '#fff', color: '#1e40af', fontWeight: 'bold', padding: '16px 32px' }}
-                radius="12px"
-                icon="whatsapp"
-                iconPosition="left"
-                iconSize="20px"
-              />
-            </Link>
-            <Link href="/contacto">
-              <Button
-                nameBtn="Agendar Cita"
-                variant="outlined"
-                style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff', padding: '16px 32px' }}
-                radius="12px"
-              />
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
