@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
 import { servicesData } from "@/common/services";
+import { CONTACT_INFO } from "@/common/constants";
 
 export default function ServicesPage() {
     return (
@@ -109,7 +110,7 @@ export default function ServicesPage() {
                         Contáctanos
                     </p>
                     <div className="flex flex-wrap justify-center gap-6">
-                        <Link href="https://wa.me/573148029030" target="_blank">
+                        <Link href={CONTACT_INFO.whatsapp.link} target="_blank">
                             <Button
                                 nameBtn="Chat WhatsApp"
                                 variant="contained"

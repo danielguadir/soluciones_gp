@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Svg } from "@/components";
+import { CONTACT_INFO } from "@/common/constants";
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -58,33 +59,42 @@ const Footer = () => {
                         <div className="space-y-4 text-sm">
                             <div className="flex items-center gap-3 font-semibold text-white group">
                                 <Svg icon="whatsapp" fontSize="20px" color="#25D366" />
-                                <a href="https://wa.me/573148029030" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    +57 314 802 9030
+                                <a href={CONTACT_INFO.whatsapp.link} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                                    {CONTACT_INFO.whatsapp.number}
                                 </a>
                             </div>
-                            <div className="flex items-center gap-3 text-[12px]">
-                                <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                <span>gaviria.alex@gmail.com</span>
+                            
+                            {/* New LinkedIn link after WP number */}
+                            <div className="flex items-center gap-3 font-semibold text-white group">
+                                <Svg icon="linkedin" fontSize="20px" color="#0077b5" />
+                                <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                                    LinkedIn Profile
+                                </a>
                             </div>
-                            <div className="flex items-center gap-3 text-[12px]">
-                                <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                <span>daniel.guadir@correounivalle.edu.co</span>
-                            </div>
+
                             <div className="flex flex-col gap-2">
-                                <div className="flex items-center gap-3">
-                                    <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                    <span>Valle del Cauca - Cali</span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
-                                    <span>Nariño - Cumbal</span>
-                                </div>
+                                {CONTACT_INFO.emails.map(email => (
+                                    <div key={email} className="flex items-center gap-3 text-[12px]">
+                                        <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                        <span>{email}</span>
+                                    </div>
+                                ))}
                             </div>
+
+                            <div className="flex flex-col gap-2">
+                                {CONTACT_INFO.locations.map(location => (
+                                    <div key={location} className="flex items-center gap-3 text-[12px]">
+                                        <Svg icon="location" fontSize="18px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                        <span>{location}</span>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div className="flex gap-4 mt-8">
-                                <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all border border-white/5">
+                                <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all border border-white/5">
                                     <Svg icon="linkedin" fontSize="16px" color="#fff" />
                                 </a>
-                                <a href="#" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-white group transition-all border border-white/5">
+                                <a href={CONTACT_INFO.socials.github} className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-white group transition-all border border-white/5">
                                     <Svg icon="github" fontSize="16px" color="#fff" className="group-hover:text-slate-900" />
                                 </a>
                             </div>

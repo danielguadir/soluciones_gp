@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Svg } from "@/components";
+import { CONTACT_INFO } from "@/common/constants";
 
 const WhatsAppButton = () => {
-    const phoneNumber = "573148029030"; // From the homepage CTA
     const message = "Hola, me gustaría obtener más información sobre sus servicios.";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `${CONTACT_INFO.whatsapp.link}?text=${encodeURIComponent(message)}`;
 
     return (
         <a

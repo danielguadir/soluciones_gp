@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
+import { CONTACT_INFO } from "@/common/constants";
 
 export default function ContactPage() {
     const [formData, setFormData] = useState({
@@ -39,10 +40,22 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">WhatsApp</h3>
-                                    <a href="https://wa.me/573148029030" target="_blank" className="text-green-400 font-medium text-lg hover:underline transition-all">
-                                        +57 314 802 9030
+                                    <a href={CONTACT_INFO.whatsapp.link} target="_blank" className="text-green-400 font-medium text-lg hover:underline transition-all">
+                                        {CONTACT_INFO.whatsapp.number}
                                     </a>
-                                    <p className="text-slate-500 text-sm mt-1 italic"></p>
+                                </div>
+                            </div>
+
+                            {/* New LinkedIn link after WP */}
+                            <div className="flex gap-6 items-start group">
+                                <div className="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-full flex items-center justify-center flex-shrink-0 border border-blue-600/20 group-hover:scale-110 transition-transform">
+                                    <Svg icon="linkedin" fontSize="24px" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold mb-1 text-white">LinkedIn</h3>
+                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" className="text-blue-400 font-medium text-lg hover:underline transition-all">
+                                        Perfiles Profesional
+                                    </a>
                                 </div>
                             </div>
 
@@ -53,8 +66,9 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Email</h3>
                                     <div className="flex flex-col gap-1">
-                                        <p className="text-blue-400 font-medium text-lg">gaviria.alex@gmail.com</p>
-                                        <p className="text-blue-400 font-medium text-lg text-[13px]">daniel.guadir@correounivalle.edu.co</p>
+                                        {CONTACT_INFO.emails.map(email => (
+                                            <p key={email} className="text-blue-400 font-medium text-lg even:text-[13px]">{email}</p>
+                                        ))}
                                     </div>
                                     <p className="text-slate-500 text-sm mt-1 italic">Para propuestas detalladas</p>
                                 </div>
@@ -67,10 +81,10 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Ubicación</h3>
                                     <div className="flex flex-col gap-1">
-                                        <p className="text-slate-400 text-lg">Valle del Cauca - Cali</p>
-                                        <p className="text-slate-400 text-lg">Nariño - Cumbal</p>
+                                        {CONTACT_INFO.locations.map(location => (
+                                            <p key={location} className="text-slate-400 text-lg">{location}</p>
+                                        ))}
                                     </div>
-                                    <p className="text-slate-500 text-sm mt-1 italic"></p>
                                 </div>
                             </div>
                         </div>
