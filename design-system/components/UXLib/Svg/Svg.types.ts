@@ -2,7 +2,7 @@ import type { CSSProperties, MouseEvent } from "react";
 
 export interface SvgProps {
   id?: string;
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
+  onClick?: (event: MouseEvent<HTMLElement | SVGElement>) => void;
   icon: string;
   fontSize?: string | number;
   color?: string;

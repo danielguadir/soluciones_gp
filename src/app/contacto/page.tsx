@@ -53,9 +53,9 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">LinkedIn</h3>
-                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" className="text-blue-400 font-medium text-lg hover:underline transition-all">
-                                        Perfiles Profesional
-                                    </a>
+                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                                    LinkedIn
+                                </a>
                                 </div>
                             </div>
 
