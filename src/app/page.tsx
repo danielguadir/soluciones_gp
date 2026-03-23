@@ -1,22 +1,9 @@
 "use client";
 import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
+import { servicesData } from "@/common/services";
 
 export default function HomePage() {
-  const featuredServices = [
-    {
-      title: "Desarrollo de Software",
-      desc: "Creamos aplicaciones web y móviles escalables con las últimas tecnologías.",
-      icon: "cog",
-      color: "blue"
-    },
-    {
-      title: "Soluciones Matemáticas",
-      desc: " Clases de Matemáticas.",
-      icon: "target",
-      color: "cyan"
-    }
-  ];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -91,36 +78,22 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Service 1: Web Development */}
-            <div className="group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-2">
-              <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-8 group-hover:bg-blue-500/20 transition-colors">
-                <Svg icon="cog" fontSize="32px" color="#3b82f6" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {servicesData.map((service, index) => (
+              <div key={index} className={`group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-${service.color}-500/30 transition-all duration-300 hover:-translate-y-2`}>
+                <div className={`w-16 h-16 rounded-2xl bg-${service.color}-500/10 flex items-center justify-center mb-8 group-hover:bg-${service.color}-500/20 transition-colors`}>
+                  <Svg icon={service.icon} fontSize="32px" color={`${service.color === 'blue' ? '#3b82f6' : service.color === 'cyan' ? '#06b6d4' : '#6366f1'}`} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
+                <p className="text-slate-400 mb-8 leading-relaxed">
+                  {service.description}
+                </p>
+                <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
+                  Ver detalles
+                  <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                </Link>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Desarrollo Web</h3>
-              <p className="text-slate-400 mb-8 leading-relaxed">
-                Desarrollo de pagina web de su negocio, tienda o emprendimiento.
-              </p>
-              <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
-                Ver detalles
-                <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
-
-            {/* Service 2: Math Solutions */}
-            <div className="group p-8 rounded-3xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 transition-all duration-300 hover:-translate-y-2">
-              <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-8 group-hover:bg-cyan-500/20 transition-colors">
-                <Svg icon="target" fontSize="32px" color="#06b6d4" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Soluciones Matemáticas</h3>
-              <p className="text-slate-400 mb-8 leading-relaxed">
-                Clases de Matemáticas.
-              </p>
-              <Link href="/servicios" className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300 transition-colors group/link">
-                Ver detalles
-                <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
