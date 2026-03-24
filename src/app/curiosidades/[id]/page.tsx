@@ -32,6 +32,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: `${item.title} | IMPULSOGP`,
         description: shortDescription,
+        alternates: {
+            canonical: `https://www.impulsogp.com/curiosidades/${id}`,
+        },
         openGraph: {
             title: `${item.title} | IMPULSOGP`,
             description: shortDescription,
