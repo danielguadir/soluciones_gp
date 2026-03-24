@@ -63,12 +63,12 @@ const Footer = () => {
                                     {CONTACT_INFO.whatsapp.number}
                                 </a>
                             </div>
-                            
+
                             {/* New LinkedIn link after WP number */}
                             <div className="flex items-center gap-3 font-semibold text-white group">
                                 <Svg icon="linkedin" fontSize="20px" color="#0077b5" />
                                 <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    LinkedIn Profile
+                                    LinkedIn: Daniel Guadir P.
                                 </a>
                             </div>
 
