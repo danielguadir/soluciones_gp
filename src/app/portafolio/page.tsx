@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { PortfolioHeader } from "@/components/Portfolio/PortfolioHeader";
-import { PortfolioGrid } from "@/components/Portfolio/PortfolioGrid";
-import { PortfolioCTA } from "@/components/Portfolio/PortfolioCTA";
+import { PortfolioHeader } from "@/components/portfolio/PortfolioHeader";
+import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
+import { PortfolioCTA } from "@/components/portfolio/PortfolioCTA";
 
 /**
  * Portfolio Page
