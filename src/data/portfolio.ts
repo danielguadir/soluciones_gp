@@ -35,5 +35,14 @@ export const projectsData: Project[] = [
         link: "#",
         tech: ["Next.js", "Business Suite", "Agriculture Tech"],
         images: ["/images/portfolio/agrodistrib/tienda-agro.png"]
+    },
+    {
+        id: "mundial-jheison-fs",
+        title: "Mundial Jheison FS: Campeonato Regional",
+        description: "Plataforma dinámica para la gestión de torneos de fútbol en San Adolfo Huila. Incluye inscripción en línea, tabla de posiciones dinámica y visualizaciones compartibles en redes sociales.",
+        icon: "chart-line",
+        link: "https://wa.me/573148029030?text=Hola,%20quisiera%20solicitar%20un%20demo%20del%20sistema%20para%20campeonatos%20de%20fútbol.",
+        tech: ["Next.js", "Tournament Manager", "Dynamic SEO"],
+        images: ["/images/portfolio/cancha_js/cancha.png", "/images/portfolio/cancha_js/cancha2.png"]
     }
 ];
