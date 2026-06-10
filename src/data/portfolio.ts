@@ -44,5 +44,29 @@ export const projectsData: Project[] = [
         link: "https://wa.me/573148029030?text=Hola,%20quisiera%20solicitar%20un%20demo%20del%20sistema%20para%20campeonatos%20de%20fútbol.",
         tech: ["Next.js", "Tournament Manager", "Dynamic SEO"],
         images: ["/images/portfolio/cancha_js/cancha.png", "/images/portfolio/cancha_js/cancha2.png"]
+    },
+    {
+        id: "page-web-karen",
+        title: "Page Web Karen: Servicios de Peluquería y Belleza",
+        description: "Prototipo de landing page para servicios de peluquería y belleza, desarrollado con Next.js, TypeScript y Tailwind CSS. Página desplegada en Vercel y construida con componentes escalables y reutilizables.",
+        icon: "heart",
+        link: "https://page-web-karen.vercel.app",
+        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+        images: [
+            "https://via.placeholder.com/1200x675.png?text=Page+Web+Karen+%2F+Peluquer%C3%ADa+%26+Belleza",
+            "https://via.placeholder.com/1200x675.png?text=Prototipo+Lovable+%2F+Dise%C3%B1o+Web"
+        ]
+    },
+    {
+        id: "elegant-booking-beauty",
+        title: "Elegant Booking Beauty: Reserva de Belleza",
+        description: "Sitio de reserva para servicios de belleza creado con Next.js y desplegado para producción. Diseño mantenible, con enfoque en experiencia de usuario y arquitectura modular para futuras iteraciones.",
+        icon: "star-1",
+        link: "https://elegant-booking-beauty.lovable.app",
+        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+        images: [
+            "https://via.placeholder.com/1200x675.png?text=Elegant+Booking+Beauty",
+            "https://via.placeholder.com/1200x675.png?text=Reserva+de+Servicios+de+Belleza"
+        ]
     }
 ];
