@@ -37,6 +37,7 @@ model Inquiry {
   id        String   @id @default(uuid())
   name      String
   email     String
+  subject   String
   message   String
   read      Boolean  @default(false) // Para marcar si ya lo leíste
   createdAt DateTime @default(now())

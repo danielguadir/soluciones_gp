@@ -18,13 +18,13 @@ export const sendInquiry = async (req: Request, res: Response) => {
         const data = await validateRequest(req, res, contactFormSchema);
         if (!data) return; // validateRequest ya envió error
 
-        // Crear inquiry en BD
-        const inquiry = await createInquiry(data.nombre, data.email, data.mensaje);
+        // Crear inquiry en BD con asunto incluido
+        await createInquiry(data.nombre, data.email, data.asunto, data.mensaje);
         
-        // Respuesta genérica (no revelar detalles internos)
+        // Respuesta genérica y consistente con la contracta API global
         res.status(201).json({
+            success: true,
             message: '¡Gracias por tu mensaje! Nos pondremos en contacto pronto.',
-            // NO incluir IDs ni detalles internos
         });
     } catch (error: any) {
         console.error('[INQUIRY ERROR]', error.message);

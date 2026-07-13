@@ -3,18 +3,39 @@
 import React, { useState } from "react";
 import { Button, Card, Svg } from "@/components";
 import { CONTACT_INFO } from "@/common/constants";
+import { contactService } from "@/services/contact.service";
+import type { ContactForm } from "@/common/validation";
+
+const initialFormData: ContactForm = {
+    nombre: "",
+    email: "",
+    asunto: "",
+    mensaje: ""
+};
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-        nombre: "",
-        email: "",
-        asunto: "",
-        mensaje: ""
-    });
+    const [formData, setFormData] = useState<ContactForm>(initialFormData);
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [feedback, setFeedback] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert("¡Gracias! En breve nos pondremos en contacto contigo.");
+        if (status === "loading") return;
+
+        setStatus("loading");
+        setFeedback(null);
+
+        try {
+            const payload = await contactService.submitInquiry(formData);
+            setStatus("success");
+            setFeedback(payload?.message || "¡Mensaje enviado correctamente!");
+            setFormData(initialFormData);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            console.error("[CONTACT FORM ERROR]", error);
+            setStatus("error");
+            setFeedback(message || "Error al enviar el mensaje. Intenta de nuevo más tarde.");
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -28,10 +49,6 @@ export default function ContactPage() {
 
                     {/* Info Section */}
                     <div className="flex flex-col gap-10">
-                        <div>
-                            <h1 className="text-5xl font-extrabold text-white mb-6 italic">Hablemos</h1>
-                        </div>
-
                         <div className="space-y-8">
                             <div className="flex gap-6 items-start group">
                                 <div className="w-12 h-12 bg-green-500/10 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 border border-green-500/20 group-hover:scale-110 transition-transform">
@@ -98,7 +115,19 @@ export default function ContactPage() {
 
                     {/* Form Section */}
                     <Card className="p-10 bg-white/5 backdrop-blur-md shadow-2xl rounded-3xl border border-white/10">
-                        <h2 className="text-2xl font-bold mb-8 italic text-white">Envíanos un mensaje</h2>
+                        <h2 className="text-2xl font-bold mb-4 italic text-white">Envíanos un mensaje</h2>
+                        {feedback ? (
+                            <div
+                                role="status"
+                                className={`rounded-2xl border p-4 mb-6 ${
+                                    status === "success"
+                                        ? "border-emerald-500 bg-emerald-500/10 text-emerald-100"
+                                        : "border-rose-500 bg-rose-500/10 text-rose-100"
+                                }`}
+                            >
+                                {feedback}
+                            </div>
+                        ) : null}
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6 font-medium">
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm text-slate-400">Nombre Completo</label>
@@ -153,11 +182,12 @@ export default function ContactPage() {
                             </div>
 
                             <Button
-                                nameBtn="enviar mensaje"
+                                nameBtn={status === "loading" ? "Enviando..." : "enviar mensaje"}
                                 variant="contained"
                                 radius="12px"
                                 style={{ height: '56px', marginTop: '12px', fontWeight: 'bold' }}
                                 type="submit"
+                                disabled={status === "loading"}
                             />
                         </form>
                     </Card>

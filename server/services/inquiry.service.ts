@@ -10,12 +10,18 @@ const prisma = new PrismaClient();
  * @param email - Email validado (RFC 5321)
  * @param message - Mensaje validado (10-2000 chars)
  */
-export const createInquiry = async (name: string, email: string, message: string) => {
+export const createInquiry = async (
+  name: string,
+  email: string,
+  subject: string,
+  message: string
+) => {
     try {
         return await prisma.inquiry.create({
             data: {
                 name: name.trim(),
                 email: email.trim().toLowerCase(),
+                subject: subject.trim(),
                 message: message.trim(),
             },
         });
@@ -37,6 +43,7 @@ export const getInquiries = async () => {
                 id: true,
                 name: true,
                 email: true,
+                subject: true,
                 message: true,
                 read: true,
                 createdAt: true,
