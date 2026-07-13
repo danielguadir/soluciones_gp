@@ -17,6 +17,10 @@ const Navbar = () => {
         { name: "Contacto", href: "/contacto" },
     ];
 
+    const navItemWrapper = "relative group inline-flex rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105";
+    const navItemBackground = "absolute inset-0 bg-white/0 group-hover:bg-white/10 group-hover:shadow-[0_0_18px_rgba(255,255,255,0.25)] transition-all duration-300";
+    const navItemText = "relative text-slate-300 group-hover:text-white font-medium transition-colors duration-300 text-sm uppercase tracking-wider";
+
     return (
         <nav className="bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,14 +47,11 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden md:flex items-center space-x-3">
                         {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className="text-slate-300 hover:text-blue-400 font-medium transition-colors text-sm uppercase tracking-wider"
-                            >
-                                {link.name}
+                            <Link key={link.name} href={link.href} className={`${navItemWrapper} px-3 py-2`}>
+                                <span className={navItemBackground} aria-hidden="true" />
+                                <span className={navItemText}>{link.name}</span>
                             </Link>
                         ))}
                     </div>
@@ -70,15 +71,18 @@ const Navbar = () => {
             {/* Mobile Menu Overlay */}
             {isOpen && (
                 <div className="md:hidden bg-[#0f172a] border-b border-white/5 shadow-2xl absolute w-full left-0 animate-fade-down animate-duration-300">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <div className="px-2 pt-2 pb-3 space-y-2 sm:px-3">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
-                                className="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                                className={`${navItemWrapper} block px-4 py-3 bg-white/0 rounded-2xl`}
                             >
-                                {link.name}
+                                <span className={navItemBackground} aria-hidden="true" />
+                                <span className="relative text-slate-300 group-hover:text-white font-medium transition-colors duration-300 text-base uppercase tracking-wider">
+                                    {link.name}
+                                </span>
                             </Link>
                         ))}
                     </div>
