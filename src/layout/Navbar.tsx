@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Button, Svg } from "@/components";
+import { Svg } from "@/components";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);

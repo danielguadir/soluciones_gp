@@ -17,7 +17,7 @@ interface CmpAvatarProps {
   name?: string;
   avatarClr?: string;
   avatarSizeList?: string;
-  onClickAvatar?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClickAvatar?: (e: React.MouseEvent<HTMLElement | SVGElement>) => void;
   onChange?: (e: string) => void;
 }
 

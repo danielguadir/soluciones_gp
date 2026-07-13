@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { Button, Card, Svg } from "@/components";
 import { CONTACT_INFO } from "@/common/constants";
 

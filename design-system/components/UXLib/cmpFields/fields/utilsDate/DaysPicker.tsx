@@ -1,110 +1,89 @@
 "use client";
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { DayPicker, DateRange } from "react-day-picker";
-import { format, isValid, parse, setHours, setMinutes } from "date-fns";
-import { dateToLong } from '../../utils';
-const RANGE = 'range'
+import { format } from "date-fns";
 
-const DaysPicker = ({
+const RANGE = 'range';
+
+type DayInputValue = Date | string | number | null | undefined;
+
+interface DaysPickerProps {
+  modeSelectDate?: "single" | "range";
+  setDateCalendar?: DayInputValue;
+  numOfMonth?: number;
+  startMonth?: Date;
+  endMonth?: Date;
+  pickerDate?: (date: DayInputValue) => void;
+}
+
+const DaysPicker: React.FC<DaysPickerProps> = ({
   modeSelectDate,
-  setDateCalendar,    // single || range
+  setDateCalendar,
   numOfMonth,
   startMonth,
   endMonth,
-  pickerDate = (date) => { },
-
-  //styles
+  pickerDate = () => { },
 }) => {
-
   useEffect(() => {
-    const y = setDateCalendar;
-    handleDayPickerSelect(y)
+    if (setDateCalendar !== undefined && setDateCalendar !== null && setDateCalendar !== "") {
+      handleDayPickerSelect(setDateCalendar);
+    }
+  }, [setDateCalendar]);
 
-  }, [])
-
-  // Hold the month in state to control the calendar when the input changes
   const [month, setMonth] = useState(new Date());
-  // Hold the selected date in state
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [range, setRange] = useState<DateRange | undefined>({
     from: undefined,
-    to: undefined
+    to: undefined,
   });
 
-  // Hold the input value in state
-  const [inputValue, setInputValue] = useState("");
-
-  // De Date a long (timestamp)
-
-
-  const handleDayPickerSelect = (date) => {
-    if (date !== '') {
-      pickerDate(date)
-      date = new Date(date)
-
-      setSelectedDate(date);
-      setMonth(date);
-      setInputValue(format(date, "dd/MMMM/yyyy"));
-
-    } else {
-
+  const handleDayPickerSelect = (date: DayInputValue) => {
+    if (date === undefined || date === null || date === "") {
+      return;
     }
-    /* if (date === '') {
-       date = new Date()
-     }*/
 
+    const parsedDate = typeof date === "number" ? new Date(date) : date instanceof Date ? date : new Date(date);
+
+    pickerDate(parsedDate);
+    setSelectedDate(parsedDate);
+    setMonth(parsedDate);
+    setInputValue(format(parsedDate, "dd/MMMM/yyyy"));
   };
 
-  const handleRangeSelect = (selectedRange) => {
+  const handleRangeSelect = (selectedRange: DateRange | undefined) => {
     setRange(selectedRange);
   };
-  /*
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value); // Keep the input value in sync
-  
-      const parsedDate = parse(e.target.value, "MM/dd/yyyy", new Date());
-  
-      if (isValid(parsedDate)) {
-        setSelectedDate(parsedDate);
-        setMonth(parsedDate);
-      } else {
-        setSelectedDate(undefined);
-      }
-    };
-    */
+
+  const [inputValue, setInputValue] = useState("");
+  const pickerMode: "range" | "single" = modeSelectDate === RANGE ? "range" : "single";
+
+  const dayPickerProps = {
+    captionLayout: "dropdown" as const,
+    defaultMonth: new Date(2024, 6),
+    startMonth,
+    endMonth,
+    navLayout: 'after' as const,
+    numberOfMonths: numOfMonth,
+    month,
+    onMonthChange: setMonth,
+    mode: pickerMode,
+    selected: modeSelectDate === RANGE ? range : selectedDate,
+    required: false,
+    onSelect: modeSelectDate === RANGE ? handleRangeSelect : (value: Date | DateRange | undefined) => handleDayPickerSelect(value as Date | number | string | null | undefined),
+  };
+
   return (
     <>
-      <DayPicker
-        captionLayout="dropdown"
-        defaultMonth={new Date(2024, 6)}
-        startMonth={startMonth}
-        endMonth={endMonth}
-        navLayout='after'
-        numberOfMonths={numOfMonth}
-        month={month}
-        onMonthChange={setMonth}
-        mode={modeSelectDate}
-        selected={modeSelectDate === RANGE ? range : selectedDate}
-        onSelect={modeSelectDate === RANGE ? handleRangeSelect : handleDayPickerSelect}
-      //   footer={`Fecha: ${selectedDate?.toDateString()}`}
-      />
-      {
-        range?.from && (
-          <div>
-            <p>Fecha de inicio: {range?.from.toLocaleDateString()}</p>
-            {range?.to && (
-              <p>Fecha de fin: {range?.to.toLocaleDateString()}</p>
-            )}
-          </div>
-        )
-      }
-      {
-        modeSelectDate !== RANGE && `Fecha: ${selectedDate?.toDateString()}`
-      }
+      <DayPicker {...dayPickerProps as any} />
+      {range?.from && (
+        <div>
+          <p>Fecha de inicio: {range?.from.toLocaleDateString()}</p>
+          {range?.to && <p>Fecha de fin: {range?.to.toLocaleDateString()}</p>}
+        </div>
+      )}
+      {modeSelectDate !== RANGE && `Fecha: ${selectedDate?.toDateString()}`}
     </>
+  );
+};
 
-
-  )
-}
-
-export { DaysPicker }
+export { DaysPicker };

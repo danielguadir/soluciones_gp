@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Card, Svg } from "@/components";
+import { Card, Svg } from "@/components";
 
 import { curiosities, type Category } from "@/data/curiosities";
 

@@ -23,8 +23,8 @@ interface CmpFieldSelectProps {
   template?: "outlined" | string;
   bckCalendar?: string;
   modeSelectDate?: "single" | "range";
-  minDate?: object;
-  maxDate?: object;
+  minDate?: Date;
+  maxDate?: Date;
   numOfMonth?: number;
   formatDate: string;
   onChange: (value: string | null | number, name?: string | object) => void;
@@ -93,19 +93,21 @@ export const CmpFieldDate: React.FC<CmpFieldSelectProps> = ({
     setvalue("");
   };
 
-  const fieldDate = (longDate) => {
-    let resultLong;
-    let resultDate;
+  const fieldDate = (longDate: Date | number | string | null | undefined) => {
+    let resultLong: string | number | null;
+    let resultDate: Date | null;
 
     if (typeof longDate === "number") {
       resultLong = longDate;
       resultDate = longToDate(longDate);
-    } else {
+    } else if (longDate instanceof Date) {
       resultLong = dateToLong(longDate);
       resultDate = longDate;
+    } else {
+      resultLong = null;
+      resultDate = null;
     }
 
-    //  const formDate = format(resultDate, "dd/MMMM/yyyy")
     setvalue(resultDate);
     onChange(resultLong);
   };
@@ -202,12 +204,12 @@ interface ComponentSelectFrgProps {
   onCloseList: (event: MouseEvent | FocusEvent) => void;
   nameBtnClose?: string;
   modeSelectDate?: "single" | "range";
-  fieldDate: (value: Date) => void;
+  fieldDate: (value: Date | number | string | null | undefined) => void;
   bckCalendar?: string;
   setDateCalendar?: Date | number;
   numOfMonth?: number;
-  minDate?: object;
-  maxDate?: object;
+  minDate?: Date;
+  maxDate?: Date;
   formatDate?: string;
 }
 

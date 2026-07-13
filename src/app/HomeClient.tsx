@@ -1,6 +1,7 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
-import { Button, Svg } from "@/components";
+import { Svg } from "@/components";
 import { servicesData } from "@/common/services";
 
 export default function HomeClient() {
@@ -46,10 +47,13 @@ export default function HomeClient() {
                 {/* Main Hero Image */}
                 <div className="relative z-10 w-full h-full p-2 sm:p-4 group">
                   <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/15 to-transparent rounded-[30px] sm:rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  <img
+                  <Image
                     src="/images/hero/inicio1_pw.png"
                     alt="ImpulsoGP Hero"
-                    className="w-full h-full object-contain sm:object-cover lg:object-contain rounded-[30px] sm:rounded-[40px] shadow-2xl transform transition-all duration-1000 group-hover:scale-[1.03] group-hover:-rotate-1"
+                    fill
+                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 60vw"
+                    className="object-contain sm:object-cover lg:object-contain rounded-[30px] sm:rounded-[40px] shadow-2xl transform transition-all duration-1000 group-hover:scale-[1.03] group-hover:-rotate-1"
                   />
 
                   {/* Animated side highlights */}

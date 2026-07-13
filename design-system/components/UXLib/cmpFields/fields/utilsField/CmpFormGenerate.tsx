@@ -1,35 +1,55 @@
 "use client";
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-// import "./CmpFormGenerate.css";
-
 import { CmpButton } from "../../../cmpButton/CmpButton";
 
-const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
-  const [formData, setFormData] = useState(() =>
-    fields.reduce((acc, field) => {
-      acc[field.name] = storedValues[field.name] || field.defaultValue || "";
+type FieldType = "text" | "number" | "select" | "checkbox" | "boolean";
+
+interface FormFieldOption {
+  label: string;
+  value: string | number;
+}
+
+export interface FormField {
+  name: string;
+  label: string;
+  type: FieldType;
+  defaultValue?: string | number | boolean;
+  options?: FormFieldOption[];
+}
+
+interface CmpFormGenerateProps {
+  fields: FormField[];
+  onSubmit: (data: Record<string, string | number | boolean>) => void;
+  storedValues?: Record<string, unknown>;
+}
+
+type FormValue = string | number | boolean;
+type ChangeValue = React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | FormValue;
+
+const CmpFormGenerate: React.FC<CmpFormGenerateProps> = ({ fields, onSubmit, storedValues = {} }) => {
+  const [formData, setFormData] = useState<Record<string, FormValue>>(() =>
+    fields.reduce<Record<string, FormValue>>((acc, field) => {
+      acc[field.name] = (storedValues[field.name] ?? field.defaultValue ?? "") as FormValue;
       return acc;
     }, {})
   );
 
-  const handleChange = (name, value, type) => {
+  const handleChange = (name: string, value: ChangeValue, type: FieldType) => {
     if (type === "checkbox") {
-      setFormData({ ...formData, [name]: value.target.checked });
+      const checked = typeof value === "boolean" ? value : value && typeof value === "object" && "target" in value ? (value.target as HTMLInputElement).checked : false;
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
-      setFormData({
-        ...formData,
-        [name]: value.target ? value.target.value : value,
-      });
+      const nextValue = typeof value === "object" && value !== null && "target" in value ? value.target.value : value;
+      setFormData((prev) => ({ ...prev, [name]: nextValue }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
   };
 
-  const renderField = (field) => {
+  const renderField = (field: FormField) => {
     switch (field.type) {
       case "text":
       case "number":
@@ -38,7 +58,7 @@ const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
             type={field.type}
             name={field.name}
             className="input-name"
-            value={formData[field.name]}
+            value={String(formData[field.name] ?? "")}
             onChange={(e) => handleChange(field.name, e, field.type)}
             placeholder={field.label}
           />
@@ -49,12 +69,12 @@ const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
           <select
             className="input-name"
             name={field.name}
-            value={formData[field.name]}
-            onChange={(e) => handleChange(field.name, e, 'select')}
+            value={String(formData[field.name] ?? "")}
+            onChange={(e) => handleChange(field.name, e, "select")}
           >
             <option value="">-- Seleccionar --</option>
-            {field.options.map((opt) => (
-              <option key={opt.value} value={opt.value}>
+            {field.options?.map((opt) => (
+              <option key={String(opt.value)} value={String(opt.value)}>
                 {opt.label}
               </option>
             ))}
@@ -67,7 +87,7 @@ const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
             <label>
               <input
                 type="checkbox"
-                checked={formData[field.name]}
+                checked={Boolean(formData[field.name])}
                 onChange={(e) => handleChange(field.name, e, field.type)}
               />
             </label>
@@ -78,8 +98,8 @@ const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
         return (
           <select
             name={field.name}
-            value={formData[field.name]}
-            onChange={(e) => handleChange(field.name, e, 'boolean')}
+            value={String(formData[field.name] ?? "")}
+            onChange={(e) => handleChange(field.name, e, "boolean")}
           >
             <option value="true">Sí</option>
             <option value="false">No</option>
@@ -93,35 +113,17 @@ const CmpFormGenerate = ({ fields, onSubmit, storedValues = {} }) => {
 
   return (
     <div className="content-form">
-      <form className="form-class">
+      <form className="form-class" onSubmit={handleSubmit}>
         {fields.map((field) => (
           <div key={field.name} className="hola">
             <label>{field.label}</label>
             {renderField(field)}
           </div>
         ))}
-        <CmpButton
-          variant="outlined"
-          nameBtn="guardar"
-          type="submit"
-          onClick={handleSubmit}
-        />
+        <CmpButton variant="outlined" nameBtn="guardar" type="submit" onClick={() => {}} />
       </form>
     </div>
   );
-};
-
-CmpFormGenerate.propTypes = {
-  fields: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["text", "number", "select", "checkbox", "boolean"])
-        .isRequired,
-      defaultValue: PropTypes.any,
-      options: PropTypes.array, // para selects
-    })
-  ).isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export { CmpFormGenerate };

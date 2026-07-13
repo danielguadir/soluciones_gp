@@ -1,53 +1,61 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { CmpFieldLabel } from "./CmpFieldLabel";
 import { Svg as CmpSvg } from "../../Svg/Svg";
-import { Button as CmpButton } from "../../Button/Button";
 import { CmpFieldSelect } from "./CmpFieldSelect";
 import { Modal } from "../../Modal/Modal";
-import { CmpFormGenerate } from "./utilsField/CmpFormGenerate";
+import { CmpFormGenerate, type FormField } from "./utilsField/CmpFormGenerate";
 
 const ICONS = { PICKVIEW: "th-list" };
 
-export const CmpFieldPickView = ({
+interface CmpFieldPickViewProps {
+    id?: string;
+    label?: string;
+    value?: string | number;
+    onChange?: (id: string | number | boolean | null | undefined, text: string | undefined) => void;
+    getValue?: (id: string | number | boolean | null | undefined, text: string | undefined) => void;
+    foreignDao?: Record<string, string>;
+    mandatory?: boolean;
+    disabled?: boolean;
+    template?: string;
+    formFieldsMap?: Record<string, FormField[]>;
+}
+
+export const CmpFieldPickView: React.FC<CmpFieldPickViewProps> = ({
     id,
     label,
     value,
     onChange,
     getValue,
-    foreignDao,
+    foreignDao = {},
     mandatory,
     disabled,
     template,
-    formFieldsMap, // Valores guardados por ID, para mantener el estado del formulario **Obligatorio**
+    formFieldsMap = {},
 }) => {
     const [openModal, setOpenModal] = useState(false);
-    const [selectedId, setSelectedId] = useState<string>(String(value) || "");
-    const [selectedLabel, setSelectedLabel] = useState<string>(foreignDao?.[String(value || "")] || "");
-    const [lastOpenedId, setLastOpenedId] = useState<any>(null);
+    const selectedValue = value != null ? String(value) : "";
+    const [selectedId, setSelectedId] = useState<string>(selectedValue);
+    const [selectedLabel, setSelectedLabel] = useState<string>(foreignDao?.[selectedValue] || "");
 
-    const [storedValues, setStoredValues] = useState<Record<string, any>>({}); //  Inicializa storedValues en el estado
-
-    const [formValues, setFormValues] = useState<Record<string, any>>({}); // <- aquí se guardan los datos por ID
+    const [storedValues, setStoredValues] = useState<Record<string, unknown>>({});
+    const [formValues, setFormValues] = useState<Record<string, unknown>>({});
 
     useEffect(() => {
         if (selectedId && formValues[selectedId]) {
-            setStoredValues(formValues[selectedId]); //  Actualiza storedValues con los datos guardados
+            setStoredValues(formValues[selectedId] as Record<string, unknown>);
         } else {
             setStoredValues({});
         }
     }, [selectedId, openModal, formValues]);
 
-    const handleSelect = (id, text) => {
-        setSelectedId(id);           // ID que se usará para mostrar el formulario
-        setSelectedLabel(text);      // etiqueta visible
-        getValue?.(id, text);          // notifica al padre
-        onChange?.(id, text);          // notifica al padre
+    const handleSelect = (id: string | number | boolean | null | undefined, text: string | undefined) => {
+        const normalizedId = id != null ? String(id) : "";
+        setSelectedId(normalizedId);
+        setSelectedLabel(text || "");
+        getValue?.(id, text);
+        onChange?.(id, text);
     };
-
-
-    console.log("sewwwwlectedId", selectedId);
 
     return (
         <div className="container-field-pickView">
@@ -55,14 +63,12 @@ export const CmpFieldPickView = ({
                 <CmpFieldLabel labelFocus id={id} label={label} template={template} />
                 <div
                     className="zinputBase-root zinput-root zinputBase-fullWidth zinput-formCrtl zinput-underline zinput-underline-focusOFF zinput-underline-focus-error"
-
                     onClick={() => {
                         setSelectedId("");
                         setSelectedLabel("");
                         setStoredValues({});
                         setOpenModal(true);
                     }}
-
                     style={{ width: "100%", display: "flex", alignItems: "center" }}
                 >
                     <input
@@ -85,14 +91,12 @@ export const CmpFieldPickView = ({
                 showFooter={false}
                 closeOnOverlayClick={false}
             >
-                <div className="container-field-pickView"
-                    style={{ width: "webkit-fill-available", position: "relative" }}
-                >
+                <div className="container-field-pickView" style={{ width: "webkit-fill-available", position: "relative" }}>
                     <CmpFieldSelect
                         id={id}
                         value={selectedId}
                         label="Selecciona una opción"
-                        onChange={(id, text) => handleSelect(id, text)}
+                        onChange={(itemId, text) => handleSelect(itemId, text)}
                         foreignDao={foreignDao}
                         mandatory={mandatory}
                     />
@@ -101,11 +105,11 @@ export const CmpFieldPickView = ({
                         <CmpFormGenerate
                             key={selectedId}
                             fields={formFieldsMap[selectedId]}
-                            storedValues={storedValues} //  Se actualizan los valores dinámicamente al abrir
+                            storedValues={storedValues}
                             onSubmit={(formData) => {
                                 setFormValues((prev) => ({
                                     ...prev,
-                                    [selectedId]: formData, //  Guarda los datos con el ID seleccionado
+                                    [selectedId]: formData,
                                 }));
                                 setOpenModal(false);
                             }}
@@ -113,20 +117,7 @@ export const CmpFieldPickView = ({
                     )}
                 </div>
             </Modal>
-
         </div>
     );
 };
 
-CmpFieldPickView.propTypes = {
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-    getValue: PropTypes.func.isRequired,
-    foreignDao: PropTypes.object.isRequired,
-    mandatory: PropTypes.bool,
-    disabled: PropTypes.bool,
-    template: PropTypes.string,
-    formFieldsMap: PropTypes.object.isRequired,
-};
