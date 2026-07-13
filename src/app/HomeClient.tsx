@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Svg } from "@/components";
 import { servicesData } from "@/common/services";
+import { usePageTracking } from "@/lib/hooks/usePageTracking";
 
 export default function HomeClient() {
+  usePageTracking();
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}

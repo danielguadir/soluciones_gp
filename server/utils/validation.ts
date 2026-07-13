@@ -57,3 +57,11 @@ export const safeParse = async <T>(
     throw error;
   }
 };
+
+/**
+ * Validar admin token (simple, solo para desarrollo)
+ */
+export const isValidAdminToken = (token?: string): boolean => {
+  const adminToken = process.env.ADMIN_TOKEN || 'admin-secret-key';
+  return token === adminToken;
+};

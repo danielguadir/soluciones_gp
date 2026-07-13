@@ -42,3 +42,13 @@ model Inquiry {
   read      Boolean  @default(false) // Para marcar si ya lo leíste
   createdAt DateTime @default(now())
 }
+
+// Analytics: Pageviews para tracking
+model Pageview {
+  id        String   @id @default(uuid())
+  page      String   // Ruta visitada: /, /servicios, /portafolio, etc.
+  ip        String?  // IP anónima del visitor
+  userAgent String?  // Navegador/dispositivo
+  referer   String?  // De dónde vino
+  createdAt DateTime @default(now())
+}

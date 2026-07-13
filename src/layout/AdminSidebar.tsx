@@ -5,7 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Svg } from "@/components";
 
-const AdminSidebar = () => {
+interface AdminSidebarProps {
+    onLogout?: () => void;
+}
+
+const AdminSidebar = ({ onLogout }: AdminSidebarProps) => {
     const pathname = usePathname();
 
     const menuItems = [
@@ -50,7 +54,10 @@ const AdminSidebar = () => {
             </nav>
 
             <div className="p-4 border-t border-gray-800">
-                <button className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors">
+                <button 
+                    onClick={onLogout}
+                    className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                >
                     <Svg icon="logout" fontSize="20px" color="currentColor" />
                     <span className="font-medium">Cerrar Sesión</span>
                 </button>

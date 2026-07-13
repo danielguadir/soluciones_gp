@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import authRoutes from '../server/routes/auth.routes';
 import serviceRoutes from '../server/routes/service.routes';
 import inquiryRoutes from '../server/routes/inquiry.routes';
+import analyticsRoutes from '../server/routes/analytics.routes';
 import { securityMiddleware } from '../server/middleware/security';
 import { createRateLimiter, startRateLimitCleanup } from '../server/middleware/rateLimiter';
 
@@ -66,6 +67,7 @@ startRateLimitCleanup();
 app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/inquiries', inquiryRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 app.get('/api', (req, res) => {
     res.send('API de Servicios GP esta corriendo en Vercel (Flattened)');
