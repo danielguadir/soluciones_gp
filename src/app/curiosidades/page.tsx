@@ -15,7 +15,7 @@ function CuriositiesContent() {
 
     useEffect(() => {
         const cat = searchParams.get("cat") as Category;
-        if (cat && ["Todas", "Historia", "Tecnología", "Matemáticas", "Agricultura"].includes(cat)) {
+        if (cat && ["Todas", "Tecnología", "Matemáticas", "Agricultura"].includes(cat)) {
             setActiveCategory(cat);
         }
     }, [searchParams]);
@@ -25,7 +25,7 @@ function CuriositiesContent() {
         router.push(`/curiosidades?cat=${cat}`, { scroll: false });
     };
 
-    const categories: Category[] = ["Todas", "Historia", "Tecnología", "Matemáticas", "Agricultura"];
+    const categories: Category[] = ["Todas", "Tecnología", "Matemáticas", "Agricultura"];
 
     const filteredCuriosities = activeCategory === "Todas"
         ? curiosities
@@ -50,7 +50,7 @@ function CuriositiesContent() {
                         Curiosidades
                     </h1>
                     <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-                        Explorando los hitos de la historia, la tecnología y el conocimiento.
+                        Explorando la tecnología, las matemáticas y el conocimiento.
                     </p>
                 </div>
             </section>

@@ -1,4 +1,4 @@
-export type Category = "Historia" | "Tecnología" | "Matemáticas" | "Agricultura" | "Todas";
+export type Category = "Tecnología" | "Matemáticas" | "Agricultura" | "Todas";
 
 export interface Curiosity {
     id: number;
@@ -12,7 +12,7 @@ export interface Curiosity {
 export const curiosities: Curiosity[] = [
     {
         id: 1,
-        category: "Historia",
+        category: "Matemáticas",
         title: "Eratóstenes y el Diámetro de la Tierra",
         date: "Siglo III a.C.",
         content: [
@@ -21,7 +21,7 @@ export const curiosities: Curiosity[] = [
             "Este razonamiento lógico, basado en el supuesto de que la Tierra era esférica y que los rayos del Sol eran paralelos, le permitió calcular que la circunferencia terrestre era de unos 250,000 estadios. Aunque existe un debate sobre la longitud precisa de un 'estadio' en aquella época, las estimaciones sugieren que su error fue de apenas entre un 1% y un 15% respecto al valor real de 40,075 kilómetros.",
             "El experimento de Eratóstenes es considerado uno de los hitos más importantes en la historia de la ciencia, no solo por el resultado obtenido, sino por demostrar que el ingenio humano, apoyado en el rigor matemático y la observación cuidadosa, puede desentrañar los secretos más grandes de la naturaleza incluso con los recursos más limitados."
         ],
-        image: "/images/curiosidades/historia.png"
+        image: "/images/curiosidades/matematicas.png"
     },
     {
         id: 2,
