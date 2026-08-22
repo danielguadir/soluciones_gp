@@ -21,12 +21,15 @@ interface AdminUser {
   name: string | null;
 }
 
-export default function AdminPanelContent() {
+interface AdminPanelContentProps {
+  initialSection?: "dashboard" | "servicios" | "mensajes" | "config";
+}
+
+export default function AdminPanelContent({ initialSection = "dashboard" }: AdminPanelContentProps) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<AdminUser | null>(null);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
-  
   // Auth Form State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,47 +56,50 @@ export default function AdminPanelContent() {
     }
   }, []);
 
+  const fetchInquiries = async (authToken?: string) => {
+    const currentToken = authToken || token;
+    if (!currentToken) return;
+
+    setLoadingData(true);
+    setDataError(null);
+    try {
+      const response = await fetch(getApiUrl('/api/inquiries'), {
+        headers: {
+          Authorization: `Bearer ${currentToken}`,
+        },
+      });
+
+      const contentType = response.headers.get('content-type') || '';
+      let data: Inquiry[] = [];
+      if (contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        throw new Error('Respuesta del servidor no válida');
+      }
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          handleLogout();
+          throw new Error("Sesión expirada. Por favor inicia sesión de nuevo.");
+        }
+        throw new Error("Error al obtener los mensajes de contacto.");
+      }
+
+      setInquiries(data);
+    } catch (error) {
+      const errMsg = error instanceof Error ? error.message : "Error al conectar con el servidor.";
+      console.error("[FETCH INQUIRIES ERROR]", error);
+      setDataError(errMsg);
+    } finally {
+      setLoadingData(false);
+    }
+  };
+
   // Fetch inquiries when token is available
   useEffect(() => {
-    if (!token) return;
-
-    const fetchInquiries = async () => {
-      setLoadingData(true);
-      setDataError(null);
-      try {
-        const response = await fetch(getApiUrl('/api/inquiries'), {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const contentType = response.headers.get('content-type') || '';
-        let data: Inquiry[] = [];
-        if (contentType.includes('application/json')) {
-          data = await response.json();
-        } else {
-          throw new Error('Respuesta del servidor no válida');
-        }
-
-        if (!response.ok) {
-          if (response.status === 401) {
-            handleLogout();
-            throw new Error("Sesión expirada. Por favor inicia sesión de nuevo.");
-          }
-          throw new Error("Error al obtener los mensajes de contacto.");
-        }
-
-        setInquiries(data);
-      } catch (error) {
-        const errMsg = error instanceof Error ? error.message : "Error al conectar con el servidor.";
-        console.error("[FETCH INQUIRIES ERROR]", error);
-        setDataError(errMsg);
-      } finally {
-        setLoadingData(false);
-      }
-    };
-
-    fetchInquiries();
+    if (token) {
+      fetchInquiries(token);
+    }
   }, [token]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -337,12 +343,16 @@ export default function AdminPanelContent() {
                 Lista de personas y empresas interesadas en tus servicios.
               </p>
             </div>
-            {loadingData && (
-              <span className="text-xs text-blue-400 flex items-center gap-2">
-                <span className="w-2.5 h-2.5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
-                Actualizando...
-              </span>
-            )}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => fetchInquiries()}
+                disabled={loadingData}
+                className="px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 rounded-xl text-blue-400 font-bold text-xs flex items-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+              >
+                <span className={loadingData ? "animate-spin" : ""}>🔄</span>
+                {loadingData ? "Cargando..." : "Actualizar Mensajes"}
+              </button>
+            </div>
           </div>
 
           {dataError && (

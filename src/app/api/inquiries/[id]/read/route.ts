@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { markAsRead } from '../../../../../../server/services/inquiry.service';
 import { verifyToken } from '../../../../../../server/utils/auth';
+import { markMemoryInquiryAsRead } from '@/lib/inquiriesStore';
 
 /**
  * PATCH /api/inquiries/[id]/read
@@ -28,7 +29,16 @@ export async function PATCH(
       return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
     }
 
-    await markAsRead(id);
+    // Update in memory store
+    markMemoryInquiryAsRead(id);
+
+    // Try updating in Prisma DB
+    try {
+      await markAsRead(id);
+    } catch (dbError) {
+      console.warn('[NEXT API] Mark as read DB write skipped or failed:', dbError);
+    }
+
     return NextResponse.json({ message: 'Mensaje marcado como leído' }, { status: 200 });
   } catch (error: unknown) {
     console.error('[NEXT API /api/inquiries/[id]/read PATCH ERROR]', error);

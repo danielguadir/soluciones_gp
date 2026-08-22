@@ -3,6 +3,7 @@ import { contactFormSchema } from '@/common/validation';
 import { createInquiry, getInquiries } from '../../../../server/services/inquiry.service';
 import { sendInquiryNotification } from '../../../../server/services/email.service';
 import { verifyToken } from '../../../../server/utils/auth';
+import { addMemoryInquiry, getMemoryInquiries } from '@/lib/inquiriesStore';
 
 /**
  * POST /api/inquiries
@@ -21,12 +22,19 @@ export async function POST(request: Request) {
 
     const { nombre, email, asunto, mensaje } = validationResult.data;
 
+    // Save in memory store so it is instantly viewable in Admin Panel
+    addMemoryInquiry({
+      name: nombre,
+      email,
+      subject: asunto,
+      message: mensaje,
+    });
+
     // Try saving in Prisma database if database is configured
     try {
       await createInquiry(nombre, email, asunto, mensaje);
     } catch (dbError) {
-      console.warn('[NEXT API] Database write skipped or failed:', dbError);
-      // We continue so the contact form submission still succeeds for user & sends email notification
+      console.warn('[NEXT API] Database write skipped or failed (using memory store):', dbError);
     }
 
     // Trigger email notification via Resend asynchronously
@@ -69,13 +77,21 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Invalid or expired token' }, { status: 401 });
     }
 
+    const memoryList = getMemoryInquiries();
+
     try {
-      const messages = await getInquiries();
-      return NextResponse.json(messages, { status: 200 });
+      const dbList = await getInquiries();
+      if (Array.isArray(dbList) && dbList.length > 0) {
+        // Merge DB list and Memory list without duplicates by ID or timestamp
+        const combined = [...dbList, ...memoryList];
+        const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
+        return NextResponse.json(unique, { status: 200 });
+      }
     } catch (dbErr) {
-      console.warn('[NEXT API] Could not fetch inquiries from DB:', dbErr);
-      return NextResponse.json([], { status: 200 });
+      console.warn('[NEXT API] Fetching from DB skipped, serving memory store:', dbErr);
     }
+
+    return NextResponse.json(memoryList, { status: 200 });
   } catch (error: unknown) {
     console.error('[NEXT API /api/inquiries GET ERROR]', error);
     return NextResponse.json({ error: 'Error al obtener mensajes' }, { status: 500 });
