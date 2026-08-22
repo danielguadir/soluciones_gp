@@ -112,16 +112,29 @@ export default function AdminPanelContent() {
         body: JSON.stringify({ email, password }),
       });
 
-      const payload = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      let payload: Record<string, unknown> = {};
 
-      if (!response.ok) {
-        throw new Error(payload?.error || "Credenciales inválidas.");
+      if (contentType.includes('application/json')) {
+        payload = await response.json();
+      } else {
+        const text = await response.text();
+        console.error('[LOGIN NON-JSON RESPONSE]', text);
+        throw new Error(`Error de servidor (${response.status}). Intenta de nuevo.`);
       }
 
-      localStorage.setItem("admin_token", payload.token);
-      localStorage.setItem("admin_user", JSON.stringify(payload.user));
-      setToken(payload.token);
-      setUser(payload.user);
+      if (!response.ok) {
+        const errorMsg = typeof payload?.error === 'string' ? payload.error : 'Credenciales inválidas.';
+        throw new Error(errorMsg);
+      }
+
+      const tokenStr = String(payload.token || '');
+      const userData = payload.user as AdminUser;
+
+      localStorage.setItem("admin_token", tokenStr);
+      localStorage.setItem("admin_user", JSON.stringify(userData));
+      setToken(tokenStr);
+      setUser(userData);
       
       // Clear form
       setEmail("");
