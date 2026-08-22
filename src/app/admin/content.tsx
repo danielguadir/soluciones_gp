@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/layout/AdminSidebar";
-import { API_BASE_URL } from "@/lib/utils/constants";
+import { getApiUrl } from "@/lib/utils/constants";
 import { Svg } from "@/components";
 
 interface Inquiry {
@@ -61,7 +61,7 @@ export default function AdminPanelContent() {
       setLoadingData(true);
       setDataError(null);
       try {
-        const response = await fetch(`${API_BASE_URL.replace(/\/$/, "")}/api/inquiries`, {
+        const response = await fetch(getApiUrl('/api/inquiries'), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -104,7 +104,7 @@ export default function AdminPanelContent() {
     setAuthError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL.replace(/\/$/, "")}/api/auth/login`, {
+      const response = await fetch(getApiUrl('/api/auth/login'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -161,7 +161,7 @@ export default function AdminPanelContent() {
     if (!token) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL.replace(/\/$/, "")}/api/inquiries/${id}/read`, {
+      const response = await fetch(getApiUrl(`/api/inquiries/${id}/read`), {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -7,6 +7,23 @@
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
+/**
+ * Sanitiza y construye la URL final de cualquier endpoint de la API
+ * Evita duplicaciones de rutas como '/api/api/auth/login'
+ */
+export const getApiUrl = (path: string): string => {
+  const envUrl = (process.env.NEXT_PUBLIC_API_URL || '').trim().replace(/\/$/, '');
+  let cleanPath = path.startsWith('/') ? path : `/${path}`;
+
+  if (envUrl.endsWith('/api') && cleanPath.startsWith('/api/')) {
+    cleanPath = cleanPath.substring(4);
+  } else if (!envUrl.endsWith('/api') && !cleanPath.startsWith('/api/')) {
+    cleanPath = `/api${cleanPath}`;
+  }
+
+  return `${envUrl}${cleanPath}`;
+};
+
 // ============================================
 // Paths (Rutas del frontend)
 // ============================================

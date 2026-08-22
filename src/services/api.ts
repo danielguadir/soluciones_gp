@@ -5,7 +5,7 @@
  * Maneja autenticación, errores, reintentos y transformación de datos
  */
 
-import { API_BASE_URL, HTTP_STATUS } from '@/lib/utils/constants';
+import { API_BASE_URL, HTTP_STATUS, getApiUrl } from '@/lib/utils/constants';
 import type { ApiResponse, FetchOptions } from '@/types';
 
 // ============================================
@@ -64,7 +64,7 @@ class ApiClient {
     } = options;
 
     // Construir URL con parámetros
-    let url = `${this.baseUrl}${endpoint}`;
+    let url = getApiUrl(endpoint);
     if (params) {
       const queryString = new URLSearchParams(
         Object.entries(params).reduce((acc, [key, value]) => {

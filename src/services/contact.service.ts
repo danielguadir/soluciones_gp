@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/lib/utils/constants';
+import { getApiUrl } from '@/lib/utils/constants';
 import type { ContactForm } from '@/common/validation';
 
 export interface ContactServiceResponse {
@@ -8,7 +8,7 @@ export interface ContactServiceResponse {
 
 export const contactService = {
   async submitInquiry(data: ContactForm): Promise<ContactServiceResponse> {
-    const endpoint = `${API_BASE_URL.replace(/\/$/, '')}/api/inquiries`;
+    const endpoint = getApiUrl('/api/inquiries');
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
