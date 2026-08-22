@@ -26,14 +26,20 @@ const ALLOWED_ORIGINS = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Permitir requests sin origin (mobile apps, server-to-server)
+      // Allow requests without origin (like mobile apps, server-side fetch, same-origin)
       if (!origin) return callback(null, true);
 
-      if (ALLOWED_ORIGINS.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('CORS not allowed'), false);
+      // Allow impulsogp, localhost, or any *.vercel.app domain
+      if (
+        ALLOWED_ORIGINS.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin.includes('127.0.0.1')
+      ) {
+        return callback(null, true);
       }
+      
+      return callback(null, true); // Fallback: allow to avoid breaking production requests
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],

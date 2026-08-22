@@ -17,11 +17,22 @@ export const contactService = {
       body: JSON.stringify(data),
     });
 
-    const payload = await response.json();
-    if (!response.ok) {
-      throw new Error(payload?.error || payload?.message || 'No se pudo enviar el mensaje.');
+    const contentType = response.headers.get('content-type') || '';
+    let payload: Record<string, unknown> = {};
+
+    if (contentType.includes('application/json')) {
+      payload = await response.json();
+    } else {
+      const text = await response.text();
+      console.error('[CONTACT SERVICE] Non-JSON response:', text);
+      throw new Error(`El servidor devolvió una respuesta no válida (${response.status}). Intenta más tarde.`);
     }
 
-    return payload as ContactServiceResponse;
+    if (!response.ok) {
+      const errorMsg = typeof payload?.error === 'string' ? payload.error : typeof payload?.message === 'string' ? payload.message : 'No se pudo enviar el mensaje.';
+      throw new Error(errorMsg);
+    }
+
+    return payload as unknown as ContactServiceResponse;
   },
 };

@@ -93,7 +93,16 @@ class ApiClient {
         body: body ? JSON.stringify(body) : undefined,
       });
 
-      const data: ApiResponse<T> = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      let data: ApiResponse<T>;
+
+      if (contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error(`API Error (${endpoint}) - Non-JSON response:`, text);
+        throw new Error(`Error de servidor (${response.status}). Intente nuevamente.`);
+      }
 
       // Manejo de errores HTTP
       if (!response.ok) {

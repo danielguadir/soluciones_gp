@@ -67,6 +67,14 @@ export default function AdminPanelContent() {
           },
         });
 
+        const contentType = response.headers.get('content-type') || '';
+        let data: Inquiry[] = [];
+        if (contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          throw new Error('Respuesta del servidor no válida');
+        }
+
         if (!response.ok) {
           if (response.status === 401) {
             handleLogout();
@@ -75,7 +83,6 @@ export default function AdminPanelContent() {
           throw new Error("Error al obtener los mensajes de contacto.");
         }
 
-        const data = await response.json();
         setInquiries(data);
       } catch (error) {
         const errMsg = error instanceof Error ? error.message : "Error al conectar con el servidor.";
