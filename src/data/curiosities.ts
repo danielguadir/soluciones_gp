@@ -50,11 +50,11 @@ export const curiosities: Curiosity[] = [
     {
         id: 4,
         category: "Agricultura",
-        title: "Inteligencia Artificial y Big Data en la agricultura",
+        title: "Inteligencia Artificial y Ciencia de Datos en la Agricultura",
         date: "Actualidad",
         content: [
-            "La integración de la Inteligencia Artificial (IA) y el Big Data en el sector agrícola permite procesar y analizar grandes volúmenes de información provenientes de variables climáticas, edáficas, productivas y ambientales. Estas tecnologías facilitan la identificación de patrones y tendencias que pueden ser utilizados para anticipar riesgos, estimar el rendimiento de los cultivos y optimizar la planificación de las actividades agrícolas.",
-            "Mediante modelos predictivos y técnicas de análisis de datos, es posible generar información para apoyar la toma de decisiones relacionadas con el manejo de cultivos, el uso eficiente de recursos y la gestión de la producción. De esta manera, la incorporación de herramientas digitales contribuye al desarrollo de una agricultura más precisa, eficiente y basada en evidencia."
+            "La integración de Inteligencia Artificial (IA), drones agrícolas multiespectrales y Ciencia de Datos permite monitorear cultivos en tiempo real y procesar grandes volúmenes de información geoespacial, climática y edáfica. Estos dispositivos capturan imágenes de alta precisión para detectar estrés hídrico, deficiencias nutricionales y plagas antes de que sean visibles a simple vista.",
+            "Mediante modelos predictivos y analítica avanzada de Big Data, los agricultores pueden optimizar el uso del agua y fertilizantes, predecir el rendimiento de las cosechas y tomar decisiones basadas en evidencia. Esta sinergia tecnológica transforma la agricultura tradicional en agricultura de precisión, haciendo el sector más sostenible, eficiente y rentable."
         ],
         image: "/images/curiosidades/agricultura.png"
     }
