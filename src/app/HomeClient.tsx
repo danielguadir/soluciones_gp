@@ -75,12 +75,14 @@ export default function HomeClient() {
       {/* Featured Services Section */}
       <section className="py-32 bg-[#0f172a] border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center text-center mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">Nuestros Pilares</h2>
-            <div className="w-20 h-1.5 bg-blue-500 rounded-full mb-8"></div>
-            <p className="text-slate-400 max-w-2xl text-lg">
-              Enfoque integral .
-            </p>
+          {/* Creative Section Separator */}
+          <div className="relative flex items-center justify-center mb-16 sm:mb-20">
+            <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+            <div className="absolute px-6 bg-[#0f172a] flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shadow-[0_0_10px_#3b82f6]"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-80"></span>
+              <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse delay-300 shadow-[0_0_10px_#6366f1]"></span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
