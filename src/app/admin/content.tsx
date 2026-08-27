@@ -196,7 +196,7 @@ export default function AdminPanelContent({ initialSection = "dashboard" }: Admi
   // If there's no active session, render the login card
   if (!token) {
     return (
-      <div className="min-h-screen bg-[#0f172a] bg-grid-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         {/* Glow background effects */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>

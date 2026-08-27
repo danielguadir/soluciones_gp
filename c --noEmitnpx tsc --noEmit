@@ -1,0 +1,14 @@
+warning: in the working copy of 'src/app/admin/content.tsx', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/src/app/admin/content.tsx b/src/app/admin/content.tsx[m
+[1mindex 08638e7..59685cf 100644[m
+[1m--- a/src/app/admin/content.tsx[m
+[1m+++ b/src/app/admin/content.tsx[m
+[36m@@ -196,7 +196,7 @@[m [mexport default function AdminPanelContent({ initialSection = "dashboard" }: Admi[m
+   // If there's no active session, render the login card[m
+   if (!token) {[m
+     return ([m
+[31m-      <div className="min-h-screen bg-[#0f172a] bg-grid-white flex items-center justify-center p-4">[m
+[32m+[m[32m      <div className="min-h-screen bg-white flex items-center justify-center p-4">[m
+         {/* Glow background effects */}[m
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>[m
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>[m
