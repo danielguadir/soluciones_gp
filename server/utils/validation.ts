@@ -39,7 +39,6 @@ export const validateRequest = async <T>(
     throw error;
   }
 };
-
 /**
  * Parsear sin respuesta automática (para uso interno)
  */
@@ -58,10 +57,3 @@ export const safeParse = async <T>(
   }
 };
 
-/**
- * Validar admin token (simple, solo para desarrollo)
- */
-export const isValidAdminToken = (token?: string): boolean => {
-  const adminToken = process.env.ADMIN_TOKEN || 'admin-secret-key';
-  return token === adminToken;
-};

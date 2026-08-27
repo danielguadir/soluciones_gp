@@ -1,9 +1,14 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-// CRÍTICO: JWT_SECRET es requerido. Sin fallback por seguridad.
 const getJwtSecret = (): string => {
-  return process.env.JWT_SECRET || 'impulsogp-default-secret-key-change-in-prod';
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret || secret.length < 32) {
+        throw new Error('JWT_SECRET debe estar configurado y tener al menos 32 caracteres');
+    }
+
+    return secret;
 };
 
 // Generar Token

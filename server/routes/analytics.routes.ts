@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Request, Response } from 'express';
 import { trackPageview } from '../services/analytics.service';
 import { getAdminStats } from '../controllers/analytics.controller';
+import { authenticate, requireAdmin } from '../middleware/auth.middleware';
 
 const router = Router();
 
@@ -19,6 +20,6 @@ router.post('/pageview', async (req: Request, res: Response) => {
 });
 
 // Protected: Admin stats
-router.get('/stats', getAdminStats);
+router.get('/stats', authenticate, requireAdmin, getAdminStats);
 
 export default router;
