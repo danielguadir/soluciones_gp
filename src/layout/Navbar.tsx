@@ -61,79 +61,90 @@ const Navbar = () => {
 
                         <div className="h-5 w-[1px] bg-white/10 mx-2" aria-hidden="true" />
 
-                        {isAuthenticated && user ? (
-                            <div className="relative">
-                                <button
-                                    onClick={() => setShowUserDropdown(!showUserDropdown)}
-                                    className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 transition-all cursor-pointer group"
-                                >
-                                    <Avatar
-                                        src={user.avatarUrl || DEFAULT_AVATAR_URL}
-                                        name={user.name || user.email}
-                                        size={28}
-                                        className="border border-blue-400/40"
-                                    />
-                                    <span className="text-xs font-bold text-white max-w-[100px] truncate">
-                                        {user.name?.split(" ")[0] || "Mi Cuenta"}
-                                    </span>
-                                    <Svg icon="caret-down" fontSize="12px" className="text-slate-400 group-hover:text-white" />
-                                </button>
+                        {/* User Profile Avatar Icon Button & Dropdown */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                                className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600/30 to-blue-600/30 hover:from-cyan-500/40 hover:to-blue-500/40 border border-cyan-400/40 flex items-center justify-center transition-all cursor-pointer shadow-lg shadow-cyan-500/10 group"
+                                aria-label="Perfil de usuario"
+                                title={isAuthenticated ? user?.name || "Mi Cuenta" : "Cuenta / Iniciar Sesión"}
+                            >
+                                <Avatar
+                                    src={isAuthenticated && user?.avatarUrl ? user.avatarUrl : DEFAULT_AVATAR_URL}
+                                    name={user?.name || user?.email || ""}
+                                    size={36}
+                                    className="border-0 pointer-events-none"
+                                />
+                            </button>
 
-                                {showUserDropdown && (
-                                    <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl p-2 z-50 animate-fade-down">
-                                        <div className="p-3 border-b border-white/5 mb-1">
-                                            <p className="text-xs font-bold text-white truncate">{user.name}</p>
-                                            <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
+                            {showUserDropdown && (
+                                <div className="absolute right-0 mt-3 w-56 bg-slate-900/95 border border-white/10 rounded-2xl shadow-2xl p-2 z-50 backdrop-blur-md animate-fade-down">
+                                    {isAuthenticated && user ? (
+                                        <>
+                                            <div className="p-3 border-b border-white/5 mb-1 bg-slate-950/40 rounded-xl">
+                                                <p className="text-xs font-bold text-white truncate">{user.name}</p>
+                                                <p className="text-[10px] text-slate-400 truncate">{user.email}</p>
+                                            </div>
+                                            <Link
+                                                href="/admin"
+                                                onClick={() => setShowUserDropdown(false)}
+                                                className="flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl transition-colors"
+                                            >
+                                                <Svg icon="dashboard" fontSize="15px" color="#3b82f6" />
+                                                <span>Panel de Control</span>
+                                            </Link>
+                                            <button
+                                                onClick={() => {
+                                                    setShowUserDropdown(false);
+                                                    logout();
+                                                }}
+                                                className="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-red-400 hover:bg-red-500/10 rounded-xl transition-colors cursor-pointer text-left"
+                                            >
+                                                <Svg icon="logout" fontSize="15px" color="currentColor" />
+                                                <span>Cerrar Sesión</span>
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <div className="space-y-1">
+                                            <button
+                                                onClick={() => {
+                                                    setShowUserDropdown(false);
+                                                    openAuthModal("login");
+                                                }}
+                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/20 rounded-xl transition-all text-left cursor-pointer"
+                                            >
+                                                <Svg icon="user" fontSize="15px" color="#3b82f6" />
+                                                <span>Iniciar Sesión</span>
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setShowUserDropdown(false);
+                                                    openAuthModal("register");
+                                                }}
+                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all text-left cursor-pointer shadow-md shadow-blue-500/20"
+                                            >
+                                                <Svg icon="plus" fontSize="14px" color="#ffffff" />
+                                                <span>Registrarse</span>
+                                            </button>
                                         </div>
-                                        <Link
-                                            href="/admin"
-                                            onClick={() => setShowUserDropdown(false)}
-                                            className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl transition-colors"
-                                        >
-                                            <Svg icon="dashboard" fontSize="14px" />
-                                            <span>Panel de Control</span>
-                                        </Link>
-                                        <button
-                                            onClick={() => {
-                                                setShowUserDropdown(false);
-                                                logout();
-                                            }}
-                                            className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-red-400 hover:bg-red-500/10 rounded-xl transition-colors cursor-pointer"
-                                        >
-                                            <Svg icon="logout" fontSize="14px" color="currentColor" />
-                                            <span>Cerrar Sesión</span>
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => openAuthModal("login")}
-                                    className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all cursor-pointer"
-                                >
-                                    Iniciar Sesión
-                                </button>
-                                <button
-                                    onClick={() => openAuthModal("register")}
-                                    className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 shadow-md shadow-blue-500/20 transition-all cursor-pointer"
-                                >
-                                    Registrarse
-                                </button>
-                            </div>
-                        )}
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center gap-2">
-                        {isAuthenticated && user && (
+                    <div className="md:hidden flex items-center gap-3">
+                        <button
+                            onClick={() => setShowUserDropdown(!showUserDropdown)}
+                            className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-600/30 to-blue-600/30 border border-cyan-400/40 flex items-center justify-center"
+                        >
                             <Avatar
-                                src={user.avatarUrl || DEFAULT_AVATAR_URL}
-                                name={user.name || user.email}
+                                src={isAuthenticated && user?.avatarUrl ? user.avatarUrl : DEFAULT_AVATAR_URL}
+                                name={user?.name || user?.email || ""}
                                 size={32}
-                                className="border border-blue-400/40"
                             />
-                        )}
+                        </button>
                         <button
                             onClick={toggleMenu}
                             className="text-slate-300 hover:text-white focus:outline-none p-1"
