@@ -6,6 +6,9 @@ import "@/design-system/components/UXLib/styles/cmpStyles.scss";
 import Navbar from "@/layout/Navbar";
 import Footer from "@/layout/Footer";
 import WhatsAppButton from "@/layout/WhatsAppButton";
+import { AuthProvider } from "@/context/AuthContext";
+import { AuthModal } from "@/design-system/components/auth/AuthModal";
+import { MaintenanceNotice } from "@/design-system/components/auth/MaintenanceNotice";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -61,12 +64,16 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+          <AuthModal />
+          <MaintenanceNotice />
+        </AuthProvider>
       </body>
     </html>
   );

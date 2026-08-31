@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Svg } from "../Svg/Svg";
 import type { AvatarProps } from "./Avatar.types";

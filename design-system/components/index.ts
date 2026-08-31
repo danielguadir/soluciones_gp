@@ -1,6 +1,8 @@
-// Exporta todos los componentes de forma fácil
 export { Avatar } from './UXLib/Avatar/Avatar'
 export type { AvatarProps } from './UXLib/Avatar/Avatar.types'
+
+export { AuthModal } from './auth/AuthModal'
+export { MaintenanceNotice } from './auth/MaintenanceNotice'
 
 export { Button } from './UXLib/Button/Button'
 export { ButtonSwt } from './UXLib/Button/ButtonSwt'

@@ -35,6 +35,26 @@ export const loginUser = async (email: string, password: string) => {
         console.warn('[AUTH DB WARN] No se pudo verificar contra DB:', dbError);
     }
 
+    // 3. Verificación contra almacén de usuarios registrados en memoria
+    const { findUserByEmail } = await import('@/lib/usersStore');
+    const memoryUser = findUserByEmail(inputEmail);
+    if (memoryUser) {
+        if (memoryUser.password && memoryUser.password !== password) {
+            throw new Error('Contraseña incorrecta.');
+        }
+        const token = generateToken(memoryUser.id);
+        return {
+            token,
+            user: {
+                id: memoryUser.id,
+                email: memoryUser.email,
+                name: memoryUser.name,
+                avatarUrl: memoryUser.avatarUrl,
+                provider: memoryUser.provider,
+            },
+        };
+    }
+
     throw new Error('Credenciales inválidas. Verifica tu correo y contraseña.');
 };
 
