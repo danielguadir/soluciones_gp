@@ -42,10 +42,12 @@ export const Avatar: React.FC<AvatarProps> = ({
     const shapeClass = `avatar--${shape}`;
 
     const renderContent = () => {
-        if (src && !hasError) {
+        const imageSrc = (src && !hasError) ? src : "/images/default-avatar.png";
+        
+        if (imageSrc) {
             return (
                 <img
-                    src={src}
+                    src={imageSrc}
                     alt={alt || name || "avatar"}
                     className="avatar-img"
                     onError={() => setHasError(true)}

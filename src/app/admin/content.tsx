@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "@/layout/AdminSidebar";
-import { getApiUrl } from "@/lib/utils/constants";
-import { Svg } from "@/components";
+import { getApiUrl, DEFAULT_AVATAR_URL } from "@/lib/utils/constants";
+import { Avatar, Svg } from "@/components";
 
 interface Inquiry {
   id: string;
@@ -13,12 +13,14 @@ interface Inquiry {
   message: string;
   read: boolean;
   createdAt: string;
+  avatarUrl?: string;
 }
 
 interface AdminUser {
   id: string;
   email: string;
   name: string | null;
+  avatarUrl?: string | null;
 }
 
 interface AdminPanelContentProps {
@@ -272,13 +274,24 @@ export default function AdminPanelContent({ initialSection = "dashboard" }: Admi
       <main className="flex-1 p-8 lg:p-12 overflow-y-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-white/5">
-          <div>
-            <h1 className="text-3xl lg:text-4xl font-black text-white tracking-tight">
-              Dashboard
-            </h1>
-            <p className="text-slate-400 mt-1">
-              Bienvenido de nuevo, {user?.name || user?.email || "Administrador"}.
-            </p>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Avatar
+                src={user?.avatarUrl || DEFAULT_AVATAR_URL}
+                name={user?.name || user?.email || "Admin"}
+                size={56}
+                className="border-2 border-blue-500/40 shadow-lg shadow-blue-500/20"
+              />
+              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+            </div>
+            <div>
+              <h1 className="text-3xl lg:text-4xl font-black text-white tracking-tight">
+                Dashboard
+              </h1>
+              <p className="text-slate-400 mt-1">
+                Bienvenido de nuevo, <span className="text-white font-semibold">{user?.name || user?.email || "Administrador"}</span>.
+              </p>
+            </div>
           </div>
           <div className="text-sm px-4 py-2 bg-slate-900 border border-white/5 rounded-full text-slate-400">
             Rol: <span className="text-blue-400 font-bold">ADMIN</span>
@@ -398,7 +411,17 @@ export default function AdminPanelContent({ initialSection = "dashboard" }: Admi
                           </span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">{inq.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <Avatar
+                            src={inq.avatarUrl || DEFAULT_AVATAR_URL}
+                            name={inq.name}
+                            size={32}
+                            className="border border-white/10 flex-shrink-0"
+                          />
+                          <span className="font-medium text-white">{inq.name}</span>
+                        </div>
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">{inq.email}</td>
                       <td className="px-6 py-4 max-w-xs truncate">{inq.subject}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -452,9 +475,17 @@ export default function AdminPanelContent({ initialSection = "dashboard" }: Admi
             {/* Modal Content */}
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950/30 p-4 rounded-2xl border border-white/5">
-                <div>
-                  <span className="text-xs text-slate-500">De:</span>
-                  <p className="text-sm font-bold text-white mt-0.5">{selectedInquiry.name}</p>
+                <div className="flex items-center gap-3">
+                  <Avatar
+                    src={selectedInquiry.avatarUrl || DEFAULT_AVATAR_URL}
+                    name={selectedInquiry.name}
+                    size={40}
+                    className="border border-blue-500/30 flex-shrink-0"
+                  />
+                  <div>
+                    <span className="text-xs text-slate-500">De:</span>
+                    <p className="text-sm font-bold text-white mt-0.5">{selectedInquiry.name}</p>
+                  </div>
                 </div>
                 <div>
                   <span className="text-xs text-slate-500">Email:</span>

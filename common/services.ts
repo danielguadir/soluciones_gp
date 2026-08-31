@@ -17,14 +17,14 @@ export const servicesData: Service[] = [
     },
     {
         title: "Soluciones Matemáticas",
-        description: "Transformamos la dificultad en dominio. Ofrecemos refuerzo académico y clases personalizadas de matemáticas.",
+        description: "",
         icon: "target",
         color: "cyan",
         features: ["Refuerzo Académico", "Clases Personalizadas", "Apoyo en Tareas"]
     },
     {
         title: "Automatización y gestión de información",
-        description: "Creamos herramientas para centralizar datos, agilizar consultas y facilitar la toma de decisiones con información precisa.",
+        description: "Herramientas para centralizar datos, agilizar consultas y facilitar la toma de decisiones con información precisa.",
         icon: "database",
         color: "indigo",
         features: ["Centralización de Datos", "Agilización de Consultas", "Dashboards Interactivos"]

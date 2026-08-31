@@ -24,6 +24,8 @@ export const getApiUrl = (path: string): string => {
   return `${envUrl}${cleanPath}`;
 };
 
+export const DEFAULT_AVATAR_URL = '/images/default-avatar.png';
+
 // ============================================
 // Paths (Rutas del frontend)
 // ============================================

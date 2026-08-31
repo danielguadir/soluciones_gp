@@ -1,16 +1,36 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Svg } from "@/components";
+import { Avatar, Svg } from "@/components";
+import { DEFAULT_AVATAR_URL } from "@/lib/utils/constants";
 
 interface AdminSidebarProps {
     onLogout?: () => void;
 }
 
+interface AdminUser {
+    id?: string;
+    email?: string;
+    name?: string | null;
+    avatarUrl?: string | null;
+}
+
 const AdminSidebar = ({ onLogout }: AdminSidebarProps) => {
     const pathname = usePathname();
+    const [user, setUser] = useState<AdminUser | null>(null);
+
+    useEffect(() => {
+        const savedUser = localStorage.getItem("admin_user");
+        if (savedUser) {
+            try {
+                setUser(JSON.parse(savedUser));
+            } catch {
+                // Safe parsing fallback
+            }
+        }
+    }, []);
 
     const menuItems = [
         { name: "Dashboard", href: "/admin", icon: "dashboard" },
@@ -20,10 +40,10 @@ const AdminSidebar = ({ onLogout }: AdminSidebarProps) => {
     ];
 
     return (
-        <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col sticky top-0">
+        <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col sticky top-0 border-r border-gray-800">
             <div className="p-6 border-b border-gray-800">
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="w-[107px] h-[107px] group-hover:scale-110 transition-transform drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]">
+                <Link href="/" className="flex items-center gap-3">
+                    <div className="w-12 h-12 group-hover:scale-110 transition-transform">
                         <img src="/images/icono_tec.png" alt="GP" className="w-full h-full object-contain" />
                     </div>
                     <span className="text-lg font-bold tracking-tight">Admin GP</span>
@@ -53,13 +73,30 @@ const AdminSidebar = ({ onLogout }: AdminSidebarProps) => {
                 })}
             </nav>
 
-            <div className="p-4 border-t border-gray-800">
+            <div className="p-4 border-t border-gray-800 space-y-3">
+                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-800/60 border border-white/5">
+                    <Avatar
+                        src={user?.avatarUrl || DEFAULT_AVATAR_URL}
+                        name={user?.name || user?.email || "Admin"}
+                        size={36}
+                        className="border border-blue-500/30 flex-shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                        <p className="text-xs font-bold text-white truncate">
+                            {user?.name || "Administrador"}
+                        </p>
+                        <p className="text-[10px] text-slate-400 truncate">
+                            {user?.email || "admin@impulsogp.com"}
+                        </p>
+                    </div>
+                </div>
+
                 <button 
                     onClick={onLogout}
-                    className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 w-full rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors text-sm font-medium"
                 >
-                    <Svg icon="logout" fontSize="20px" color="currentColor" />
-                    <span className="font-medium">Cerrar Sesión</span>
+                    <Svg icon="logout" fontSize="18px" color="currentColor" />
+                    <span>Cerrar Sesión</span>
                 </button>
             </div>
         </aside>
