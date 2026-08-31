@@ -12,6 +12,9 @@ export type { CardProps } from './UXLib/Card/Card.types'
 export { Divider } from './UXLib/Divider/Divider'
 export type { DividerProps } from './UXLib/Divider/Divider.types'
 
+export { CreativeSeparator } from './UXLib/CreativeSeparator/CreativeSeparator'
+export type { CreativeSeparatorProps } from './UXLib/CreativeSeparator/CreativeSeparator'
+
 export { Dropdown } from './UXLib/Dropdown/Dropdown'
 export type { DropdownProps } from './UXLib/Dropdown/Dropdown.types'
 

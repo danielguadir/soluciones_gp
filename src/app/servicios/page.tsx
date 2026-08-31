@@ -2,9 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Button, Card, Svg } from "@/components";
+import { Button, Card, CreativeSeparator, Svg } from "@/components";
 import { servicesData } from "@/common/services";
-import { CONTACT_INFO } from "@/common/constants";
 
 export default function ServicesPage() {
     return (
@@ -102,28 +101,8 @@ export default function ServicesPage() {
                 </div>
             </section>
 
-            {/* Contact CTA */}
-            <section className="bg-slate-900/40 border-y border-white/5 py-16">
-                <div className="max-w-4xl mx-auto px-4 text-center text-white">
-                    <h2 className="text-3xl font-bold mb-6 italic">¿Tienes un requerimiento especial?</h2>
-                    <p className="text-slate-400 mb-10 text-lg">
-                        Contáctanos
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-6">
-                        <Link href={CONTACT_INFO.whatsapp.link} target="_blank">
-                            <Button
-                                nameBtn="Chat WhatsApp"
-                                variant="contained"
-                                style={{ backgroundColor: '#25D366' }}
-                                icon="whatsapp"
-                            />
-                        </Link>
-                        <Link href="/contacto">
-                            <Button nameBtn="Formulario de Contacto" variant="outlined" style={{ borderColor: '#3b82f6', color: '#3b82f6' }} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            {/* Creative Separator */}
+            <CreativeSeparator className="max-w-7xl mx-auto px-4 pb-12" />
         </div>
     );
 }
