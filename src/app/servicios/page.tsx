@@ -9,19 +9,19 @@ export default function ServicesPage() {
     return (
         <div className="bg-[#0f172a] min-h-screen text-slate-300">
             {/* Header */}
-            <section className="bg-slate-900/50 py-20 border-b border-white/5">
+            <section className="bg-slate-900/50 py-10 border-b border-white/5">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-6">
-                        Servicios
-                    </h1>
-                    <p className="text-xl text-slate-400 max-w-3xl mx-auto italic">
+                    <p className="text-xl text-slate-300 max-w-3xl mx-auto italic font-medium">
                         Soluciones integrales con un enfoque en la calidad, la escalabilidad y el éxito a largo plazo
                     </p>
                 </div>
             </section>
 
+            {/* Creative Separator */}
+            <CreativeSeparator className="max-w-7xl mx-auto px-4 my-8" />
+
             {/* Services Grid */}
-            <section className="py-20">
+            <section className="pb-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {servicesData.map((service, index) => (
