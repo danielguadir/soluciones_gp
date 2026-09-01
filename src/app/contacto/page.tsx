@@ -52,53 +52,60 @@ export default function ContactPage() {
                         <div className="space-y-8">
                             <div className="flex gap-6 items-start group">
                                 <div className="w-12 h-12 bg-green-500/10 text-green-400 rounded-full flex items-center justify-center flex-shrink-0 border border-green-500/20 group-hover:scale-110 transition-transform">
-                                    <Svg icon="whatsapp" fontSize="24px" />
+                                    <Svg icon="whatsapp" fontSize="24px" color="#25D366" />
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">WhatsApp</h3>
-                                    <a href={CONTACT_INFO.whatsapp.link} target="_blank" className="text-green-400 font-medium text-lg hover:underline transition-all">
+                                    <a href={CONTACT_INFO.whatsapp.link} target="_blank" rel="noopener noreferrer" className="text-green-400 font-medium text-lg hover:underline transition-all">
                                         {CONTACT_INFO.whatsapp.number}
                                     </a>
                                 </div>
                             </div>
 
-                            {/* New LinkedIn link after WP */}
+                            {/* LinkedIn */}
                             <div className="flex gap-6 items-start group">
                                 <div className="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-full flex items-center justify-center flex-shrink-0 border border-blue-600/20 group-hover:scale-110 transition-transform">
-                                    <Svg icon="linkedin" fontSize="24px" />
+                                    <Svg icon="linkedin" fontSize="24px" color="#0a66c2" />
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">LinkedIn</h3>
-                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    LinkedIn
-                                </a>
+                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 font-medium text-lg hover:underline transition-colors">
+                                        LinkedIn
+                                    </a>
                                 </div>
                             </div>
 
+                            {/* Email / Gmail */}
                             <div className="flex gap-6 items-start group">
-                                <div className="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center flex-shrink-0 border border-blue-500/20 group-hover:scale-110 transition-transform">
-                                    <Svg icon="mail" fontSize="24px" />
+                                <div className="w-12 h-12 bg-red-500/10 text-red-400 rounded-full flex items-center justify-center flex-shrink-0 border border-red-500/20 group-hover:scale-110 transition-transform">
+                                    <Svg icon="gmail" fontSize="22px" color="#ea4335" />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold mb-1 text-white">Email</h3>
-                                    <div className="flex flex-col gap-1">
+                                    <h3 className="text-xl font-bold mb-1 text-white flex items-center gap-2">
+                                        Email / Gmail
+                                    </h3>
+                                    <div className="flex flex-col gap-1.5">
                                         {CONTACT_INFO.emails.map(email => (
-                                            <p key={email} className="text-blue-400 font-medium text-lg even:text-[13px]">{email}</p>
+                                            <a key={email} href={`mailto:${email}`} className="text-red-400 hover:text-red-300 font-medium text-lg hover:underline transition-all flex items-center gap-2">
+                                                <Svg icon="gmail" fontSize="16px" color="#ea4335" />
+                                                <span>{email}</span>
+                                            </a>
                                         ))}
                                     </div>
-                                    <p className="text-slate-500 text-sm mt-1 italic">Para propuestas detalladas</p>
+                                    <p className="text-slate-500 text-sm mt-1.5 italic">Para propuestas detalladas</p>
                                 </div>
                             </div>
 
+                            {/* Ubicación */}
                             <div className="flex gap-6 items-start group">
                                 <div className="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-full flex items-center justify-center flex-shrink-0 border border-indigo-500/20 group-hover:scale-110 transition-transform">
-                                    <Svg icon="location" fontSize="24px" />
+                                    <Svg icon="location" fontSize="24px" color="#6366f1" />
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold mb-1 text-white">Ubicación</h3>
                                     <div className="flex flex-col gap-1">
                                         {CONTACT_INFO.locations.map(location => (
-                                            <p key={location} className="text-slate-400 text-lg">{location}</p>
+                                            <p key={location} className="text-slate-300 text-lg">{location}</p>
                                         ))}
                                     </div>
                                 </div>
@@ -107,8 +114,16 @@ export default function ContactPage() {
 
                         <div className="p-8 bg-blue-600/10 border border-blue-500/20 rounded-3xl text-white mt-10 shadow-2xl backdrop-blur-sm">
                             <h4 className="text-2xl font-bold mb-4 text-blue-400">¿Por qué elegirnos?</h4>
-                            <ul className="space-y-3 text-slate-300">
-                                <li className="flex gap-2">✓ Acompañamiento estratégico constante</li>
+                            <ul className="space-y-3 text-slate-300 text-base">
+                                <li className="flex items-center gap-2.5">
+                                    <span className="text-blue-400 font-bold">✓</span> Acompañamiento estratégico constante
+                                </li>
+                                <li className="flex items-center gap-2.5">
+                                    <span className="text-blue-400 font-bold">✓</span> Desarrollo ágil, escalable y con código limpio
+                                </li>
+                                <li className="flex items-center gap-2.5">
+                                    <span className="text-blue-400 font-bold">✓</span> Asesoría personalizada en matemáticas y soluciones digitales
+                                </li>
                             </ul>
                         </div>
                     </div>

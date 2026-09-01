@@ -74,10 +74,10 @@ const Footer = () => {
 
                             <div className="flex flex-col gap-2">
                                 {CONTACT_INFO.emails.map(email => (
-                                    <div key={email} className="flex items-center gap-3 text-[12px]">
-                                        <Svg icon="mail" fontSize="14px" color="#3b82f6" style={{ opacity: 0.7 }} />
+                                    <a key={email} href={`mailto:${email}`} className="flex items-center gap-3 text-[12px] text-slate-300 hover:text-red-400 transition-colors">
+                                        <Svg icon="gmail" fontSize="14px" color="#ea4335" />
                                         <span>{email}</span>
-                                    </div>
+                                    </a>
                                 ))}
                             </div>
 
