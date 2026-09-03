@@ -35,7 +35,6 @@ export default function HomeClient() {
 
               <p className="text-xl text-slate-400 max-w-xl leading-relaxed">
                 Transformamos desafíos en experiencias.
-                Soluciones.
               </p>
             </div>
 
