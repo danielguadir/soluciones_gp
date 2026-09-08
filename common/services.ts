@@ -20,7 +20,7 @@ export const servicesData: Service[] = [
         description: "",
         icon: "target",
         color: "cyan",
-        features: ["Refuerzo Académico", "Clases Personalizadas", "Apoyo en Tareas"]
+        features: []
     },
     {
         title: "Automatización y gestión de información",
