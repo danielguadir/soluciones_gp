@@ -10,7 +10,6 @@ export const CONTACT_INFO = {
     link: "https://wa.me/573148029030",
   },
   emails: [
-    "gaviria.alex@gmail.com",
     "daniel.guadir@correounivalle.edu.co"
   ],
   locations: [

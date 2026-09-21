@@ -92,7 +92,6 @@ export default function ContactPage() {
                                             </a>
                                         ))}
                                     </div>
-                                    <p className="text-slate-500 text-sm mt-1.5 italic">Para propuestas detalladas</p>
                                 </div>
                             </div>
 
