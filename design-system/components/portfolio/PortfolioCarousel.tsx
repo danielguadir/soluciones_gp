@@ -38,7 +38,7 @@ export const PortfolioCarousel: React.FC = () => {
     if (!currentProject) return null;
 
     return (
-        <section className="py-12 pb-24">
+        <section className="py-6 sm:py-8 pb-16 sm:pb-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Main Carousel Container */}
                 <div
@@ -49,19 +49,6 @@ export const PortfolioCarousel: React.FC = () => {
                     {/* Ambient Glows */}
                     <div className="absolute -top-24 -left-24 w-80 h-80 bg-blue-500/15 rounded-full blur-[100px] pointer-events-none"></div>
                     <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none"></div>
-
-                    {/* Slide Top Bar Indicator */}
-                    <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                        <div className="flex items-center gap-3">
-                            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
-                            <span className="text-xs font-bold text-blue-400 uppercase tracking-widest">
-                                Proyecto {currentIndex + 1} de {projectsData.length}
-                            </span>
-                        </div>
-                        <div className="text-[11px] text-slate-500 font-semibold uppercase tracking-wider hidden sm:block">
-                            {isPaused ? "Pausado (Hover)" : "Cambio automático cada 3s"}
-                        </div>
-                    </div>
 
                     {/* Main Project Slide Content */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[420px] relative z-10">
