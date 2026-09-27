@@ -62,19 +62,6 @@ export default function ContactPage() {
                                 </div>
                             </div>
 
-                            {/* LinkedIn */}
-                            <div className="flex gap-6 items-start group">
-                                <div className="w-12 h-12 bg-blue-600/10 text-blue-400 rounded-full flex items-center justify-center flex-shrink-0 border border-blue-600/20 group-hover:scale-110 transition-transform">
-                                    <Svg icon="linkedin" fontSize="24px" color="#0a66c2" />
-                                </div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-1 text-white">LinkedIn</h3>
-                                    <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 font-medium text-lg hover:underline transition-colors">
-                                        LinkedIn
-                                    </a>
-                                </div>
-                            </div>
-
                             {/* Email / Gmail */}
                             <div className="flex gap-6 items-start group">
                                 <div className="w-12 h-12 bg-red-500/10 text-red-400 rounded-full flex items-center justify-center flex-shrink-0 border border-red-500/20 group-hover:scale-110 transition-transform">

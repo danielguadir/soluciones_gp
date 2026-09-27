@@ -64,14 +64,6 @@ const Footer = () => {
                                 </a>
                             </div>
 
-                            {/* New LinkedIn link after WP number */}
-                            <div className="flex items-center gap-3 font-semibold text-white group">
-                                <Svg icon="linkedin" fontSize="20px" color="#0077b5" />
-                                <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
-                                    LinkedIn: Daniel Guadir P.
-                                </a>
-                            </div>
-
                             <div className="flex flex-col gap-2">
                                 {CONTACT_INFO.emails.map(email => (
                                     <a key={email} href={`mailto:${email}`} className="flex items-center gap-3 text-[12px] text-slate-300 hover:text-red-400 transition-colors">
@@ -91,9 +83,6 @@ const Footer = () => {
                             </div>
 
                             <div className="flex gap-4 mt-8">
-                                <a href={CONTACT_INFO.socials.linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all border border-white/5">
-                                    <Svg icon="linkedin" fontSize="16px" color="#fff" />
-                                </a>
                                 <a href={CONTACT_INFO.socials.github} className="w-9 h-9 bg-white/5 rounded-full flex items-center justify-center hover:bg-white group transition-all border border-white/5">
                                     <Svg icon="github" fontSize="16px" color="#fff" className="group-hover:text-slate-900" />
                                 </a>
