@@ -19,6 +19,17 @@ export const projectsData: Project[] = [
         images: ["/images/portfolio/inventario/auth_inventario.png", "/images/portfolio/inventario/cont_inventario.png"]
     },
     {
+        id: "casa-memoria-cumbal",
+        title: "La Casa de la Memoria del Gran Cumbal",
+        description: "Espacio cultural, archivo y repositorio histórico ubicado en el cuarto piso del edificio del cabildo de Cumbal, Nariño, dedicado a resguardar la identidad, el territorio y la memoria ancestral de los pueblos indígenas de la región.",
+        icon: "landmark",
+        link: "#",
+        tech: ["Next.js", "TypeScript", "Patrimonio Cultural", "Cumbal Nariño"],
+        images: [
+            "/images/portfolio/casa-memoria/casa_memoria_1.png"
+        ]
+    },
+    {
         id: "nature-sumaq",
         title: "Nature Sumaq: E-commerce de Belleza Natural",
         description: "Plataforma de comercio electrónico dedicada a productos de cuidado personal y belleza natural, con un diseño fresco y enfocado en la experiencia del usuario.",
@@ -44,28 +55,6 @@ export const projectsData: Project[] = [
         link: "https://wa.me/573148029030?text=Hola,%20quisiera%20solicitar%20un%20demo%20del%20sistema%20para%20campeonatos%20de%20fútbol.",
         tech: ["Next.js", "Tournament Manager", "Dynamic SEO"],
         images: ["/images/portfolio/cancha_js/cancha.png", "/images/portfolio/cancha_js/cancha2.png"]
-    },
-    {
-        id: "page-web-karen-whatsapp",
-        title: "Landing Belleza / WhatsApp Genérico",
-        description: "Página web de servicios de peluquería y belleza con prototipo desarrollado en Next.js, TypeScript y Tailwind CSS. Versión escalable, reutilizable y desplegada en Vercel.",
-        icon: "chat",
-        link: "https://page-web-karen.vercel.app",
-        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-        images: [
-            "/images/portfolio/pwkaren/Captura%20de%20pantalla%202026-06-10%20004644.png"
-        ]
-    },
-    {
-        id: "casa-memoria-cumbal",
-        title: "La Casa de la Memoria del Gran Cumbal",
-        description: "Espacio cultural, archivo y repositorio histórico ubicado en el cuarto piso del edificio del cabildo de Cumbal, Nariño, dedicado a resguardar la identidad, el territorio y la memoria ancestral de los pueblos indígenas de la región.",
-        icon: "landmark",
-        link: "#",
-        tech: ["Next.js", "TypeScript", "Patrimonio Cultural", "Cumbal Nariño"],
-        images: [
-            "/images/portfolio/casa-memoria/casa_memoria_1.png"
-        ]
     },
     {
         id: "lovable-booking-beauty",
