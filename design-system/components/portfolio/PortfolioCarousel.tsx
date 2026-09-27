@@ -38,7 +38,7 @@ export const PortfolioCarousel: React.FC = () => {
     if (!currentProject) return null;
 
     return (
-        <section className="py-6 sm:py-8 pb-16 sm:pb-20">
+        <section className="pt-4 pb-12 sm:pb-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Main Carousel Container */}
                 <div
