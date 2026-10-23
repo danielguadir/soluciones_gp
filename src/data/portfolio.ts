@@ -72,10 +72,10 @@ export const projectsData: Project[] = [
         title: "Simulación 3D: Tractor Fendt 728",
         description: "Simulación interactiva en 3D del tractor agrícola Fendt 728, diseñada con gráficos web avanzados para visualización técnica, exploración de componentes y experiencia inmersiva en tiempo real.",
         icon: "cog",
-        link: "https://vercel.com/danielguadirs-projects/simulacion-fend728",
+        link: "https://simulacion-fend728.vercel.app/",
         tech: ["3D Simulation", "WebGL / Three.js", "Next.js", "Vercel"],
         images: [
-            "/images/portfolio/simulacion-fendt/fendt_3d.png"
+            "/images/portfolio/simulacion-fendt/fendttr_3d.png"
         ]
     }
 ];
