@@ -149,9 +149,11 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
         tabIndex={0}
         onKeyDown={handleKeyDown}
         aria-label="Simulador matemático circular del Cubo de Rubik 3x3x3. Proyección de 9 órbitas continuas."
-        className={`relative w-full max-w-[500px] mx-auto flex flex-col items-center select-none outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-3xl p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(15,23,42,0.9)] ${
-          className ?? ""
-        }`}
+        className={
+          className !== undefined
+            ? `relative w-full flex flex-col items-center select-none outline-none ${className}`
+            : "relative w-full max-w-[500px] mx-auto flex flex-col items-center select-none outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-3xl p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(15,23,42,0.9)]"
+        }
       >
         {/* Status header bar */}
         {showHeader && (
@@ -177,7 +179,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
         )}
 
         {/* Interactive SVG Canvas */}
-        <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center touch-manipulation">
+        <div className="relative w-full aspect-square max-w-[460px] flex items-center justify-center touch-manipulation">
           <svg
             viewBox={`0 0 ${SVG_VIEWBOX_SIZE} ${SVG_VIEWBOX_SIZE}`}
             className="w-full h-full overflow-visible"
