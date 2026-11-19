@@ -53,7 +53,8 @@ export function InteractiveHero() {
   // Interactive UI controls
   const [hoveredFace, setHoveredFace] = useState<FaceId | null>(null);
   const [counterClockwise, setCounterClockwise] = useState(false);
-  const [hasPlayedIntro, setHasPlayedIntro] = useState(false);
+  const [showControls, setShowControls] = useState(false);
+  const userInteractedRef = useRef(false);
 
   // Lifecycle & reduced-motion detection
   useEffect(() => {
@@ -75,29 +76,53 @@ export function InteractiveHero() {
     };
   }, [controller]);
 
-  // Intro showcase: starts scrambled on load, and auto-solves gracefully in ~4s
+  // Continuous auto-demonstration cycle:
+  // 1. Starts scrambled on entrance (6 moves)
+  // 2. Immediately upon entering (~350ms), solves in ~2.6s (total ~3s)
+  // 3. Pauses ~3s in solved state
+  // 4. Disassembles with 6 moves in ~2s
+  // 5. Pauses ~1.8s, then re-solves in ~2.6s
+  // 6. Yields automatically if the user interacts manually with the controls
   useEffect(() => {
-    if (hasPlayedIntro) return;
-    setHasPlayedIntro(true);
+    const demoScramble: Move[] = ["R", "U", "F'", "L", "D'", "R'"];
+    const demoSolve: Move[] = demoScramble.slice().reverse().map(invertMove);
 
-    // Initial canonical scramble configuration
-    const scrambleMoves: Move[] = ["R", "U", "F'", "L", "D'", "B", "R'", "U'"];
-    const solveMoves: Move[] = scrambleMoves.slice().reverse().map(invertMove);
-
-    // 1. Immediately apply scramble state so both 2D and 3D show the scrambled cube on arrival
-    for (const m of scrambleMoves) {
+    // Apply scramble instantly on arrival so cube begins scrambled
+    for (const m of demoScramble) {
       controller.applyInstant(m, false);
     }
 
-    // 2. Wait 700ms, then smoothly solve step-by-step over ~3.2s (total ~4 seconds)
-    const timer = setTimeout(() => {
-      controller.enqueueMoves(solveMoves, { durationMs: 400, recordInHistory: false });
-    }, 700);
+    let isMounted = true;
+    let cycleTimer: ReturnType<typeof setTimeout> | null = null;
 
-    return () => clearTimeout(timer);
-  }, [controller, hasPlayedIntro]);
+    const runSolve = () => {
+      if (!isMounted || userInteractedRef.current) return;
+      controller.enqueueMoves(demoSolve, { durationMs: 440, recordInHistory: false });
+
+      // After solve finishes (~2.64s), pause 3s, then disassemble
+      cycleTimer = setTimeout(runScramble, 2640 + 3000);
+    };
+
+    const runScramble = () => {
+      if (!isMounted || userInteractedRef.current) return;
+      controller.enqueueMoves(demoScramble, { durationMs: 360, recordInHistory: false });
+
+      // After scramble finishes (~2.16s), pause 1.8s, then re-solve
+      cycleTimer = setTimeout(runSolve, 2160 + 1800);
+    };
+
+    // First auto-solve starts right after entering the page
+    cycleTimer = setTimeout(runSolve, 350);
+
+    return () => {
+      isMounted = false;
+      if (cycleTimer) clearTimeout(cycleTimer);
+    };
+  }, [controller]);
 
   const handleExploreExperience = () => {
+    userInteractedRef.current = true;
+    setShowControls(true);
     if (visualizerSectionRef.current) {
       visualizerSectionRef.current.scrollIntoView({
         behavior: "smooth",
@@ -108,6 +133,7 @@ export function InteractiveHero() {
   };
 
   const handleFaceTurn = (face: BaseMove) => {
+    userInteractedRef.current = true;
     controller.turn(face, counterClockwise);
   };
 
@@ -191,19 +217,14 @@ export function InteractiveHero() {
 
           {/* 2. CENTER COLUMN: 3D Rubik's Cube WebGL */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative z-20">
-            {/* 3D WebGL Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-blue-500/30 text-xs font-bold text-slate-200 shadow-sm backdrop-blur-md mb-2">
-              <span className="text-blue-400">🧊</span>
-              <span>3D WebGL</span>
-            </div>
-
             {/* 3D Cube Viewport with Orbital Glowing Ring */}
             <div className="relative w-full aspect-square max-w-[360px] sm:max-w-[400px] flex items-center justify-center">
               {/* Glowing Ambient Orbital Ring around the 3D Cube */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <svg
                   viewBox="0 0 500 500"
-                  className="w-full h-full overflow-visible opacity-55"
+                  className="w-full h-full overflow-visible opacity-55 animate-pulse"
+                  style={{ animationDuration: "5s" }}
                 >
                   <ellipse
                     cx="250"
@@ -232,12 +253,6 @@ export function InteractiveHero() {
 
           {/* 3. RIGHT COLUMN: 2D Circular Mathematical Projection */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative z-20">
-            {/* 2D Projection Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/30 text-xs font-bold text-slate-200 shadow-sm backdrop-blur-md mb-2">
-              <span className="text-cyan-400">⭕</span>
-              <span>2D Proyección</span>
-            </div>
-
             {/* 2D Projection Viewport */}
             <div className="relative w-full aspect-square max-w-[360px] sm:max-w-[420px] flex items-center justify-center">
               <RubikCircularSvg
@@ -253,97 +268,124 @@ export function InteractiveHero() {
           </div>
         </div>
 
-        {/* Discreet Synchronized Controls Toolbar (Docked cleanly below the 3 columns) */}
-        <div className="w-full max-w-4xl mx-auto mt-6 lg:mt-8 pt-3 relative z-20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/70 backdrop-blur-md rounded-2xl px-4 py-2.5 border border-white/10 shadow-lg">
-          {/* Face Rotation Buttons (U, D, L, R, F, B) */}
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {FACES.map((face) => (
-              <button
-                key={face}
-                type="button"
-                onClick={() => handleFaceTurn(face)}
-                onMouseEnter={() => setHoveredFace(face)}
-                onMouseLeave={() => setHoveredFace(null)}
-                disabled={isBusy}
-                title={`Girar capa ${FACE_PALETTE[face].label}`}
-                className="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800/90 hover:bg-slate-700 active:scale-95 disabled:opacity-50 text-white border border-white/10 hover:border-cyan-400/50 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
-              >
-                <span
-                  className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: FACE_PALETTE[face].fill }}
-                />
-                <span>{counterClockwise ? `${face}'` : face}</span>
-              </button>
-            ))}
+        {/* Collapsible Controls Toolbar Drawer (Hidden by default, expandable on demand) */}
+        <div className="w-full max-w-4xl mx-auto mt-6 lg:mt-8 flex flex-col items-center relative z-20">
+          {/* Discreet Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setShowControls((prev) => !prev)}
+            aria-expanded={showControls}
+            className="px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 hover:border-cyan-500/40 shadow-sm backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+            title={showControls ? "Ocultar barra de controles" : "Abrir barra de controles interactivos"}
+          >
+            <span className="text-cyan-400">⚙</span>
+            <span>{showControls ? "Ocultar controles del simulador" : "Controles del simulador"}</span>
+            <span className="text-[10px] text-slate-400">{showControls ? "▲" : "▼"}</span>
+          </button>
 
-            <button
-              type="button"
-              onClick={() => setCounterClockwise((prev) => !prev)}
-              aria-pressed={counterClockwise}
-              title="Alternar sentido horario (90°) / antihorario (-90°)"
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                counterClockwise
-                  ? "bg-indigo-600/30 border-indigo-400/50 text-indigo-200"
-                  : "bg-slate-800/70 border-white/10 text-slate-300 hover:text-white"
-              }`}
-            >
-              {counterClockwise ? "↺ Antihorario" : "↻ Horario"}
-            </button>
-          </div>
+          {/* Collapsible Controls Panel */}
+          {showControls && (
+            <div className="w-full mt-3 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/85 backdrop-blur-md rounded-2xl px-4 py-2.5 border border-white/10 shadow-xl transition-all duration-300 animate-fadeIn">
+              {/* Face Rotation Buttons (U, D, L, R, F, B) */}
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {FACES.map((face) => (
+                  <button
+                    key={face}
+                    type="button"
+                    onClick={() => handleFaceTurn(face)}
+                    onMouseEnter={() => setHoveredFace(face)}
+                    onMouseLeave={() => setHoveredFace(null)}
+                    disabled={isBusy}
+                    title={`Girar capa ${FACE_PALETTE[face].label}`}
+                    className="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800/90 hover:bg-slate-700 active:scale-95 disabled:opacity-50 text-white border border-white/10 hover:border-cyan-400/50 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: FACE_PALETTE[face].fill }}
+                    />
+                    <span>{counterClockwise ? `${face}'` : face}</span>
+                  </button>
+                ))}
 
-          {/* Actions & Status */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={() => controller.scramble()}
-              disabled={isBusy}
-              className="py-1 px-2.5 rounded-lg text-xs font-bold bg-blue-600/20 hover:bg-blue-600/35 active:scale-95 disabled:opacity-40 text-blue-300 border border-blue-500/30 transition-all flex items-center gap-1 cursor-pointer"
-            >
-              <span>⇄</span>
-              <span>Mezclar</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={() => setCounterClockwise((prev) => !prev)}
+                  aria-pressed={counterClockwise}
+                  title="Alternar sentido horario (90°) / antihorario (-90°)"
+                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                    counterClockwise
+                      ? "bg-indigo-600/30 border-indigo-400/50 text-indigo-200"
+                      : "bg-slate-800/70 border-white/10 text-slate-300 hover:text-white"
+                  }`}
+                >
+                  {counterClockwise ? "↺ Antihorario" : "↻ Horario"}
+                </button>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => controller.undo()}
-              disabled={history.length === 0 || isBusy}
-              className="py-1 px-2.5 rounded-lg text-xs font-bold bg-slate-800/80 hover:bg-slate-700 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
-            >
-              <span>↶</span>
-              <span>Deshacer</span>
-            </button>
+              {/* Actions & Status */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => {
+                    userInteractedRef.current = true;
+                    controller.scramble();
+                  }}
+                  disabled={isBusy}
+                  className="py-1 px-2.5 rounded-lg text-xs font-bold bg-blue-600/20 hover:bg-blue-600/35 active:scale-95 disabled:opacity-40 text-blue-300 border border-blue-500/30 transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <span>⇄</span>
+                  <span>Mezclar</span>
+                </button>
 
-            <button
-              type="button"
-              onClick={() => controller.reset()}
-              disabled={(isSolved && history.length === 0) || isBusy}
-              className="py-1 px-2.5 rounded-lg text-xs font-bold bg-slate-800/80 hover:bg-slate-700 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
-            >
-              <span>⟲</span>
-              <span>Reiniciar</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    userInteractedRef.current = true;
+                    controller.undo();
+                  }}
+                  disabled={history.length === 0 || isBusy}
+                  className="py-1 px-2.5 rounded-lg text-xs font-bold bg-slate-800/80 hover:bg-slate-700 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <span>↶</span>
+                  <span>Deshacer</span>
+                </button>
 
-            <div className="h-4 w-[1px] bg-white/10 mx-1 hidden sm:block" />
+                <button
+                  type="button"
+                  onClick={() => {
+                    userInteractedRef.current = true;
+                    controller.reset();
+                  }}
+                  disabled={(isSolved && history.length === 0) || isBusy}
+                  className="py-1 px-2.5 rounded-lg text-xs font-bold bg-slate-800/80 hover:bg-slate-700 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
+                >
+                  <span>⟲</span>
+                  <span>Reiniciar</span>
+                </button>
 
-            {/* State status indicator */}
-            <div className="flex items-center gap-2">
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  isSolved
-                    ? "bg-emerald-400 shadow-[0_0_8px_#34d399]"
-                    : "bg-blue-400 animate-pulse shadow-[0_0_8px_#60a5fa]"
-                }`}
-              />
-              <span className="text-[11px] font-semibold text-slate-300">
-                {isSolved ? "Resuelto (54/54)" : `${history.length} mov.`}
-              </span>
-              {transition && (
-                <span className="text-[10px] font-mono text-cyan-400 px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
-                  {transition.move}
-                </span>
-              )}
+                <div className="h-4 w-[1px] bg-white/10 mx-1 hidden sm:block" />
+
+                {/* State status indicator */}
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      isSolved
+                        ? "bg-emerald-400 shadow-[0_0_8px_#34d399]"
+                        : "bg-blue-400 animate-pulse shadow-[0_0_8px_#60a5fa]"
+                    }`}
+                  />
+                  <span className="text-[11px] font-semibold text-slate-300">
+                    {isSolved ? "Resuelto (54/54)" : `${history.length} mov.`}
+                  </span>
+                  {transition && (
+                    <span className="text-[10px] font-mono text-cyan-400 px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
+                      {transition.move}
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
