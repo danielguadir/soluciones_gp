@@ -173,6 +173,9 @@ function RubikScene({
             const isFaceHovered = hoveredFace === meta.face;
             const euler = planeEulerForNormal(meta.normal3D);
 
+            const isBlueNeon = stickerColor === "#0066ff";
+            const isCyanNeon = stickerColor === "#00d2ff";
+
             return (
               <mesh
                 key={meta.index}
@@ -198,10 +201,20 @@ function RubikScene({
               >
                 <meshStandardMaterial
                   color={stickerColor}
-                  roughness={0.25}
-                  metalness={0.08}
-                  emissive={isFaceHovered ? 0x3b82f6 : 0x000000}
-                  emissiveIntensity={isFaceHovered ? 0.35 : 0}
+                  roughness={stickerColor === "#ffffff" ? 0.15 : stickerColor === "#94a3b8" ? 0.3 : 0.25}
+                  metalness={stickerColor === "#94a3b8" ? 0.35 : 0.08}
+                  emissive={
+                    isFaceHovered
+                      ? 0x38bdf8
+                      : isBlueNeon
+                      ? 0x0044cc
+                      : isCyanNeon
+                      ? 0x005577
+                      : 0x000000
+                  }
+                  emissiveIntensity={
+                    isFaceHovered ? 0.5 : isBlueNeon ? 0.3 : isCyanNeon ? 0.2 : 0
+                  }
                 />
               </mesh>
             );

@@ -264,6 +264,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
                 const palette = FACE_PALETTE[colorFace];
                 const pt = currentPositions[meta.index];
                 const isCenter = meta.role === "center";
+                const isDarkSticker = ["#1e3a8a", "#334155", "#0066ff"].includes(palette.fill);
 
                 return (
                   <g
@@ -294,7 +295,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
                       <text
                         textAnchor="middle"
                         dominantBaseline="central"
-                        fill="#0f172a"
+                        fill={isDarkSticker ? "#ffffff" : "#0f172a"}
                         fontSize="9"
                         fontWeight="800"
                         className="pointer-events-none select-none"
