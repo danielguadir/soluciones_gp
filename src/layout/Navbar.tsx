@@ -68,7 +68,8 @@ const Navbar = () => {
                                 ariaLabel={isAuthenticated ? user?.name || "Perfil de usuario" : "Ingresar / Iniciar sesión"}
                                 avatarUrl={isAuthenticated && user?.avatarUrl ? user.avatarUrl : null}
                                 name={user?.name || user?.email || ""}
-                                className="rounded-full hover:bg-white/10"
+                                className="w-10 h-10 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 hover:border-cyan-400/40 shadow-sm"
+                                iconClassName="w-5 h-5 sm:w-6 sm:h-6 text-slate-200 group-hover:text-white transition-colors"
                             />
 
                             {showUserDropdown && (
@@ -135,7 +136,8 @@ const Navbar = () => {
                             ariaLabel={isAuthenticated ? user?.name || "Perfil de usuario" : "Ingresar / Iniciar sesión"}
                             avatarUrl={isAuthenticated && user?.avatarUrl ? user.avatarUrl : null}
                             name={user?.name || user?.email || ""}
-                            className="rounded-full hover:bg-white/10"
+                            className="w-9 h-9 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-white/10"
+                            iconClassName="w-5 h-5 text-slate-200"
                         />
                         <button
                             onClick={toggleMenu}

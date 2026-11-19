@@ -1,5 +1,6 @@
 import React from "react";
 import { User } from "lucide-react";
+import { DEFAULT_AVATAR_URL } from "@/lib/utils/constants";
 
 export interface UserButtonProps {
   onClick?: () => void;
@@ -8,6 +9,7 @@ export interface UserButtonProps {
   name?: string;
   title?: string;
   ariaLabel?: string;
+  iconClassName?: string;
 }
 
 export const UserButton: React.FC<UserButtonProps> = ({
@@ -17,7 +19,15 @@ export const UserButton: React.FC<UserButtonProps> = ({
   name,
   title = "Ingresar / Iniciar sesión",
   ariaLabel = "Ingresar / Iniciar sesión",
+  iconClassName = "w-5 h-5 sm:w-6 sm:h-6 transition-colors",
 }) => {
+  // Only display an image if it is an actual custom profile picture (not the default placeholder)
+  const isCustomAvatar = Boolean(
+    avatarUrl &&
+      avatarUrl !== DEFAULT_AVATAR_URL &&
+      !avatarUrl.includes("default-avatar")
+  );
+
   return (
     <button
       type="button"
@@ -26,14 +36,14 @@ export const UserButton: React.FC<UserButtonProps> = ({
       title={title}
       aria-label={ariaLabel}
     >
-      {avatarUrl ? (
+      {isCustomAvatar ? (
         <img
-          src={avatarUrl}
-          alt={name || "Usuario"}
-          className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-white/20"
+          src={avatarUrl!}
+          alt={name || "Perfil de usuario"}
+          className="w-full h-full rounded-full object-cover border border-white/20"
         />
       ) : (
-        <User size={22} className="w-5 h-5 sm:w-6 sm:h-6 transition-colors" />
+        <User size={22} className={iconClassName} />
       )}
     </button>
   );
