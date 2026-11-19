@@ -77,5 +77,16 @@ export const projectsData: Project[] = [
         images: [
             "/images/portfolio/simulacion-fendt/fendttr_3d.png"
         ]
+    },
+    {
+        id: "pwa-parqueadero",
+        title: "PWA: Sistema Inteligente de Gestión de Parqueadero",
+        description: "Aplicación Web Progresiva (PWA) diseñada para el control eficiente de ingresos y salidas vehiculares, cálculo automatizado de tarifas, monitoreo de cupos en tiempo real y operación fluida desde dispositivos móviles y escritorio.",
+        icon: "dashboard",
+        link: "https://pwa-parqueadero.vercel.app/",
+        tech: ["PWA", "Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+        images: [
+            "/images/portfolio/pwa-parqueadero/parqueadero_pwa.png"
+        ]
     }
 ];
