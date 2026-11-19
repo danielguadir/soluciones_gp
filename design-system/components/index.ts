@@ -3,6 +3,8 @@ export type { AvatarProps } from './UXLib/Avatar/Avatar.types'
 
 export { AuthModal } from './auth/AuthModal'
 export { MaintenanceNotice } from './auth/MaintenanceNotice'
+export { UserButton } from './auth/UserButton'
+export type { UserButtonProps } from './auth/UserButton'
 
 export { Button } from './UXLib/Button/Button'
 export { ButtonSwt } from './UXLib/Button/ButtonSwt'

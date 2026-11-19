@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Avatar, Svg } from "@/components";
+import { Svg, UserButton } from "@/components";
 import { useAuth } from "@/context/AuthContext";
-import { DEFAULT_AVATAR_URL } from "@/lib/utils/constants";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -61,21 +60,16 @@ const Navbar = () => {
 
                         <div className="h-5 w-[1px] bg-white/10 mx-2" aria-hidden="true" />
 
-                        {/* User Profile Avatar Icon Button & Dropdown */}
+                        {/* User Profile Button & Dropdown */}
                         <div className="relative">
-                            <button
+                            <UserButton
                                 onClick={() => setShowUserDropdown(!showUserDropdown)}
-                                className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-600/30 to-blue-600/30 hover:from-cyan-500/40 hover:to-blue-500/40 border border-cyan-400/40 flex items-center justify-center transition-all cursor-pointer shadow-lg shadow-cyan-500/10 group"
-                                aria-label="Perfil de usuario"
-                                title={isAuthenticated ? user?.name || "Mi Cuenta" : "Cuenta / Iniciar Sesión"}
-                            >
-                                <Avatar
-                                    src={isAuthenticated && user?.avatarUrl ? user.avatarUrl : DEFAULT_AVATAR_URL}
-                                    name={user?.name || user?.email || ""}
-                                    size={36}
-                                    className="border-0 pointer-events-none"
-                                />
-                            </button>
+                                title={isAuthenticated ? user?.name || "Mi Cuenta" : "Ingresar / Iniciar sesión"}
+                                ariaLabel={isAuthenticated ? user?.name || "Perfil de usuario" : "Ingresar / Iniciar sesión"}
+                                avatarUrl={isAuthenticated && user?.avatarUrl ? user.avatarUrl : null}
+                                name={user?.name || user?.email || ""}
+                                className="rounded-full hover:bg-white/10"
+                            />
 
                             {showUserDropdown && (
                                 <div className="absolute right-0 mt-3 w-56 bg-slate-900/95 border border-white/10 rounded-2xl shadow-2xl p-2 z-50 backdrop-blur-md animate-fade-down">
@@ -133,21 +127,20 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center gap-3">
-                        <button
+                    {/* Mobile Menu & User Button */}
+                    <div className="md:hidden flex items-center gap-2">
+                        <UserButton
                             onClick={() => setShowUserDropdown(!showUserDropdown)}
-                            className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-600/30 to-blue-600/30 border border-cyan-400/40 flex items-center justify-center"
-                        >
-                            <Avatar
-                                src={isAuthenticated && user?.avatarUrl ? user.avatarUrl : DEFAULT_AVATAR_URL}
-                                name={user?.name || user?.email || ""}
-                                size={32}
-                            />
-                        </button>
+                            title={isAuthenticated ? user?.name || "Mi Cuenta" : "Ingresar / Iniciar sesión"}
+                            ariaLabel={isAuthenticated ? user?.name || "Perfil de usuario" : "Ingresar / Iniciar sesión"}
+                            avatarUrl={isAuthenticated && user?.avatarUrl ? user.avatarUrl : null}
+                            name={user?.name || user?.email || ""}
+                            className="rounded-full hover:bg-white/10"
+                        />
                         <button
                             onClick={toggleMenu}
-                            className="text-slate-300 hover:text-white focus:outline-none p-1"
+                            className="text-slate-300 hover:text-white focus:outline-none p-1.5"
+                            aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
                         >
                             <Svg icon={isOpen ? "cancel" : "menu"} fontSize="24px" />
                         </button>
