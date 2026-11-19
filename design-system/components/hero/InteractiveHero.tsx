@@ -7,9 +7,40 @@ import { RubikController } from "@/lib/rubik/controller";
 import { useRubikSync } from "@/lib/rubik/useRubikSync";
 import { RubikCircularSvg } from "@/components/hero/RubikCircularSvg";
 import { RubikCube3D } from "@/components/hero/RubikCube3D";
-import { FACES } from "@/lib/rubik/engine";
+import { FACES, invertMove } from "@/lib/rubik/engine";
 import { FACE_PALETTE } from "@/lib/rubik/palette";
-import { BaseMove, FaceId } from "@/lib/rubik/types";
+import { BaseMove, FaceId, Move } from "@/lib/rubik/types";
+
+// Deterministic cosmic starfield for deep space atmosphere behind 3D & 2D views
+const COSMIC_STARS = [
+  { top: "6%", left: "12%", size: 2, opacity: 0.8, pulse: true },
+  { top: "10%", left: "28%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "14%", left: "45%", size: 2, opacity: 0.9, pulse: true },
+  { top: "8%", left: "68%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "12%", left: "84%", size: 2.5, opacity: 0.85, pulse: true },
+  { top: "18%", left: "94%", size: 1, opacity: 0.4, pulse: false },
+  { top: "25%", left: "8%", size: 1.5, opacity: 0.7, pulse: false },
+  { top: "28%", left: "38%", size: 2, opacity: 0.8, pulse: true },
+  { top: "22%", left: "55%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "30%", left: "72%", size: 2, opacity: 0.9, pulse: true },
+  { top: "26%", left: "88%", size: 1, opacity: 0.5, pulse: false },
+  { top: "35%", left: "18%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "42%", left: "32%", size: 2, opacity: 0.75, pulse: true },
+  { top: "38%", left: "62%", size: 2.5, opacity: 0.95, pulse: true },
+  { top: "45%", left: "80%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "48%", left: "92%", size: 2, opacity: 0.7, pulse: false },
+  { top: "52%", left: "14%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "58%", left: "42%", size: 2, opacity: 0.85, pulse: true },
+  { top: "54%", left: "70%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "62%", left: "86%", size: 2, opacity: 0.8, pulse: true },
+  { top: "68%", left: "24%", size: 1, opacity: 0.4, pulse: false },
+  { top: "65%", left: "50%", size: 2, opacity: 0.75, pulse: false },
+  { top: "72%", left: "65%", size: 1.5, opacity: 0.6, pulse: true },
+  { top: "75%", left: "82%", size: 2, opacity: 0.9, pulse: true },
+  { top: "80%", left: "10%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "82%", left: "35%", size: 2, opacity: 0.7, pulse: false },
+  { top: "78%", left: "90%", size: 1.5, opacity: 0.6, pulse: true },
+];
 
 export function InteractiveHero() {
   // Single shared mathematical controller driving both 2D and 3D representations
@@ -44,17 +75,24 @@ export function InteractiveHero() {
     };
   }, [controller]);
 
-  // Subtle intro sequence demonstrating live synchronization on page load
+  // Intro showcase: starts scrambled on load, and auto-solves gracefully in ~4s
   useEffect(() => {
     if (hasPlayedIntro) return;
     setHasPlayedIntro(true);
 
+    // Initial canonical scramble configuration
+    const scrambleMoves: Move[] = ["R", "U", "F'", "L", "D'", "B", "R'", "U'"];
+    const solveMoves: Move[] = scrambleMoves.slice().reverse().map(invertMove);
+
+    // 1. Immediately apply scramble state so both 2D and 3D show the scrambled cube on arrival
+    for (const m of scrambleMoves) {
+      controller.applyInstant(m, false);
+    }
+
+    // 2. Wait 700ms, then smoothly solve step-by-step over ~3.2s (total ~4 seconds)
     const timer = setTimeout(() => {
-      controller.enqueueMoves(["R", "U", "U'", "R'"], {
-        durationMs: 440,
-        recordInHistory: false,
-      });
-    }, 900);
+      controller.enqueueMoves(solveMoves, { durationMs: 400, recordInHistory: false });
+    }, 700);
 
     return () => clearTimeout(timer);
   }, [controller, hasPlayedIntro]);
@@ -74,12 +112,31 @@ export function InteractiveHero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#0f172a] bg-grid-white pt-8 pb-12 lg:py-14 select-none">
-      {/* Background Chromatic Ambient Glows */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-[8%] left-[4%] w-80 h-80 bg-blue-600/20 rounded-full blur-[130px] animate-blob" />
-        <div className="absolute bottom-[10%] right-[4%] w-96 h-96 bg-indigo-600/20 rounded-full blur-[140px] animate-blob animation-delay-2000" />
+    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#070d1e] bg-grid-white pt-8 pb-12 lg:py-14 select-none">
+      {/* Deep Space Background Layer with Twinkling Stars & Cosmic Nebulae */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[8%] left-[4%] w-80 h-80 bg-blue-600/15 rounded-full blur-[130px] animate-blob" />
+        <div className="absolute bottom-[10%] right-[4%] w-96 h-96 bg-indigo-600/15 rounded-full blur-[140px] animate-blob animation-delay-2000" />
         <div className="absolute top-[35%] right-[20%] w-64 h-64 bg-cyan-600/10 rounded-full blur-[110px] animate-blob animation-delay-4000" />
+
+        {/* Twinkling Cosmic Stars Field behind 3D and 2D */}
+        <div className="absolute inset-0">
+          {COSMIC_STARS.map((star, i) => (
+            <span
+              key={i}
+              style={{
+                top: star.top,
+                left: star.left,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                opacity: star.opacity,
+              }}
+              className={`absolute rounded-full bg-white shadow-[0_0_4px_#ffffff] ${
+                star.pulse ? "animate-pulse" : ""
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Original Luminous Infinity Wave Background Layer (Positioned at bottom spanning full width) */}
@@ -104,13 +161,11 @@ export function InteractiveHero() {
         >
           {/* 1. LEFT COLUMN: Enterprise Identity & CTAs */}
           <div className="lg:col-span-4 flex flex-col gap-6 lg:gap-8 relative z-20">
-            {/* Accent Cyan Vertical Bar + Statement */}
-            <div className="border-l-4 border-cyan-400 pl-4 py-1">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
-                Desarrollo y{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 text-glow">
-                  soluciones digitales...
-                </span>
+            {/* Accent Cyan Vertical Bar + Clean Normal Headline matching the mockup */}
+            <div className="flex items-center gap-3.5 pl-1">
+              <div className="w-1.5 h-7 sm:h-8 rounded-full bg-cyan-400 shadow-[0_0_14px_#22d3ee] flex-shrink-0" />
+              <h1 className="text-xl sm:text-2xl lg:text-[26px] font-normal sm:font-medium text-slate-100 tracking-wide select-text">
+                Desarrollo y soluciones digitales...
               </h1>
             </div>
 

@@ -225,6 +225,66 @@ function RubikScene({
   );
 }
 
+/**
+ * Active 3D Orbital Ring with a revolving luminous photon/satellite around the Rubik's Cube.
+ */
+function OrbitalRing3D() {
+  const satelliteRef = useRef<THREE.Mesh>(null);
+  const ringRotation = useMemo<[number, number, number]>(() => [0.45, 0.25, -0.28], []);
+
+  const linePoints = useMemo(() => {
+    const curve = new THREE.EllipseCurve(0, 0, 3.5, 2.1, 0, 2 * Math.PI, false, 0);
+    const pts = curve.getPoints(96);
+    return pts.map((p) => new THREE.Vector3(p.x, 0, p.y));
+  }, []);
+
+  const lineGeometry = useMemo(() => {
+    return new THREE.BufferGeometry().setFromPoints(linePoints);
+  }, [linePoints]);
+
+  const lineMaterial = useMemo(() => {
+    return new THREE.LineBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.6,
+    });
+  }, []);
+
+  const lineLoop = useMemo(() => {
+    return new THREE.LineLoop(lineGeometry, lineMaterial);
+  }, [lineGeometry, lineMaterial]);
+
+  useEffect(() => {
+    return () => {
+      lineGeometry.dispose();
+      lineMaterial.dispose();
+    };
+  }, [lineGeometry, lineMaterial]);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime() * 0.75;
+    if (satelliteRef.current) {
+      const angle = t % (2 * Math.PI);
+      const x = 3.5 * Math.cos(angle);
+      const z = 2.1 * Math.sin(angle);
+      const v = new THREE.Vector3(x, 0, z);
+      v.applyEuler(new THREE.Euler(ringRotation[0], ringRotation[1], ringRotation[2]));
+      satelliteRef.current.position.copy(v);
+    }
+  });
+
+  return (
+    <group>
+      <primitive object={lineLoop} rotation={ringRotation} />
+      <mesh ref={satelliteRef}>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshBasicMaterial color="#38bdf8" />
+        <pointLight color="#38bdf8" intensity={1.8} distance={2.5} />
+      </mesh>
+    </group>
+  );
+}
+
 export function RubikCube3DCanvas({
   controller,
   onHoverFace,
@@ -244,6 +304,9 @@ export function RubikCube3DCanvas({
         <directionalLight position={[6, 8, 7]} intensity={1.15} />
         <directionalLight position={[-6, -4, -6]} intensity={0.4} color="#93c5fd" />
         <directionalLight position={[0, 6, -6]} intensity={0.3} color="#f8fafc" />
+
+        {/* Active 3D Orbital Ring with Revolving Satellite Photon */}
+        <OrbitalRing3D />
 
         {/* 3D Rubik Scene */}
         <RubikScene
