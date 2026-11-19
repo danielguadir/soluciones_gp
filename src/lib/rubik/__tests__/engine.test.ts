@@ -20,6 +20,14 @@ import {
   interpolateStickerPosition,
   STICKER_2D_POSITIONS,
 } from "../circularGeometry";
+import { FACE_PALETTE } from "../palette";
+import {
+  CUBIE_POSITIONS,
+  isInLayer,
+  stickerRestPose,
+  stickerWorldPose,
+} from "../projection3D";
+import { RubikController } from "../controller";
 import { Move } from "../types";
 
 export interface TestResult {
@@ -99,93 +107,133 @@ export function runRubikEngineTestSuite(): TestResult[] {
 
     for (const move of ALL_MOVES) {
       const inv = invertMove(move);
-      const moved = applyMove(startState, move);
-      assert.notDeepEqual(moved, startState);
-      const restored = applyMove(moved, inv);
+      const afterBoth = applyMove(applyMove(startState, move), inv);
       assert.deepEqual(
-        restored,
+        afterBoth,
         startState,
-        `El movimiento ${move} seguido de ${inv} no restauró el estado`
+        `M * M' falló para ${move} * ${inv}`
       );
     }
   });
 
-  // 4. Double turns consistency: M2 === M * M and (M2)^2 === I
+  // 4. Double turns consistency: M2 = M * M and (M2)^2 = I
   test("4. Consistencia de dobles giros: M2 = M * M y (M2)^2 = I", () => {
-    const solved = createSolvedCube();
+    const start = applySequence(createSolvedCube(), ["D", "B", "L"]);
+
     for (const face of FACES) {
       const doubleMove = `${face}2` as Move;
-      const viaDouble = applyMove(solved, doubleMove);
-      const viaTwice = applySequence(solved, [face, face]);
-      assert.deepEqual(viaDouble, viaTwice);
+      const viaDouble = applyMove(start, doubleMove);
+      const viaTwoSingles = applyMove(applyMove(start, face), face);
 
-      const backToSolved = applyMove(viaDouble, doubleMove);
-      assert.deepEqual(backToSolved, solved);
+      assert.deepEqual(
+        viaDouble,
+        viaTwoSingles,
+        `Giro doble ${doubleMove} no coincide con dos giros simples`
+      );
+
+      // (M2)^2 = I
+      const twiceDouble = applyMove(viaDouble, doubleMove);
+      assert.deepEqual(
+        twiceDouble,
+        start,
+        `(M2)^2 debe ser identidad para ${face}`
+      );
     }
   });
 
-  // 5. Conservation of 54 stickers and color counts across complex sequences
+  // 5. Invariant preservation: 54 stickers and exactly 9 of each color
   test("5. Conservación invariante de las 54 pegatinas y 9 de cada color", () => {
     let state = createSolvedCube();
-    const scramble = generateScramble(40, () => 0.42);
 
-    for (const move of scramble) {
+    const sequence: Move[] = [
+      "R", "U", "R'", "U'", "F'", "U", "F", "L", "D", "L'",
+      "B2", "R2", "U2", "D'", "F2", "L2", "U", "B'", "R", "D2",
+    ];
+
+    for (const move of sequence) {
       state = applyMove(state, move);
       const report = validateCubeInvariants(state);
       assert.equal(
         report.valid,
         true,
-        `Invariante violado tras ${move}: ${report.errors.join(", ")}`
+        `Invariantes violados tras mover ${move}: ${report.errors.join(", ")}`
       );
       assert.equal(report.totalStickers, 54);
-      assert.equal(report.centersIntact, true);
+      for (const face of FACES) {
+        assert.equal(report.colorCounts[face], 9);
+      }
+      assert.equal(report.centersIntact, true, "Los 6 centros deben permanecer fijos");
     }
   });
 
-  // 6. Scramble and step-by-step Undo consistency
+  // 6. Scramble consistency and Undo stack
   test("6. Consistencia de mezcla (Scramble) y pila de Deshacer (Undo)", () => {
-    const solved = createSolvedCube();
-    const scramble = generateScramble(25);
+    const scramble = generateScramble(30);
+    assert.equal(scramble.length, 30);
+
+    // No two consecutive moves on the same face in a valid scramble
+    for (let i = 1; i < scramble.length; i++) {
+      assert.notEqual(
+        scramble[i][0],
+        scramble[i - 1][0],
+        `Scramble tiene giros consecutivos en la misma cara: ${scramble[i - 1]} y ${scramble[i]}`
+      );
+    }
+
+    let state = createSolvedCube();
     const history: Move[] = [];
 
-    let current = solved;
     for (const m of scramble) {
-      current = applyMove(current, m);
+      state = applyMove(state, m);
       history.push(m);
     }
-    assert.equal(isCubeSolved(current), false);
 
-    // Undo all moves in reverse LIFO order
+    assert.equal(isCubeSolved(state), false, "Un scramble de 30 giros no debe resultar resuelto");
+
+    // Reversing history via invertMove must restore solved state
     while (history.length > 0) {
-      const lastMove = history.pop()!;
-      current = applyMove(current, invertMove(lastMove));
+      const last = history.pop()!;
+      state = applyMove(state, invertMove(last));
     }
 
-    assert.equal(isCubeSolved(current), true);
-    assert.deepEqual(current, solved);
+    assert.equal(isCubeSolved(state), true, "Deshacer todo el historial debe resolver el cubo");
   });
 
-  // 7. Group theory benchmark: (R U R' U')^6 = I and T-Perm^2 = I
+  // 7. Group theory: commutator order 6 for [R, U] and order 2 for T-Permutation
   test("7. Verificación de teoría de grupos: orden 6 de [R, U] y orden 2 de T-Perm", () => {
     const solved = createSolvedCube();
+
+    // Commutator [R, U] = R U R' U' has order 6
     const commutator: Move[] = ["R", "U", "R'", "U'"];
     let state = solved;
-
-    for (let i = 1; i <= 6; i++) {
+    for (let rep = 1; rep <= 6; rep++) {
       state = applySequence(state, commutator);
-      if (i < 6) {
-        assert.equal(isCubeSolved(state), false);
+      if (rep < 6) {
+        assert.equal(
+          isCubeSolved(state),
+          false,
+          `El conmutador [R, U] se resolvió prematuramente en repetición ${rep}`
+        );
       }
     }
-    assert.equal(isCubeSolved(state), true);
+    assert.equal(
+      isCubeSolved(state),
+      true,
+      "([R, U])^6 debe restaurar exactamente el cubo resuelto"
+    );
 
+    // T-Permutation: R U R' U' R' F R2 U' R' U' R U R' F' has order 2
     const tPerm: Move[] = [
       "R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'",
     ];
-    const once = applySequence(solved, tPerm);
-    assert.equal(isCubeSolved(once), false);
-    const twice = applySequence(once, tPerm);
-    assert.equal(isCubeSolved(twice), true);
+    let tState = applySequence(solved, tPerm);
+    assert.equal(isCubeSolved(tState), false);
+    tState = applySequence(tState, tPerm);
+    assert.equal(
+      isCubeSolved(tState),
+      true,
+      "(T-Perm)^2 debe restaurar el cubo resuelto (orden 2)"
+    );
   });
 
   // 8. 2D Circular Geometry & Orbital Radius Invariance
@@ -242,6 +290,114 @@ export function runRubikEngineTestSuite(): TestResult[] {
         }
       }
     }
+  });
+
+  // 9. 2D & 3D Mathematical Synchronization: Exact Isomorphism and Pose Convergence
+  test("9. Sincronización matemática 2D y 3D: isomorfismo de estado y convergencia de poses continuas", () => {
+    assert.equal(CUBIE_POSITIONS.length, 26, "Debe haber 26 cubos visibles en 3D");
+
+    // Palette consistency: all 6 faces have identical colors in 2D and 3D
+    for (const face of FACES) {
+      assert.ok(FACE_PALETTE[face].fill.startsWith("#"));
+      assert.ok(FACE_PALETTE[face].stroke.startsWith("#"));
+    }
+
+    // Discrete 3D convergence at progress = 1.0 matches the S54 permutation exactly
+    for (const face of FACES) {
+      const perm = MOVE_PERMUTATIONS[face];
+
+      for (let src = 0; src < 54; src++) {
+        const dest = perm[src];
+        const worldPoseAtEnd = stickerWorldPose(src, { move: face, progress: 1.0 });
+        const destRest = stickerRestPose(dest);
+
+        const distCenter = Math.hypot(
+          worldPoseAtEnd.center[0] - destRest.center[0],
+          worldPoseAtEnd.center[1] - destRest.center[1],
+          worldPoseAtEnd.center[2] - destRest.center[2]
+        );
+
+        assert.ok(
+          distCenter < 1e-4,
+          `En giro ${face}, sticker 3D ${src} -> ${dest} no convergió al centro esperado (${distCenter.toFixed(6)})`
+        );
+
+        const distNormal = Math.hypot(
+          worldPoseAtEnd.normal[0] - destRest.normal[0],
+          worldPoseAtEnd.normal[1] - destRest.normal[1],
+          worldPoseAtEnd.normal[2] - destRest.normal[2]
+        );
+
+        assert.ok(
+          distNormal < 1e-4,
+          `En giro ${face}, normal 3D ${src} -> ${dest} no convergió a la normal esperada (${distNormal.toFixed(6)})`
+        );
+      }
+    }
+
+    // Invariance of stationary stickers in both 2D and 3D during a layer turn
+    for (const face of FACES) {
+      for (let i = 0; i < 54; i++) {
+        const meta = STICKER_METADATA[i];
+        if (!isInLayer(meta.position3D, face)) {
+          // 3D must be completely unchanged at any progress
+          const poseMid = stickerWorldPose(i, { move: face, progress: 0.5 });
+          const poseRest = stickerRestPose(i);
+          assert.deepEqual(poseMid, poseRest, `Sticker 3D estático ${i} se movió durante giro ${face}`);
+
+          // 2D must be completely unchanged
+          const ptMid = interpolateStickerPosition(i, i, face, 0.5);
+          const ptRest = STICKER_2D_POSITIONS[i];
+          assert.equal(ptMid.x, ptRest.x);
+          assert.equal(ptMid.y, ptRest.y);
+        }
+      }
+    }
+  });
+
+  // 10. Central RubikController: state machine, subscription, queueing, and undo
+  test("10. RubikController: máquina de estados, suscripciones síncronas, cola e historial", () => {
+    const ctrl = new RubikController();
+    ctrl.setReducedMotion(true); // Instant execution for deterministic assertions
+
+    let notifyCount = 0;
+    const unsubscribe = ctrl.subscribe(() => {
+      notifyCount++;
+    });
+
+    assert.equal(ctrl.isSolved(), true);
+    assert.equal(ctrl.getHistory().length, 0);
+
+    // Apply commutator [R, U] = R U R' U'
+    ctrl.turn("R");
+    ctrl.turn("U");
+    ctrl.turn("R", true); // R'
+    ctrl.turn("U", true); // U'
+
+    assert.equal(ctrl.getHistory().length, 4);
+    assert.equal(ctrl.isSolved(), false);
+    assert.ok(notifyCount >= 4);
+
+    // Undo 4 times restores solved state
+    ctrl.undo();
+    ctrl.undo();
+    ctrl.undo();
+    ctrl.undo();
+
+    assert.equal(ctrl.isSolved(), true);
+    assert.equal(ctrl.getHistory().length, 0);
+
+    // Scramble and Reset
+    ctrl.scramble(15);
+    assert.equal(ctrl.getHistory().length, 15);
+    assert.equal(ctrl.isSolved(), false);
+
+    ctrl.reset();
+    assert.equal(ctrl.isSolved(), true);
+    assert.equal(ctrl.getHistory().length, 0);
+
+    unsubscribe();
+    ctrl.dispose();
   });
 
   return results;

@@ -1,20 +1,16 @@
 "use client";
 
 import React, {
+  forwardRef,
   useCallback,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
-  forwardRef,
 } from "react";
 import {
-  applyMove,
-  createSolvedCube,
   FACES,
-  generateScramble,
-  invertMove,
-  isCubeSolved,
   MOVE_PERMUTATIONS,
   STICKER_METADATA,
 } from "@/lib/rubik/engine";
@@ -27,303 +23,161 @@ import {
   STICKER_2D_POSITIONS,
   SVG_VIEWBOX_SIZE,
 } from "@/lib/rubik/circularGeometry";
-import { BaseMove, CubeState, FaceId, Move } from "@/lib/rubik/types";
+import { BaseMove, FaceId } from "@/lib/rubik/types";
+import { FACE_PALETTE } from "@/lib/rubik/palette";
+import { RubikController } from "@/lib/rubik/controller";
+import { useRubikSync } from "@/lib/rubik/useRubikSync";
+import { baseFaceOf } from "@/lib/rubik/projection3D";
 
 export interface RubikCircularHandle {
   triggerDemoSequence: () => void;
   scramble: () => void;
   undo: () => void;
   reset: () => void;
+  turn: (face: BaseMove, isInverse?: boolean) => void;
 }
 
-const FACE_COLORS: Record<FaceId, { fill: string; stroke: string; label: string }> = {
-  U: { fill: "#facc15", stroke: "#fef08a", label: "Superior (U)" },
-  D: { fill: "#ef4444", stroke: "#fca5a5", label: "Inferior (D)" },
-  L: { fill: "#3b82f6", stroke: "#93c5fd", label: "Izquierda (L)" },
-  R: { fill: "#ec4899", stroke: "#f9a8d4", label: "Derecha (R)" },
-  F: { fill: "#22c55e", stroke: "#86efac", label: "Frontal (F)" },
-  B: { fill: "#06b6d4", stroke: "#67e8f9", label: "Posterior (B)" },
-};
-
-interface ActiveAnimation {
-  readonly move: Move;
-  readonly baseFace: BaseMove;
-  readonly startTime: number;
-  readonly durationMs: number;
-  readonly recordInHistory: boolean;
+export interface RubikCircularSvgProps {
+  controller?: RubikController;
+  showControls?: boolean;
+  showHeader?: boolean;
+  hoveredFace?: FaceId | null;
+  onHoverFace?: (face: FaceId | null) => void;
+  counterClockwiseMode?: boolean;
+  onToggleCounterClockwise?: () => void;
+  className?: string;
 }
 
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
+export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvgProps>(
+  function RubikCircularSvg(
+    {
+      controller: externalController,
+      showControls = false,
+      showHeader = true,
+      hoveredFace: externalHoveredFace,
+      onHoverFace: externalOnHoverFace,
+      counterClockwiseMode: externalCounterClockwiseMode,
+      onToggleCounterClockwise: externalOnToggleCounterClockwise,
+      className,
+    },
+    ref
+  ) {
+    // Internal fallback controller if none provided
+    const internalControllerRef = useRef<RubikController | null>(null);
+    if (!internalControllerRef.current) {
+      internalControllerRef.current = new RubikController();
+    }
+    const controller = externalController ?? internalControllerRef.current;
 
-export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
-  function RubikCircularSvg(_, ref) {
-    const [cubeState, setCubeState] = useState<CubeState>(() => createSolvedCube());
-    const [history, setHistory] = useState<Move[]>([]);
-    const [hoveredFace, setHoveredFace] = useState<FaceId | null>(null);
-    const [counterClockwiseMode, setCounterClockwiseMode] = useState(false);
-    const [reducedMotion, setReducedMotion] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
+    // Synchronized state hook
+    const { cubeState, transition, history, isSolved, isBusy } = useRubikSync(controller);
 
-    // Animation state (progress in [0, 1] for the currently active move)
-    const [animState, setAnimState] = useState<{
-      move: Move;
-      baseFace: BaseMove;
-      progress: number;
-    } | null>(null);
+    // Local UI state for standalone usage
+    const [localHoveredFace, setLocalHoveredFace] = useState<FaceId | null>(null);
+    const [localCounterClockwise, setLocalCounterClockwise] = useState(false);
 
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const queueRef = useRef<
-      Array<{ move: Move; durationMs: number; recordInHistory: boolean }>
-    >([]);
-    const activeAnimRef = useRef<ActiveAnimation | null>(null);
-    const rafIdRef = useRef<number | null>(null);
-    const hasPlayedIntroRef = useRef(false);
+    const hoveredFace = externalHoveredFace !== undefined ? externalHoveredFace : localHoveredFace;
+    const setHoveredFace = externalOnHoverFace ?? setLocalHoveredFace;
 
-    // Detect prefers-reduced-motion
-    useEffect(() => {
-      if (typeof window === "undefined" || !window.matchMedia) return;
-      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-      setReducedMotion(mq.matches);
+    const counterClockwiseMode =
+      externalCounterClockwiseMode !== undefined
+        ? externalCounterClockwiseMode
+        : localCounterClockwise;
+    const toggleCounterClockwise =
+      externalOnToggleCounterClockwise ??
+      (() => setLocalCounterClockwise((prev) => !prev));
 
-      const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-      mq.addEventListener("change", handler);
-      return () => mq.removeEventListener("change", handler);
-    }, []);
-
-    // IntersectionObserver to pause animations when off-screen
-    useEffect(() => {
-      const el = containerRef.current;
-      if (!el || typeof IntersectionObserver === "undefined") return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          setIsVisible(entry.isIntersecting);
-        },
-        { threshold: 0.1 }
-      );
-      observer.observe(el);
-      return () => observer.disconnect();
-    }, []);
-
-    const processNextInQueue = useCallback(() => {
-      if (activeAnimRef.current || queueRef.current.length === 0) return;
-
-      const nextItem = queueRef.current.shift()!;
-      const baseFace = nextItem.move[0] as BaseMove;
-
-      if (reducedMotion || !isVisible) {
-        setCubeState((prev) => applyMove(prev, nextItem.move));
-        if (nextItem.recordInHistory) {
-          setHistory((prev) => [...prev, nextItem.move]);
-        }
-        if (queueRef.current.length > 0) {
-          processNextInQueue();
-        }
-        return;
-      }
-
-      const startTime = performance.now();
-      activeAnimRef.current = {
-        move: nextItem.move,
-        baseFace,
-        startTime,
-        durationMs: nextItem.durationMs,
-        recordInHistory: nextItem.recordInHistory,
-      };
-
-      const step = (now: number) => {
-        const current = activeAnimRef.current;
-        if (!current) return;
-
-        const elapsed = now - current.startTime;
-        const rawProgress = Math.min(1, Math.max(0, elapsed / current.durationMs));
-        const easedProgress = easeInOutCubic(rawProgress);
-
-        if (rawProgress < 1) {
-          setAnimState({
-            move: current.move,
-            baseFace: current.baseFace,
-            progress: easedProgress,
-          });
-          rafIdRef.current = requestAnimationFrame(step);
-        } else {
-          // Commit discrete group permutation to cubeState
-          const finishedMove = current.move;
-          const shouldRecord = current.recordInHistory;
-          activeAnimRef.current = null;
-          setAnimState(null);
-          setCubeState((prev) => applyMove(prev, finishedMove));
-          if (shouldRecord) {
-            setHistory((prev) => [...prev, finishedMove]);
-          }
-          processNextInQueue();
-        }
-      };
-
-      rafIdRef.current = requestAnimationFrame(step);
-    }, [reducedMotion, isVisible]);
-
-    // Cleanup RAF on unmount
-    useEffect(() => {
-      return () => {
-        if (rafIdRef.current !== null) {
-          cancelAnimationFrame(rafIdRef.current);
-        }
-      };
-    }, []);
-
-    const enqueueMoves = useCallback(
-      (
-        moves: readonly Move[],
-        options: { durationMs?: number; recordInHistory?: boolean } = {}
-      ) => {
-        const durationMs = options.durationMs ?? 380;
-        const recordInHistory = options.recordInHistory ?? true;
-
-        for (const move of moves) {
-          queueRef.current.push({ move, durationMs, recordInHistory });
-        }
-        processNextInQueue();
-      },
-      [processNextInQueue]
-    );
-
-    // Subtle, non-infinite initial entry animation (2 moves + 2 inverse moves -> stable state)
-    useEffect(() => {
-      if (hasPlayedIntroRef.current || reducedMotion) return;
-      hasPlayedIntroRef.current = true;
-
-      const timer = setTimeout(() => {
-        enqueueMoves(["R", "U", "U'", "R'"], {
-          durationMs: 420,
-          recordInHistory: false,
-        });
-      }, 350);
-
-      return () => clearTimeout(timer);
-    }, [enqueueMoves, reducedMotion]);
-
-    const handleFaceTurn = useCallback(
-      (face: FaceId, forceInverse?: boolean) => {
-        const useInverse = forceInverse ?? counterClockwiseMode;
-        const move: Move = useInverse ? (`${face}'` as Move) : face;
-        enqueueMoves([move], { durationMs: 360, recordInHistory: true });
-      },
-      [counterClockwiseMode, enqueueMoves]
-    );
-
-    const handleScramble = useCallback(() => {
-      queueRef.current = [];
-      const seq = generateScramble(7);
-      enqueueMoves(seq, { durationMs: 220, recordInHistory: true });
-    }, [enqueueMoves]);
-
-    const handleUndo = useCallback(() => {
-      if (activeAnimRef.current || queueRef.current.length > 0) return;
-      if (history.length === 0) return;
-
-      const lastMove = history[history.length - 1];
-      const inverse = invertMove(lastMove);
-      setHistory((prev) => prev.slice(0, -1));
-      enqueueMoves([inverse], { durationMs: 320, recordInHistory: false });
-    }, [history, enqueueMoves]);
-
-    const handleReset = useCallback(() => {
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
-      queueRef.current = [];
-      activeAnimRef.current = null;
-      setAnimState(null);
-      setHistory([]);
-      setCubeState(createSolvedCube());
-    }, []);
-
-    const triggerDemoSequence = useCallback(() => {
-      if (activeAnimRef.current || queueRef.current.length > 0) return;
-      enqueueMoves(["U", "R", "F", "F'", "R'", "U'"], {
-        durationMs: 340,
-        recordInHistory: false,
-      });
-    }, [enqueueMoves]);
-
+    // Expose imperative API for parent callers
     useImperativeHandle(
       ref,
       () => ({
-        triggerDemoSequence,
-        scramble: handleScramble,
-        undo: handleUndo,
-        reset: handleReset,
+        triggerDemoSequence: () => controller.triggerDemoSequence(),
+        scramble: () => controller.scramble(),
+        undo: () => controller.undo(),
+        reset: () => controller.reset(),
+        turn: (face: BaseMove, isInverse = false) => controller.turn(face, isInverse),
       }),
-      [triggerDemoSequence, handleScramble, handleUndo, handleReset]
+      [controller]
     );
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const key = e.key.toUpperCase();
-      if (FACES.includes(key as FaceId)) {
-        e.preventDefault();
-        handleFaceTurn(key as FaceId, e.shiftKey);
-      } else if (e.key === "Backspace") {
-        e.preventDefault();
-        handleUndo();
+    // Compute current 2D positions of all 54 stickers
+    const currentPositions: readonly Point2D[] = useMemo(() => {
+      if (!transition) {
+        return STICKER_2D_POSITIONS;
       }
-    };
 
-    const solved = isCubeSolved(cubeState) && !animState;
-    const activeBundle = animState
-      ? FACE_BUNDLE_MAP[animState.baseFace].activeBundle
-      : hoveredFace
-      ? FACE_BUNDLE_MAP[hoveredFace].activeBundle
-      : null;
+      const activeMove = transition.move;
+      const baseFace = baseFaceOf(activeMove);
+      const perm = MOVE_PERMUTATIONS[activeMove];
 
-    // Compute current 2D coordinates for all 54 stickers
-    const currentPositions: Point2D[] = STICKER_2D_POSITIONS.map((pos, idx) => {
-      if (!animState) {
-        return { x: pos.x, y: pos.y };
-      }
-      const perm = MOVE_PERMUTATIONS[animState.move];
-      const destIdx = perm[idx];
-      return interpolateStickerPosition(
-        idx,
-        destIdx,
-        animState.baseFace,
-        animState.progress
-      );
-    });
+      return STICKER_2D_POSITIONS.map((_, index) => {
+        const destIndex = perm[index];
+        return interpolateStickerPosition(
+          index,
+          destIndex,
+          baseFace,
+          transition.progress
+        );
+      });
+    }, [transition]);
+
+    // Active bundle highlight based on currently rotating face or hovered face
+    const activeFace = transition ? baseFaceOf(transition.move) : hoveredFace;
+    const activeBundle = activeFace ? FACE_BUNDLE_MAP[activeFace]?.activeBundle : null;
+
+    const handleFaceTurn = useCallback(
+      (face: BaseMove, shiftKey = false) => {
+        const isInverse = shiftKey ? !counterClockwiseMode : counterClockwiseMode;
+        controller.turn(face, isInverse);
+      },
+      [controller, counterClockwiseMode]
+    );
+
+    const handleKeyDown = useCallback(
+      (e: React.KeyboardEvent) => {
+        const key = e.key.toUpperCase();
+        if (["U", "D", "L", "R", "F", "B"].includes(key)) {
+          e.preventDefault();
+          handleFaceTurn(key as BaseMove, e.shiftKey);
+        }
+      },
+      [handleFaceTurn]
+    );
 
     return (
       <div
-        ref={containerRef}
         tabIndex={0}
         onKeyDown={handleKeyDown}
-        aria-label="Simulador matemático circular del Cubo de Rubik 3x3x3. Usa los botones o las teclas U, D, L, R, F, B para rotar las capas."
-        className="relative w-full max-w-[540px] mx-auto flex flex-col items-center select-none outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-3xl p-3 sm:p-5 bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(15,23,42,0.9)]"
+        aria-label="Simulador matemático circular del Cubo de Rubik 3x3x3. Proyección de 9 órbitas continuas."
+        className={`relative w-full max-w-[500px] mx-auto flex flex-col items-center select-none outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 rounded-3xl p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(15,23,42,0.9)] ${
+          className ?? ""
+        }`}
       >
         {/* Status header bar */}
-        <div className="w-full flex items-center justify-between px-2 mb-1 text-xs">
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-2 h-2 rounded-full ${
-                solved
-                  ? "bg-emerald-400 shadow-[0_0_8px_#34d399]"
-                  : "bg-blue-400 animate-pulse shadow-[0_0_8px_#60a5fa]"
-              }`}
-            />
-            <span className="font-semibold text-slate-300 tracking-wide">
-              {solved
-                ? "Estado Canónico Resuelto (54/54)"
-                : `Movimientos aplicados: ${history.length}`}
+        {showHeader && (
+          <div className="w-full flex items-center justify-between px-2 mb-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isSolved
+                    ? "bg-emerald-400 shadow-[0_0_8px_#34d399]"
+                    : "bg-blue-400 animate-pulse shadow-[0_0_8px_#60a5fa]"
+                }`}
+              />
+              <span className="font-semibold text-slate-300 tracking-wide text-[11px] sm:text-xs">
+                {isSolved
+                  ? "Estado Canónico Resuelto (54/54)"
+                  : `Movimientos: ${history.length}`}
+              </span>
+            </div>
+            <span className="text-[10px] sm:text-[11px] text-slate-400 font-mono">
+              Grupo S₅₄ · 9 Órbitas
             </span>
           </div>
-          <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-            Grupo S₅₄ · 9 Órbitas
-          </span>
-        </div>
+        )}
 
         {/* Interactive SVG Canvas */}
-        <div className="relative w-full aspect-square max-w-[460px] flex items-center justify-center touch-manipulation">
+        <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center touch-manipulation">
           <svg
             viewBox={`0 0 ${SVG_VIEWBOX_SIZE} ${SVG_VIEWBOX_SIZE}`}
             className="w-full h-full overflow-visible"
@@ -358,8 +212,8 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
                     r={orbit.r}
                     fill="none"
                     stroke={isHighlighted ? "#60a5fa" : "#64748b"}
-                    strokeOpacity={isHighlighted ? 0.65 : 0.32}
-                    strokeWidth={isHighlighted ? 2 : 1.25}
+                    strokeOpacity={isHighlighted ? 0.75 : 0.28}
+                    strokeWidth={isHighlighted ? 2 : 1.2}
                     className="transition-colors duration-200"
                   />
                 );
@@ -374,22 +228,25 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
                 return (
                   <g
                     key={`cluster-${face}`}
-                    onClick={(e) => handleFaceTurn(face, e.shiftKey)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFaceTurn(face, e.shiftKey);
+                    }}
                     onMouseEnter={() => setHoveredFace(face)}
                     onMouseLeave={() => setHoveredFace(null)}
                     className="cursor-pointer"
                     role="button"
                     tabIndex={-1}
-                    aria-label={`Girar capa ${FACE_COLORS[face].label}`}
+                    aria-label={`Girar capa ${FACE_PALETTE[face].label}`}
                   >
                     <circle
                       cx={center.x}
                       cy={center.y}
                       r={44}
-                      fill={FACE_COLORS[face].fill}
-                      fillOpacity={isHovered ? 0.12 : 0.02}
-                      stroke={FACE_COLORS[face].fill}
-                      strokeOpacity={isHovered ? 0.45 : 0}
+                      fill={FACE_PALETTE[face].fill}
+                      fillOpacity={isHovered ? 0.14 : 0.02}
+                      stroke={FACE_PALETTE[face].fill}
+                      strokeOpacity={isHovered ? 0.5 : 0}
                       strokeWidth={1.5}
                       strokeDasharray="4 3"
                     />
@@ -402,7 +259,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
             <g>
               {STICKER_METADATA.map((meta) => {
                 const colorFace = cubeState[meta.index];
-                const palette = FACE_COLORS[colorFace];
+                const palette = FACE_PALETTE[colorFace];
                 const pt = currentPositions[meta.index];
                 const isCenter = meta.role === "center";
 
@@ -428,7 +285,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
                       r={isCenter ? 10.5 : 9}
                       fill="none"
                       stroke={palette.stroke}
-                      strokeOpacity={0.65}
+                      strokeOpacity={0.7}
                       strokeWidth={1}
                     />
                     {isCenter && (
@@ -450,77 +307,81 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle>(
           </svg>
         </div>
 
-        {/* Layer Rotation Quick Controls (U, D, L, R, F, B) */}
-        <div className="w-full flex flex-col gap-2.5 mt-1">
-          <div className="flex items-center justify-between gap-1.5 flex-wrap">
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {FACES.map((face) => (
-                <button
-                  key={face}
-                  type="button"
-                  onClick={() => handleFaceTurn(face)}
-                  onMouseEnter={() => setHoveredFace(face)}
-                  onMouseLeave={() => setHoveredFace(null)}
-                  title={`Girar capa ${FACE_COLORS[face].label}`}
-                  className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800/90 hover:bg-slate-700 text-white border border-white/10 hover:border-blue-400/50 transition-all flex items-center gap-1.5 shadow-sm"
-                >
-                  <span
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: FACE_COLORS[face].fill }}
-                  />
-                  <span>{counterClockwiseMode ? `${face}'` : face}</span>
-                </button>
-              ))}
+        {/* Optional Embedded Controls for Standalone Mode */}
+        {showControls && (
+          <div className="w-full flex flex-col gap-2.5 mt-2">
+            <div className="flex items-center justify-between gap-1.5 flex-wrap">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {FACES.map((face) => (
+                  <button
+                    key={face}
+                    type="button"
+                    onClick={() => handleFaceTurn(face)}
+                    onMouseEnter={() => setHoveredFace(face)}
+                    onMouseLeave={() => setHoveredFace(null)}
+                    title={`Girar capa ${FACE_PALETTE[face].label}`}
+                    className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800/90 hover:bg-slate-700 text-white border border-white/10 hover:border-blue-400/50 transition-all flex items-center gap-1.5 shadow-sm"
+                  >
+                    <span
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: FACE_PALETTE[face].fill }}
+                    />
+                    <span>{counterClockwiseMode ? `${face}'` : face}</span>
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={toggleCounterClockwise}
+                aria-pressed={counterClockwiseMode}
+                title="Alternar sentido horario (90°) / antihorario (-90°)"
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                  counterClockwiseMode
+                    ? "bg-indigo-600/30 border-indigo-400/50 text-indigo-200"
+                    : "bg-slate-800/60 border-white/10 text-slate-300 hover:text-white"
+                }`}
+              >
+                {counterClockwiseMode ? "↺ Antihorario" : "↻ Horario"}
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setCounterClockwiseMode((prev) => !prev)}
-              aria-pressed={counterClockwiseMode}
-              title="Alternar sentido horario (90°) / antihorario (-90°)"
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                counterClockwiseMode
-                  ? "bg-indigo-600/30 border-indigo-400/50 text-indigo-200"
-                  : "bg-slate-800/60 border-white/10 text-slate-300 hover:text-white"
-              }`}
-            >
-              {counterClockwiseMode ? "↺ Antihorario" : "↻ Horario"}
-            </button>
+            <div className="grid grid-cols-3 gap-2 pt-1 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => controller.scramble()}
+                disabled={isBusy}
+                className="py-2 px-3 rounded-xl text-xs font-bold bg-blue-600/20 hover:bg-blue-600/35 text-blue-300 border border-blue-500/30 transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>⇄</span>
+                <span>Mezclar</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => controller.undo()}
+                disabled={history.length === 0 || isBusy}
+                className="py-2 px-3 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700/80 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>↶</span>
+                <span>Deshacer</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => controller.reset()}
+                disabled={isSolved && history.length === 0}
+                className="py-2 px-3 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700/80 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center justify-center gap-1.5"
+              >
+                <span>⟲</span>
+                <span>Reiniciar</span>
+              </button>
+            </div>
           </div>
-
-          {/* Primary User Controls: Mezclar, Deshacer, Reiniciar */}
-          <div className="grid grid-cols-3 gap-2 pt-1 border-t border-white/10">
-            <button
-              type="button"
-              onClick={handleScramble}
-              className="py-2 px-3 rounded-xl text-xs font-bold bg-blue-600/20 hover:bg-blue-600/35 text-blue-300 border border-blue-500/30 transition-all flex items-center justify-center gap-1.5"
-            >
-              <span>⇄</span>
-              <span>Mezclar</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleUndo}
-              disabled={history.length === 0 || !!animState}
-              className="py-2 px-3 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700/80 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center justify-center gap-1.5"
-            >
-              <span>↶</span>
-              <span>Deshacer</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleReset}
-              disabled={solved && history.length === 0}
-              className="py-2 px-3 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700/80 disabled:opacity-40 disabled:pointer-events-none text-slate-200 border border-white/10 transition-all flex items-center justify-center gap-1.5"
-            >
-              <span>⟲</span>
-              <span>Reiniciar</span>
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     );
   }
 );
+
+export default RubikCircularSvg;
