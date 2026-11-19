@@ -86,7 +86,8 @@ export const projectsData: Project[] = [
         link: "https://pwa-parqueadero.vercel.app/",
         tech: ["PWA", "Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
         images: [
-            "/images/portfolio/pwa-parqueadero/parqueadero_pwa.png"
+            "/images/portfolio/pwa-parqueadero/parqueadero_pwa.png",
+            "/images/portfolio/pwa-parqueadero/pwa_imagen2.jpg"
         ]
     }
 ];
