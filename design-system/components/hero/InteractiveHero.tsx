@@ -89,28 +89,13 @@ export function InteractiveHero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* Left Column: Brand Statement, CTAs & Preserved Infinity Identity */}
           <div className="lg:col-span-5 flex flex-col gap-6 lg:gap-7 relative z-20">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase w-fit">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
-              </span>
-              <span>Ingeniería · Matemáticas · Software</span>
-            </div>
-
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight">
-              La lógica en{" "}
+              Desarrollo y{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 text-glow">
-                movimiento.
+                soluciones digitales.
               </span>
             </h1>
-
-            {/* Enterprise Description */}
-            <p className="text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed font-normal">
-              Transformamos ideas en soluciones digitales mediante matemáticas,
-              creatividad y desarrollo de software.
-            </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-3.5 pt-1">
