@@ -137,7 +137,7 @@ export function InteractiveHero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#070d1e] bg-grid-white pt-8 pb-12 lg:py-14 select-none">
+    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#070d1e] pt-8 pb-12 lg:py-14 select-none">
       {/* Deep Space Background Layer with Twinkling Stars & Cosmic Nebulae */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[8%] left-[4%] w-80 h-80 bg-blue-600/15 rounded-full blur-[130px] animate-blob" />
@@ -162,6 +162,28 @@ export function InteractiveHero() {
             />
           ))}
         </div>
+      </div>
+
+      {/* 3D Cybernetic CAD Perspective Ground / Floor Layer */}
+      <div className="absolute inset-x-0 bottom-0 h-[65%] sm:h-[68%] lg:h-[72%] pointer-events-none z-0 overflow-hidden [perspective:650px] [perspective-origin:50%_0%]">
+        {/* Glowing Horizon Accent & Ambient Fog where Floor meets Deep Space */}
+        <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent shadow-[0_0_20px_#22d3ee]" />
+        <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-cyan-500/12 via-blue-600/5 to-transparent blur-md" />
+
+        {/* 3D Tilted Grid Floor Surface with Smooth Forward Glide */}
+        <div
+          className="absolute inset-x-[-35%] sm:inset-x-[-25%] lg:inset-x-[-15%] top-0 h-[220%] cyber-grid-floor"
+          style={{
+            transform: "rotateX(73deg)",
+            transformOrigin: "50% 0%",
+          }}
+        />
+
+        {/* Grounding Contact Radial Light directly beneath the 3D Cube */}
+        <div className="absolute top-[40%] left-1/2 -translate-x-1/2 w-[480px] h-[160px] bg-blue-500/15 rounded-[100%] blur-3xl pointer-events-none" />
+
+        {/* Soft Depth Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#070d1e] via-transparent to-[#070d1e]/80 pointer-events-none" />
       </div>
 
       {/* Original Luminous Infinity Wave Background Layer (Positioned at bottom spanning full width) */}
