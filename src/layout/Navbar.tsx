@@ -17,7 +17,7 @@ const Navbar = () => {
         { name: "Servicios", href: "/servicios" },
         { name: "Portafolio", href: "/portafolio" },
         { name: "Curiosidades", href: "/curiosidades" },
-        { name: "Contacto", href: "/contacto" },
+        { name: "Contacto", href: "/" },
     ];
 
     const navItemWrapper = "relative group inline-flex rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105";
