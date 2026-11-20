@@ -231,8 +231,30 @@ export function InteractiveHero() {
 
           {/* 2. CENTER COLUMN: 3D Rubik's Cube WebGL */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative z-20">
-            {/* 3D Cube Viewport with Orbital Glowing Ring & Circulating Photon */}
+            {/* 3D Cube Viewport with Orbital Glowing Ring */}
             <div className="relative w-full aspect-square max-w-[360px] sm:max-w-[400px] flex items-center justify-center">
+              {/* Glowing Ambient Orbital Ring around the 3D Cube */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <svg
+                  viewBox="0 0 500 500"
+                  className="w-full h-full overflow-visible opacity-55 animate-pulse"
+                  style={{ animationDuration: "5s" }}
+                >
+                  <ellipse
+                    cx="250"
+                    cy="255"
+                    rx="205"
+                    ry="82"
+                    transform="rotate(-18 250 255)"
+                    fill="none"
+                    stroke="#38bdf8"
+                    strokeWidth="1.5"
+                    strokeDasharray="6 4"
+                    filter="drop-shadow(0 0 8px #38bdf8)"
+                  />
+                </svg>
+              </div>
+
               <RubikCube3D
                 controller={controller}
                 hoveredFace={hoveredFace}

@@ -229,12 +229,12 @@ function RubikScene({
  * Active 3D Orbital Ring with a revolving luminous photon/satellite around the Rubik's Cube.
  */
 function OrbitalRing3D() {
-  const satelliteRef = useRef<THREE.Group>(null);
+  const satelliteRef = useRef<THREE.Mesh>(null);
   const ringRotation = useMemo<[number, number, number]>(() => [0.45, 0.25, -0.28], []);
 
   const linePoints = useMemo(() => {
     const curve = new THREE.EllipseCurve(0, 0, 3.5, 2.1, 0, 2 * Math.PI, false, 0);
-    const pts = curve.getPoints(120);
+    const pts = curve.getPoints(96);
     return pts.map((p) => new THREE.Vector3(p.x, 0, p.y));
   }, []);
 
@@ -246,16 +246,12 @@ function OrbitalRing3D() {
     return new THREE.LineBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.85,
-      depthTest: false,
-      depthWrite: false,
+      opacity: 0.6,
     });
   }, []);
 
   const lineLoop = useMemo(() => {
-    const loop = new THREE.LineLoop(lineGeometry, lineMaterial);
-    loop.renderOrder = 998;
-    return loop;
+    return new THREE.LineLoop(lineGeometry, lineMaterial);
   }, [lineGeometry, lineMaterial]);
 
   useEffect(() => {
@@ -266,7 +262,7 @@ function OrbitalRing3D() {
   }, [lineGeometry, lineMaterial]);
 
   useFrame((state) => {
-    const t = state.clock.getElapsedTime() * 0.85;
+    const t = state.clock.getElapsedTime() * 0.75;
     if (satelliteRef.current) {
       const angle = t % (2 * Math.PI);
       const x = 3.5 * Math.cos(angle);
@@ -278,46 +274,13 @@ function OrbitalRing3D() {
   });
 
   return (
-    <group renderOrder={999}>
+    <group>
       <primitive object={lineLoop} rotation={ringRotation} />
-      <group ref={satelliteRef} renderOrder={1000}>
-        {/* Core brilliant white-hot photon */}
-        <mesh renderOrder={1001}>
-          <sphereGeometry args={[0.12, 24, 24]} />
-          <meshBasicMaterial
-            color="#ffffff"
-            depthTest={false}
-            depthWrite={false}
-            transparent={true}
-          />
-        </mesh>
-        {/* Luminous cyan glowing aura */}
-        <mesh renderOrder={1002}>
-          <sphereGeometry args={[0.26, 24, 24]} />
-          <meshBasicMaterial
-            color="#38bdf8"
-            transparent={true}
-            opacity={0.75}
-            depthTest={false}
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-        {/* Wider ambient cyan halo */}
-        <mesh renderOrder={1003}>
-          <sphereGeometry args={[0.45, 16, 16]} />
-          <meshBasicMaterial
-            color="#00d2ff"
-            transparent={true}
-            opacity={0.3}
-            depthTest={false}
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-        {/* Point light casting radiant illumination */}
-        <pointLight color="#38bdf8" intensity={4} distance={5} />
-      </group>
+      <mesh ref={satelliteRef}>
+        <sphereGeometry args={[0.08, 16, 16]} />
+        <meshBasicMaterial color="#38bdf8" />
+        <pointLight color="#38bdf8" intensity={1.8} distance={2.5} />
+      </mesh>
     </group>
   );
 }
@@ -342,6 +305,9 @@ export function RubikCube3DCanvas({
         <directionalLight position={[-6, -4, -6]} intensity={0.4} color="#93c5fd" />
         <directionalLight position={[0, 6, -6]} intensity={0.3} color="#f8fafc" />
 
+        {/* Active 3D Orbital Ring with Revolving Satellite Photon */}
+        <OrbitalRing3D />
+
         {/* 3D Rubik Scene */}
         <RubikScene
           controller={controller}
@@ -349,9 +315,6 @@ export function RubikCube3DCanvas({
           hoveredFace={hoveredFace}
           counterClockwise={counterClockwise}
         />
-
-        {/* Active 3D Orbital Ring with Revolving Satellite Photon on the Front Layer */}
-        <OrbitalRing3D />
 
         {/* Orbit Camera Controls */}
         <DampedCameraControls />
