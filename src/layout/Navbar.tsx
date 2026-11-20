@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Svg, UserButton } from "@/components";
 import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [showUserDropdown, setShowUserDropdown] = useState(false);
     const { user, isAuthenticated, logout } = useAuth();
@@ -50,13 +52,26 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Menu & Auth Controls */}
-                    <div className="hidden md:flex items-center space-x-3">
-                        {navLinks.map((link) => (
-                            <Link key={link.name} href={link.href} className={`${navItemWrapper} px-3 py-2`}>
-                                <span className={navItemBackground} aria-hidden="true" />
-                                <span className={navItemText}>{link.name}</span>
-                            </Link>
-                        ))}
+                    <div className="hidden md:flex items-center space-x-2">
+                        {navLinks.map((link) => {
+                            const isActive =
+                                link.href === "/"
+                                    ? pathname === "/"
+                                    : pathname.startsWith(link.href);
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className={`relative inline-flex items-center justify-center rounded-full transition-all duration-300 ease-out ${
+                                        isActive
+                                            ? "px-5 py-1.5 bg-blue-600/25 border border-blue-400/50 text-cyan-300 shadow-[0_0_14px_rgba(59,130,246,0.3)] font-bold text-sm tracking-wider uppercase scale-105"
+                                            : "px-3.5 py-1.5 text-slate-300 hover:text-white hover:bg-white/5 font-medium text-sm tracking-wider uppercase transition-colors"
+                                    }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            );
+                        })}
 
                         <div className="h-5 w-[1px] bg-white/10 mx-2" aria-hidden="true" />
 
@@ -154,19 +169,26 @@ const Navbar = () => {
             {isOpen && (
                 <div className="md:hidden bg-[#0f172a] border-b border-white/5 shadow-2xl absolute w-full left-0 animate-fade-down animate-duration-300 z-50">
                     <div className="px-4 pt-3 pb-4 space-y-2">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                onClick={() => setIsOpen(false)}
-                                className={`${navItemWrapper} block px-4 py-3 bg-white/0 rounded-2xl`}
-                            >
-                                <span className={navItemBackground} aria-hidden="true" />
-                                <span className="relative text-slate-300 group-hover:text-white font-medium transition-colors duration-300 text-base uppercase tracking-wider">
+                        {navLinks.map((link) => {
+                            const isActive =
+                                link.href === "/"
+                                    ? pathname === "/"
+                                    : pathname.startsWith(link.href);
+                            return (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className={`block px-4 py-3 rounded-2xl transition-all duration-300 font-medium text-base uppercase tracking-wider ${
+                                        isActive
+                                            ? "bg-blue-600/25 border border-blue-400/40 text-cyan-300 font-bold shadow-[0_0_12px_rgba(59,130,246,0.3)]"
+                                            : "text-slate-300 hover:text-white hover:bg-white/5"
+                                    }`}
+                                >
                                     {link.name}
-                                </span>
-                            </Link>
-                        ))}
+                                </Link>
+                            );
+                        })}
 
                         <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
                             {isAuthenticated && user ? (

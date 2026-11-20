@@ -41,6 +41,7 @@ export interface RubikCircularSvgProps {
   controller?: RubikController;
   showControls?: boolean;
   showHeader?: boolean;
+  showCenterLabels?: boolean;
   hoveredFace?: FaceId | null;
   onHoverFace?: (face: FaceId | null) => void;
   counterClockwiseMode?: boolean;
@@ -54,6 +55,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
       controller: externalController,
       showControls = false,
       showHeader = true,
+      showCenterLabels = false,
       hoveredFace: externalHoveredFace,
       onHoverFace: externalOnHoverFace,
       counterClockwiseMode: externalCounterClockwiseMode,
@@ -291,7 +293,7 @@ export const RubikCircularSvg = forwardRef<RubikCircularHandle, RubikCircularSvg
                       strokeOpacity={0.7}
                       strokeWidth={1}
                     />
-                    {isCenter && (
+                    {isCenter && showCenterLabels && (
                       <text
                         textAnchor="middle"
                         dominantBaseline="central"
