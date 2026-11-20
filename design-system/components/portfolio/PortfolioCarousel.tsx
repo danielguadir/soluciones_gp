@@ -12,16 +12,33 @@ export const PortfolioCarousel: React.FC = () => {
 
     const currentProject = projectsData[currentIndex];
 
-    // Auto-play timer: transitions to next project every 3 seconds (3000ms)
+    // Auto-cycle screenshots every 2 seconds (2000ms) for projects with multiple images
+    useEffect(() => {
+        if (!currentProject || currentProject.images.length <= 1) return;
+
+        const imgInterval = setInterval(() => {
+            setActiveImgIndex((prev) => {
+                const current = prev[currentProject.id] || 0;
+                const next = (current + 1) % currentProject.images.length;
+                return { ...prev, [currentProject.id]: next };
+            });
+        }, 2000);
+
+        return () => clearInterval(imgInterval);
+    }, [currentProject]);
+
+    // Auto-play timer: transitions to next project smoothly
     useEffect(() => {
         if (isPaused || projectsData.length <= 1) return;
 
+        // Dwell longer if project has multiple rotating images so visitor sees both
+        const dwellTime = (currentProject?.images?.length || 1) > 1 ? 5000 : 4000;
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
-        }, 3000);
+        }, dwellTime);
 
         return () => clearInterval(interval);
-    }, [isPaused, currentIndex]);
+    }, [isPaused, currentIndex, currentProject]);
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
@@ -58,7 +75,7 @@ export const PortfolioCarousel: React.FC = () => {
                                 <img
                                     src={currentProject.images[activeImgIndex[currentProject.id] || 0] || currentProject.images[0]}
                                     alt={currentProject.title}
-                                    className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+                                    className="w-full h-full object-contain p-2 sm:p-3 transition-all duration-700"
                                 />
 
                                 {/* Thumbnail Switcher for Multiple Screenshots */}
@@ -102,17 +119,16 @@ export const PortfolioCarousel: React.FC = () => {
                                 ))}
                             </div>
 
-                            {/* CTA Action Button */}
-                            <div className="pt-2">
-                                <Link href={currentProject.link} target={currentProject.link === '#' ? '_self' : '_blank'}>
-                                    <Button
-                                        nameBtn={currentProject.link === '#' ? "Solicitar Demo" : "Explorar Proyecto"}
-                                        variant={currentProject.link === '#' ? "outlined" : "contained"}
-                                        radius="12px"
-                                        icon={currentProject.link === '#' ? "mail" : "plus"}
-                                        iconPosition="right"
-                                        style={{ width: '100%', height: '48px', fontWeight: 'bold' }}
-                                    />
+                            {/* CTA Action Button: Simplemente '+' */}
+                            <div className="pt-2 flex items-center">
+                                <Link
+                                    href={currentProject.link}
+                                    target={currentProject.link === '#' ? '_self' : '_blank'}
+                                    className="w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-2xl font-bold flex items-center justify-center shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-blue-400/30 cursor-pointer"
+                                    title={currentProject.link === '#' ? "Solicitar Demo" : "Explorar Proyecto"}
+                                    aria-label="Abrir proyecto"
+                                >
+                                    +
                                 </Link>
                             </div>
                         </div>

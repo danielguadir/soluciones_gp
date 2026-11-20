@@ -21,12 +21,13 @@ export const projectsData: Project[] = [
     {
         id: "casa-memoria-cumbal",
         title: "La Casa de la Memoria del Gran Cumbal",
-        description: "Espacio cultural, archivo y repositorio histórico ubicado en el cuarto piso del edificio del cabildo de Cumbal, Nariño, dedicado a resguardar la identidad, el territorio y la memoria ancestral de los pueblos indígenas de la región.",
+        description: "En desarrollo",
         icon: "landmark",
         link: "#",
         tech: ["Next.js", "TypeScript", "Patrimonio Cultural", "Cumbal Nariño"],
         images: [
-            "/images/portfolio/casa-memoria/casa_memoria_1.png"
+            "/images/portfolio/casa-memoria/casa_memoria_1.png",
+            "/images/portfolio/casa-memoria/casa_memoria_2.png"
         ]
     },
     {

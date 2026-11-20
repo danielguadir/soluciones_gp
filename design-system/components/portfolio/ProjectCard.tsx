@@ -26,7 +26,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                                 <img
                                     src={img}
                                     alt={`${project.title} screenshot ${i + 1}`}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover/gallery:scale-105"
+                                    className="w-full h-full object-contain p-2 transition-transform duration-700"
                                 />
                             </div>
                         ))}
@@ -67,16 +67,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 </div>
 
                 {/* CTA Button */}
-                <div className="pt-4 mt-auto">
-                    <Link href={project.link} target={project.link === '#' ? '_self' : '_blank'}>
-                        <Button
-                            nameBtn={project.link === '#' ? "Solicitar Demo" : "Explorar Proyecto"}
-                            variant={project.link === '#' ? "outlined" : "contained"}
-                            radius="12px"
-                            icon={project.link === '#' ? "mail" : "plus"}
-                            iconPosition="right"
-                            style={{ width: '100%', height: '50px' }}
-                        />
+                <div className="pt-4 mt-auto flex items-center">
+                    <Link
+                        href={project.link}
+                        target={project.link === '#' ? '_self' : '_blank'}
+                        className="w-12 h-12 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-2xl font-bold flex items-center justify-center shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 active:scale-95 transition-all duration-300 border border-blue-400/30 cursor-pointer"
+                        title={project.link === '#' ? "Solicitar Demo" : "Explorar Proyecto"}
+                        aria-label="Abrir proyecto"
+                    >
+                        +
                     </Link>
                 </div>
             </div>

@@ -2,11 +2,18 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Svg } from "@/components";
 import { CONTACT_INFO } from "@/common/constants";
 
 const Footer = () => {
+    const pathname = usePathname();
     const currentYear = new Date().getFullYear();
+
+    // En la página de inicio (/) no se muestra el footer por requerimiento de diseño
+    if (pathname === "/") {
+        return null;
+    }
 
     return (
         <footer className="bg-[#0f172a] text-slate-400 py-16 border-t border-white/5">
