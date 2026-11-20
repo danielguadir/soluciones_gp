@@ -22,6 +22,10 @@ const Navbar = () => {
         { name: "Contacto", href: "/" },
     ];
 
+    const navItemWrapper = "relative group inline-flex rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105";
+    const navItemBackground = "absolute inset-0 bg-white/0 group-hover:bg-white/10 group-hover:shadow-[0_0_18px_rgba(255,255,255,0.25)] transition-all duration-300";
+    const navItemText = "relative text-slate-300 group-hover:text-white font-medium transition-colors duration-300 text-sm uppercase tracking-wider";
+
     return (
         <nav className="bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
