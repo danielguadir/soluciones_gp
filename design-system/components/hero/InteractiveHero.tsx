@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { RubikController } from "@/lib/rubik/controller";
 import { useRubikSync } from "@/lib/rubik/useRubikSync";
 import { RubikCircularSvg } from "@/components/hero/RubikCircularSvg";
@@ -196,22 +195,15 @@ export function InteractiveHero() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-1">
+            <div className="flex items-center gap-3.5 pt-1">
               <button
                 type="button"
                 onClick={handleExploreExperience}
-                className="px-6 py-3.5 rounded-full font-bold text-sm text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 flex items-center gap-2 cursor-pointer active:scale-95"
+                className="px-7 py-3 rounded-full font-bold text-sm text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 flex items-center gap-2 cursor-pointer active:scale-95"
               >
-                <span>Explorar experiencia</span>
+                <span>Más...</span>
                 <span aria-hidden="true">→</span>
               </button>
-
-              <Link
-                href="/servicios"
-                className="px-6 py-3.5 rounded-full font-bold text-sm text-slate-200 hover:text-white bg-slate-900/60 hover:bg-slate-800/80 border border-white/20 hover:border-cyan-400/50 transition-all duration-300 flex items-center gap-2 active:scale-95"
-              >
-                Nuestros servicios
-              </Link>
             </div>
           </div>
 

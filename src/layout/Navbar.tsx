@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showUserDropdown, setShowUserDropdown] = useState(false);
-    const { user, isAuthenticated, openAuthModal, logout } = useAuth();
+    const { user, isAuthenticated, logout } = useAuth();
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -102,21 +102,21 @@ const Navbar = () => {
                                     ) : (
                                         <div className="space-y-1">
                                             <button
+                                                type="button"
                                                 onClick={() => {
                                                     setShowUserDropdown(false);
-                                                    openAuthModal("login");
                                                 }}
-                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/20 rounded-xl transition-all text-left cursor-pointer"
+                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-xl transition-all text-left cursor-default"
                                             >
                                                 <Svg icon="user" fontSize="15px" color="#3b82f6" />
                                                 <span>Iniciar Sesión</span>
                                             </button>
                                             <button
+                                                type="button"
                                                 onClick={() => {
                                                     setShowUserDropdown(false);
-                                                    openAuthModal("register");
                                                 }}
-                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all text-left cursor-pointer shadow-md shadow-blue-500/20"
+                                                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-bold text-white bg-blue-600/70 rounded-xl transition-all text-left cursor-default"
                                             >
                                                 <Svg icon="plus" fontSize="14px" color="#ffffff" />
                                                 <span>Registrarse</span>
@@ -183,20 +183,20 @@ const Navbar = () => {
                             ) : (
                                 <div className="grid grid-cols-2 gap-2 pt-2">
                                     <button
+                                        type="button"
                                         onClick={() => {
                                             setIsOpen(false);
-                                            openAuthModal("login");
                                         }}
-                                        className="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl text-center cursor-pointer"
+                                        className="py-3 px-4 bg-slate-800/80 text-slate-300 font-bold text-xs rounded-xl text-center cursor-default"
                                     >
                                         Iniciar Sesión
                                     </button>
                                     <button
+                                        type="button"
                                         onClick={() => {
                                             setIsOpen(false);
-                                            openAuthModal("register");
                                         }}
-                                        className="py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl text-center cursor-pointer shadow-lg shadow-blue-500/20"
+                                        className="py-3 px-4 bg-blue-600/70 text-white font-bold text-xs rounded-xl text-center cursor-default"
                                     >
                                         Registrarse
                                     </button>

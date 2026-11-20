@@ -23,19 +23,16 @@ const DynamicRubikCube3DCanvas = dynamic(
 
 function Rubik3DLoadingFallback() {
   return (
-    <div className="w-full h-full min-h-[340px] sm:min-h-[400px] flex flex-col items-center justify-center p-6 text-center rounded-3xl bg-slate-900/60 border border-white/10 backdrop-blur-sm">
-      <div className="relative w-16 h-16 mb-4">
-        <div className="absolute inset-0 rounded-2xl border-2 border-blue-500/30 animate-ping" />
-        <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-          <span className="text-2xl">🧊</span>
-        </div>
+    <div className="w-full h-full min-h-[340px] sm:min-h-[400px] flex items-center justify-center select-none pointer-events-none">
+      <div className="relative w-12 h-12 flex items-center justify-center">
+        {/* Outer orbital cyan spinner */}
+        <div className="w-12 h-12 rounded-full border-2 border-cyan-400/20 border-t-cyan-400 animate-spin" />
+        {/* Inner reverse blue ring */}
+        <div
+          className="absolute w-6 h-6 rounded-full border-2 border-blue-500/20 border-b-blue-400 animate-spin"
+          style={{ animationDirection: "reverse", animationDuration: "0.85s" }}
+        />
       </div>
-      <p className="text-sm font-semibold text-slate-200">
-        Iniciando motor Three.js WebGL...
-      </p>
-      <p className="text-xs text-slate-400 mt-1 max-w-xs">
-        Cargando espacio tridimensional y geometría $SO(3)$.
-      </p>
     </div>
   );
 }

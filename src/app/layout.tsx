@@ -7,8 +7,6 @@ import Navbar from "@/layout/Navbar";
 import Footer from "@/layout/Footer";
 import WhatsAppButton from "@/layout/WhatsAppButton";
 import { AuthProvider } from "@/context/AuthContext";
-import { AuthModal } from "@/design-system/components/auth/AuthModal";
-import { MaintenanceNotice } from "@/design-system/components/auth/MaintenanceNotice";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -71,8 +69,6 @@ export default function RootLayout({
           </main>
           <Footer />
           <WhatsAppButton />
-          <AuthModal />
-          <MaintenanceNotice />
         </AuthProvider>
       </body>
     </html>
