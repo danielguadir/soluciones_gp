@@ -286,32 +286,6 @@ function OrbitalRing3D() {
   );
 }
 
-/**
- * Soft contact shadow and subtle ambient cyan reflection directly beneath the Rubik's cube.
- */
-function CubeContactGrounding({ position = [0, -1.95, 0] }: { position?: [number, number, number] }) {
-  return (
-    <group position={position}>
-      {/* Soft radial contact shadow */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.85, 32]} />
-        <meshBasicMaterial color="#000000" transparent opacity={0.4} />
-      </mesh>
-
-      {/* Luminous cyan grounding reflection glow */}
-      <mesh position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[2.5, 32]} />
-        <meshBasicMaterial
-          color="#38bdf8"
-          transparent
-          opacity={0.12}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-    </group>
-  );
-}
-
 export function RubikCube3DCanvas({
   controller,
   onHoverFace,
@@ -331,9 +305,6 @@ export function RubikCube3DCanvas({
         <directionalLight position={[6, 8, 7]} intensity={1.15} />
         <directionalLight position={[-6, -4, -6]} intensity={0.4} color="#93c5fd" />
         <directionalLight position={[0, 6, -6]} intensity={0.3} color="#f8fafc" />
-
-        {/* Soft Contact Grounding Shadow directly beneath the Cube */}
-        <CubeContactGrounding />
 
         {/* Active 3D Orbital Ring with Revolving Satellite Photon */}
         <OrbitalRing3D />

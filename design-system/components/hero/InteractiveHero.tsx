@@ -288,16 +288,16 @@ export function InteractiveHero() {
 
         {/* Collapsible Controls Toolbar Drawer (Hidden by default, expandable on demand) */}
         <div className="w-full max-w-4xl mx-auto mt-6 lg:mt-8 flex flex-col items-center relative z-20">
-          {/* Discreet Toggle Button (Only gear icon) */}
+          {/* Discreet Toggle Button (Only gear icon, no oval outline or container) */}
           <button
             type="button"
             onClick={() => setShowControls((prev) => !prev)}
             aria-expanded={showControls}
             aria-label={showControls ? "Ocultar controles del simulador" : "Controles del simulador"}
             title={showControls ? "Ocultar controles del simulador" : "Controles del simulador"}
-            className="p-2 sm:px-3 sm:py-1.5 rounded-full text-sm font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 hover:border-cyan-500/40 shadow-sm backdrop-blur-md transition-all flex items-center justify-center cursor-pointer active:scale-95"
+            className="p-1 text-cyan-400 hover:text-cyan-300 transition-colors duration-200 flex items-center justify-center cursor-pointer active:scale-90 bg-transparent border-0 outline-none select-none"
           >
-            <span className="text-cyan-400">⚙</span>
+            <span className="text-base sm:text-lg">⚙</span>
           </button>
 
           {/* Collapsible Controls Panel */}
