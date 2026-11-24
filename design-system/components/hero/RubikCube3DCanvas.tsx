@@ -67,6 +67,7 @@ function DampedCameraControls() {
     controls.minDistance = 3.8;
     controls.maxDistance = 8.0;
     controls.rotateSpeed = 0.9;
+    controls.maxPolarAngle = Math.PI / 2 + 0.08;
     controlsRef.current = controls;
 
     return () => {
@@ -285,6 +286,76 @@ function OrbitalRing3D() {
   );
 }
 
+/**
+ * 3D Checkerboard CAD Floor ("Piso en Cuadros 3D")
+ * Directly derived from the user's project architecture and tailored for Impulso GP:
+ * - Static floor where the Rubik's Cube rests at [0, -2.15, 0]
+ * - Base floor plane with subtle tech navy material
+ * - Dual grid lines (minor 1x1 in cyan-blue, master 2x2 in neon cyan)
+ * - Alternating solid checker tiles (dark slate / tech navy)
+ * - Soft radial contact shadow and ambient grounding glow
+ */
+function PisoEnCuadros3D({ position = [0, -2.15, 0] }: { position?: [number, number, number] }) {
+  // Precompute 1x1 alternating checker tiles (checkerboard pattern)
+  const checkerTiles = useMemo(() => {
+    const tiles: [number, number][] = [];
+    for (let ix = -8; ix < 8; ix++) {
+      for (let iz = -8; iz < 8; iz++) {
+        if ((ix + iz) % 2 === 0) {
+          tiles.push([ix + 0.5, iz + 0.5]);
+        }
+      }
+    }
+    return tiles;
+  }, []);
+
+  const cellColor = "#1e3a8a";   // Electric tech navy
+  const sectionColor = "#0284c7"; // Cyan blue
+  const majorColor = "#38bdf8";   // Cyber neon cyan
+  const tileColor = "#0f172a";    // Dark slate tile
+
+  return (
+    <group position={position}>
+      {/* Subtle radial ground disc with soft alpha so background stars and waves remain visible */}
+      <mesh position={[0, -0.008, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[9, 36]} />
+        <meshBasicMaterial color="#070d1e" transparent opacity={0.35} />
+      </mesh>
+
+      {/* Minor 1x1 CAD grid lines */}
+      <gridHelper args={[18, 18, sectionColor, cellColor]} position={[0, 0.001, 0]} />
+
+      {/* Master 2x2 CAD grid lines */}
+      <gridHelper args={[18, 9, majorColor, sectionColor]} position={[0, 0.003, 0]} />
+
+      {/* Solid alternating checker tiles ("Piso en cuadritos") */}
+      {checkerTiles.map(([tx, tz], idx) => (
+        <mesh key={idx} position={[tx, -0.002, tz]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.96, 0.96]} />
+          <meshBasicMaterial color={tileColor} transparent opacity={0.42} />
+        </mesh>
+      ))}
+
+      {/* Soft contact shadow directly under the Rubik's cube */}
+      <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[2.0, 32]} />
+        <meshBasicMaterial color="#000000" transparent opacity={0.5} />
+      </mesh>
+
+      {/* Luminous cyan grounding reflection glow */}
+      <mesh position={[0, 0.005, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[2.8, 32]} />
+        <meshBasicMaterial
+          color="#38bdf8"
+          transparent
+          opacity={0.14}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+    </group>
+  );
+}
+
 export function RubikCube3DCanvas({
   controller,
   onHoverFace,
@@ -304,6 +375,9 @@ export function RubikCube3DCanvas({
         <directionalLight position={[6, 8, 7]} intensity={1.15} />
         <directionalLight position={[-6, -4, -6]} intensity={0.4} color="#93c5fd" />
         <directionalLight position={[0, 6, -6]} intensity={0.3} color="#f8fafc" />
+
+        {/* 3D Checkerboard CAD Floor resting beneath the Cube */}
+        <PisoEnCuadros3D />
 
         {/* Active 3D Orbital Ring with Revolving Satellite Photon */}
         <OrbitalRing3D />

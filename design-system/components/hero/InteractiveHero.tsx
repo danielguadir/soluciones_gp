@@ -12,33 +12,48 @@ import { BaseMove, FaceId, Move } from "@/lib/rubik/types";
 
 // Deterministic cosmic starfield for deep space atmosphere behind 3D & 2D views
 const COSMIC_STARS = [
-  { top: "6%", left: "12%", size: 2, opacity: 0.8, pulse: true },
-  { top: "10%", left: "28%", size: 1.5, opacity: 0.6, pulse: false },
-  { top: "14%", left: "45%", size: 2, opacity: 0.9, pulse: true },
-  { top: "8%", left: "68%", size: 1.5, opacity: 0.5, pulse: false },
-  { top: "12%", left: "84%", size: 2.5, opacity: 0.85, pulse: true },
-  { top: "18%", left: "94%", size: 1, opacity: 0.4, pulse: false },
-  { top: "25%", left: "8%", size: 1.5, opacity: 0.7, pulse: false },
-  { top: "28%", left: "38%", size: 2, opacity: 0.8, pulse: true },
-  { top: "22%", left: "55%", size: 1.5, opacity: 0.6, pulse: false },
-  { top: "30%", left: "72%", size: 2, opacity: 0.9, pulse: true },
-  { top: "26%", left: "88%", size: 1, opacity: 0.5, pulse: false },
-  { top: "35%", left: "18%", size: 1.5, opacity: 0.6, pulse: false },
-  { top: "42%", left: "32%", size: 2, opacity: 0.75, pulse: true },
-  { top: "38%", left: "62%", size: 2.5, opacity: 0.95, pulse: true },
-  { top: "45%", left: "80%", size: 1.5, opacity: 0.6, pulse: false },
-  { top: "48%", left: "92%", size: 2, opacity: 0.7, pulse: false },
-  { top: "52%", left: "14%", size: 1.5, opacity: 0.5, pulse: false },
-  { top: "58%", left: "42%", size: 2, opacity: 0.85, pulse: true },
-  { top: "54%", left: "70%", size: 1.5, opacity: 0.6, pulse: false },
-  { top: "62%", left: "86%", size: 2, opacity: 0.8, pulse: true },
-  { top: "68%", left: "24%", size: 1, opacity: 0.4, pulse: false },
-  { top: "65%", left: "50%", size: 2, opacity: 0.75, pulse: false },
-  { top: "72%", left: "65%", size: 1.5, opacity: 0.6, pulse: true },
-  { top: "75%", left: "82%", size: 2, opacity: 0.9, pulse: true },
-  { top: "80%", left: "10%", size: 1.5, opacity: 0.5, pulse: false },
-  { top: "82%", left: "35%", size: 2, opacity: 0.7, pulse: false },
-  { top: "78%", left: "90%", size: 1.5, opacity: 0.6, pulse: true },
+  { top: "5%", left: "8%", size: 1.5, opacity: 0.7, pulse: true },
+  { top: "8%", left: "22%", size: 2, opacity: 0.85, pulse: false },
+  { top: "12%", left: "38%", size: 1.5, opacity: 0.6, pulse: true },
+  { top: "7%", left: "54%", size: 2, opacity: 0.9, pulse: false },
+  { top: "11%", left: "72%", size: 1.5, opacity: 0.5, pulse: true },
+  { top: "6%", left: "88%", size: 2.5, opacity: 0.85, pulse: false },
+  { top: "16%", left: "95%", size: 1, opacity: 0.45, pulse: true },
+  { top: "19%", left: "4%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "24%", left: "16%", size: 2, opacity: 0.8, pulse: true },
+  { top: "21%", left: "31%", size: 1.5, opacity: 0.55, pulse: false },
+  { top: "27%", left: "48%", size: 2, opacity: 0.9, pulse: true },
+  { top: "23%", left: "64%", size: 1.5, opacity: 0.65, pulse: false },
+  { top: "29%", left: "81%", size: 2.5, opacity: 0.8, pulse: true },
+  { top: "26%", left: "92%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "34%", left: "10%", size: 2, opacity: 0.75, pulse: true },
+  { top: "38%", left: "26%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "36%", left: "42%", size: 2, opacity: 0.85, pulse: true },
+  { top: "41%", left: "58%", size: 1.5, opacity: 0.7, pulse: false },
+  { top: "37%", left: "75%", size: 2.5, opacity: 0.9, pulse: true },
+  { top: "43%", left: "89%", size: 1.5, opacity: 0.55, pulse: false },
+  { top: "49%", left: "6%", size: 1, opacity: 0.4, pulse: false },
+  { top: "52%", left: "19%", size: 2, opacity: 0.8, pulse: true },
+  { top: "48%", left: "35%", size: 1.5, opacity: 0.65, pulse: false },
+  { top: "55%", left: "52%", size: 2, opacity: 0.75, pulse: true },
+  { top: "51%", left: "68%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "57%", left: "84%", size: 2, opacity: 0.85, pulse: true },
+  { top: "62%", left: "94%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "66%", left: "14%", size: 2, opacity: 0.7, pulse: true },
+  { top: "69%", left: "28%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "64%", left: "45%", size: 2.5, opacity: 0.9, pulse: true },
+  { top: "71%", left: "61%", size: 1.5, opacity: 0.55, pulse: false },
+  { top: "67%", left: "77%", size: 2, opacity: 0.8, pulse: true },
+  { top: "73%", left: "91%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "78%", left: "8%", size: 2, opacity: 0.75, pulse: true },
+  { top: "82%", left: "23%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "79%", left: "39%", size: 2, opacity: 0.85, pulse: true },
+  { top: "85%", left: "55%", size: 1.5, opacity: 0.6, pulse: false },
+  { top: "81%", left: "71%", size: 2, opacity: 0.75, pulse: true },
+  { top: "86%", left: "86%", size: 1.5, opacity: 0.65, pulse: false },
+  { top: "90%", left: "16%", size: 1.5, opacity: 0.5, pulse: false },
+  { top: "88%", left: "48%", size: 2, opacity: 0.8, pulse: true },
+  { top: "92%", left: "78%", size: 1.5, opacity: 0.55, pulse: false },
 ];
 
 export function InteractiveHero() {
@@ -137,7 +152,7 @@ export function InteractiveHero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#070d1e] bg-grid-white pt-8 pb-12 lg:py-14 select-none">
+    <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-x-hidden bg-[#070d1e] pt-8 pb-12 lg:py-14 select-none">
       {/* Deep Space Background Layer with Twinkling Stars & Cosmic Nebulae */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[8%] left-[4%] w-80 h-80 bg-blue-600/15 rounded-full blur-[130px] animate-blob" />
@@ -245,7 +260,7 @@ export function InteractiveHero() {
 
           {/* 3. RIGHT COLUMN: 2D Circular Mathematical Projection */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center relative z-20">
-            {/* 2D Projection Viewport */}
+            {/* 2D Projection Viewport with Grounding Glow */}
             <div className="relative w-full aspect-square max-w-[360px] sm:max-w-[420px] flex items-center justify-center">
               <RubikCircularSvg
                 controller={controller}
@@ -255,6 +270,11 @@ export function InteractiveHero() {
                 onHoverFace={setHoveredFace}
                 counterClockwiseMode={counterClockwise}
                 className="bg-transparent border-0 shadow-none p-0 w-full h-full"
+              />
+              {/* Subtle tech grounding reflection under 2D circular projection */}
+              <div
+                className="absolute -bottom-2 w-48 sm:w-60 h-3 rounded-full bg-cyan-500/15 blur-md pointer-events-none"
+                aria-hidden="true"
               />
             </div>
           </div>
