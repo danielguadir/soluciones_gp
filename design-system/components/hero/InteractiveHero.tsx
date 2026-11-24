@@ -181,12 +181,12 @@ export function InteractiveHero() {
       </div>
 
       {/* Full-Width Static 3D Topological Floor (Digital Wave / Particle Terrain across entire screen) */}
-      <div className="absolute bottom-0 left-0 w-full h-[360px] sm:h-[440px] lg:h-[500px] pointer-events-none z-0 overflow-hidden select-none">
+      <div className="absolute bottom-0 left-0 w-full h-[340px] sm:h-[420px] lg:h-[500px] pointer-events-none z-0 overflow-hidden select-none">
         <TopologicalFloorLandscape className="w-full h-full" />
       </div>
 
       {/* Original Luminous Infinity Wave Background Layer (Positioned at bottom spanning full width) */}
-      <div className="absolute bottom-0 left-0 w-full h-[320px] sm:h-[400px] lg:h-[490px] pointer-events-none z-0 overflow-hidden flex items-end justify-center select-none">
+      <div className="absolute bottom-0 left-0 w-full h-[340px] sm:h-[420px] lg:h-[500px] pointer-events-none z-0 overflow-hidden flex items-end justify-center select-none">
         <div className="relative w-full max-w-[1750px] h-full">
           <Image
             src="/images/hero/inicio1_pw.png"
@@ -277,9 +277,9 @@ export function InteractiveHero() {
                 counterClockwiseMode={counterClockwise}
                 className="bg-transparent border-0 shadow-none p-0 w-full h-full"
               />
-              {/* Subtle tech grounding reflection under 2D circular projection */}
+              {/* Subtle tech grounding reflection under 2D circular projection matching the ascending green wave */}
               <div
-                className="absolute -bottom-2 w-48 sm:w-60 h-3 rounded-full bg-cyan-500/15 blur-md pointer-events-none"
+                className="absolute -bottom-2 w-48 sm:w-60 h-3 rounded-full bg-gradient-to-r from-cyan-500/20 via-emerald-400/25 to-lime-400/20 blur-md pointer-events-none"
                 aria-hidden="true"
               />
             </div>

@@ -18,8 +18,8 @@ function createDotTexture(): THREE.CanvasTexture {
   if (ctx) {
     const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
     gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-    gradient.addColorStop(0.2, "rgba(255, 255, 255, 0.95)");
-    gradient.addColorStop(0.5, "rgba(255, 255, 255, 0.35)");
+    gradient.addColorStop(0.22, "rgba(255, 255, 255, 0.95)");
+    gradient.addColorStop(0.52, "rgba(255, 255, 255, 0.35)");
     gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, 64, 64);
@@ -31,14 +31,13 @@ function createDotTexture(): THREE.CanvasTexture {
 
 /**
  * TopologicalFloorLandscape:
- * Full-width 3D digital topological floor made of glowing particle points in smooth,
- * undulating terrain waves.
+ * Full-width 3D digital topological floor made of glowing particle points & subtle CAD contours.
  *
- * Characteristics:
- * - Spans the entire screen width (full viewport background).
- * - Static: rendered with high-precision perspective with zero ongoing CPU/GPU loop.
- * - Gentle topological elevation hills & valleys mimicking digital terrain / topography.
- * - Cyber cyan, electric blue, and luminous crest highlights matching Impulso GP colors.
+ * Mathematically synchronized with the energy curves of `inicio1_pw.png`:
+ * - Left flank (X < 0): Follows the cyber-blue digital stream with deep navy, electric blue & cyan.
+ * - Center nexus (X ≈ 0): Concentrates at the central starburst flare directly beneath the Rubik's Cube.
+ * - Right flank (X > 0): Soars upward following the neon lime-green / emerald arrow trajectory.
+ * - Completely static: Zero animation loop overhead (0% GPU/CPU idle drain, 60 FPS fluid scroll).
  */
 export function TopologicalFloorLandscape({ className = "w-full h-full" }: TopologicalFloorLandscapeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,14 +49,14 @@ export function TopologicalFloorLandscape({ className = "w-full h-full" }: Topol
     if (!container || !canvas) return;
 
     let width = container.clientWidth || window.innerWidth;
-    let height = container.clientHeight || 450;
+    let height = container.clientHeight || 480;
 
     // 1. Scene & Perspective Camera
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 80);
-    // Elevated perspective looking across the topological landscape
-    camera.position.set(0, 4.6, 15.0);
-    camera.lookAt(0, 0.2, 3.2);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 90);
+    // Elevated perspective looking down and across the topological landscape
+    camera.position.set(0, 4.8, 15.2);
+    camera.lookAt(0, 0.25, 3.4);
 
     // 2. High-performance WebGL Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -69,125 +68,181 @@ export function TopologicalFloorLandscape({ className = "w-full h-full" }: Topol
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(width, height, false);
 
-    // 3. Dot Texture
+    // 3. Dot Texture for soft point glow
     const dotTexture = createDotTexture();
 
     // 4. Mathematical Topological Terrain Generation
-    // Grid of columns (X) and rows (Z)
-    const COLS = 120; // Lateral breadth spanning wide across the screen
-    const ROWS = 56;  // Depth from near foreground to distant horizon
+    const COLS = 120; // Lateral span across the entire screen
+    const ROWS = 56;  // Depth from foreground near camera towards the horizon
     const totalPoints = COLS * ROWS;
 
     const positions = new Float32Array(totalPoints * 3);
     const colors = new Float32Array(totalPoints * 3);
 
+    // Lateral line segments for subtle CAD contour lines
+    const lineIndices: number[] = [];
+
     let pIdx = 0;
     let cIdx = 0;
 
     for (let r = 0; r < ROWS; r++) {
-      // Z depth from foreground near camera towards the horizon
       const tz = r / (ROWS - 1);
+      // Z depth from near foreground (z = -1.5) to distant horizon (z = 16.5)
       const z = tz * 18.0 - 1.5;
 
       for (let c = 0; c < COLS; c++) {
-        // X lateral position spanning full screen
         const tx = c / (COLS - 1);
+        // X lateral position spanning full screen (-23 to +23 in world units)
         const x = (tx - 0.5) * 46.0;
 
-        // --- Smooth Topological Wave Elevation Function ---
-        // A) Primary prominent wave crest (center-right, echoing reference image ridge)
-        const d1 = Math.hypot((x - 2.8) / 5.8, (z - 5.2) / 4.0);
-        const h1 = 3.85 * Math.exp(-0.5 * d1 * d1);
+        // --- Topological Elevation Mathematically Mapped to inicio1_pw.png ---
+        // A) Left Wave Crest (Under Left Text Column & Gears):
+        // Peaks at x ≈ -9.5, z ≈ 6.2 with cyber-blue wave elevation
+        const dLeft = Math.hypot((x + 9.5) / 6.2, (z - 6.2) / 4.4);
+        const hLeft = 2.35 * Math.exp(-0.5 * dLeft * dLeft);
 
-        // B) Secondary rolling wave crest on the left
-        const d2 = Math.hypot((x + 9.5) / 6.4, (z - 7.2) / 4.8);
-        const h2 = 2.45 * Math.exp(-0.5 * d2 * d2);
+        // B) Center Nexus Platform (Under Rubik's Cube & Starburst Flare):
+        // Focal convergence point where blue and green energy streams meet
+        const dCenter = Math.hypot(x / 4.8, (z - 5.0) / 3.6);
+        const hCenter = 1.35 * Math.exp(-0.5 * dCenter * dCenter);
 
-        // C) Tertiary wave crest on the far right
-        const d3 = Math.hypot((x - 12.8) / 5.2, (z - 8.5) / 4.2);
-        const h3 = 1.85 * Math.exp(-0.5 * d3 * d3);
+        // C) Right Ascending Wave Crest (Under 2D Projection & Soaring Green Arrow):
+        // Follows the ascending trajectory of the arrow, rising higher (Y ≈ 3.85) and sweeping upward
+        const dRight = Math.hypot((x - 11.2) / 6.8, (z - (5.2 - 0.22 * (x - 11.2))) / 4.6);
+        const hRight = 3.85 * Math.exp(-0.5 * dRight * dRight);
 
-        // D) Gentle harmonic undulating swell across the whole terrain
-        const ripple = 0.52 * Math.sin(x * 0.28 + 1.2) * Math.cos(z * 0.26 - 0.4);
+        // D) Gentle Harmonic Undulation across the terrain
+        const ripple = 0.38 * Math.sin(x * 0.25 - 0.18 * z + 0.8) * Math.cos(0.18 * x + 0.22 * z);
 
-        // E) Lateral and horizon tapering for smooth edge dissipation
+        // E) Lateral and Horizon Edge Tapering for smooth visual dissipation
         const taperX = Math.exp(-Math.pow(Math.abs(x) / 21.0, 4));
         const taperZ = Math.exp(-Math.pow(Math.max(0, z - 13.5) / 3.8, 2));
 
-        const y = (h1 + h2 + h3 + ripple) * taperX * taperZ - 1.85;
+        const y = (hLeft + hCenter + hRight + ripple) * taperX * taperZ - 1.78;
 
-        // Position
         positions[pIdx] = x;
         positions[pIdx + 1] = y;
         positions[pIdx + 2] = z;
         pIdx += 3;
 
-        // --- Color Gradient based on Elevation ---
-        // Normalizes elevation to [0, 1]
-        const normY = Math.max(0, Math.min(1, (y + 1.85) / 3.6));
+        // --- Color Gradient Synchronized with inicio1_pw.png ---
+        // Normalized elevation for vertical tone mapping
+        const normY = Math.max(0, Math.min(1, (y + 1.78) / 3.8));
 
-        let red = 0.05;
+        let red = 0.04;
         let green = 0.15;
         let blue = 0.32;
 
-        if (normY < 0.28) {
-          // Deep slate navy to cyan-blue
-          const t = normY / 0.28;
-          red = 0.04 + t * 0.04;
-          green = 0.14 + t * 0.38;
-          blue = 0.28 + t * 0.52;
-        } else if (normY < 0.72) {
-          // Cyan-blue to cyber cyan neon
-          const t = (normY - 0.28) / 0.44;
-          red = 0.08 + t * 0.14;
-          green = 0.52 + t * 0.22;
-          blue = 0.80 + t * 0.17;
+        if (x < -2.5) {
+          // --- LEFT FLANK: Cyber Blue & Electric Cyan Stream ---
+          if (normY < 0.35) {
+            // Deep slate navy to royal cyan
+            const t = normY / 0.35;
+            red = 0.03 + t * 0.04;
+            green = 0.12 + t * 0.38;
+            blue = 0.26 + t * 0.52;
+          } else if (normY < 0.75) {
+            // Royal cyan to cyber cyan neon
+            const t = (normY - 0.35) / 0.40;
+            red = 0.07 + t * 0.15;
+            green = 0.50 + t * 0.26;
+            blue = 0.78 + t * 0.20;
+          } else {
+            // Luminous crest highlight
+            const t = (normY - 0.75) / 0.25;
+            red = 0.22 + t * 0.76;
+            green = 0.76 + t * 0.24;
+            blue = 0.98 + t * 0.02;
+          }
+        } else if (x <= 2.5) {
+          // --- CENTER NEXUS: Convergent Starburst Flare ---
+          // Intense white-cyan focal core under the Rubik's Cube
+          const t = normY;
+          red = 0.15 + t * 0.82;
+          green = 0.65 + t * 0.35;
+          blue = 0.92 + t * 0.08;
         } else {
-          // Luminous crest: cyber cyan to brilliant white-cyan glow
-          const t = (normY - 0.72) / 0.28;
-          red = 0.22 + t * 0.75;
-          green = 0.74 + t * 0.26;
-          blue = 0.97 + t * 0.03;
-        }
+          // --- RIGHT FLANK: Neon Lime & Vibrant Emerald Stream ---
+          // Transition: Cyan-Lime -> Chartreuse -> Neon Emerald -> Forest Green
+          const xProgress = Math.min(1, (x - 2.5) / 16.0);
 
-        // Subtle lateral green tint on far right to harmonize with brand energy streak
-        if (x > 5.0) {
-          const greenFactor = Math.min(1, (x - 5.0) / 12.0) * 0.22;
-          green = Math.min(1, green + greenFactor);
+          if (normY < 0.35) {
+            // Deep navy-emerald base
+            const t = normY / 0.35;
+            red = 0.03 + t * 0.12;
+            green = 0.18 + t * 0.45;
+            blue = 0.18 - t * 0.08;
+          } else if (normY < 0.75) {
+            // Neon lime-green / chartreuse body
+            const t = (normY - 0.35) / 0.40;
+            red = 0.15 + t * (0.45 + xProgress * 0.15);
+            green = 0.63 + t * 0.34;
+            blue = 0.10 - t * 0.04;
+          } else {
+            // Radiant yellow-green / white-lime crest
+            const t = (normY - 0.75) / 0.25;
+            red = 0.60 + t * 0.38;
+            green = 0.97 + t * 0.03;
+            blue = 0.08 + t * 0.65;
+          }
         }
 
         colors[cIdx] = red;
         colors[cIdx + 1] = green;
         colors[cIdx + 2] = blue;
         cIdx += 3;
+
+        // Build horizontal contour line segments
+        const currentIdx = r * COLS + c;
+        if (c < COLS - 1) {
+          lineIndices.push(currentIdx, currentIdx + 1);
+        }
       }
     }
 
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    // 5. Point Cloud Mesh
+    const pointsGeometry = new THREE.BufferGeometry();
+    pointsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    pointsGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    const material = new THREE.PointsMaterial({
-      size: 0.165,
+    const pointsMaterial = new THREE.PointsMaterial({
+      size: 0.17,
       map: dotTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.90,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
       sizeAttenuation: true,
     });
 
-    const pointCloud = new THREE.Points(geometry, material);
+    const pointCloud = new THREE.Points(pointsGeometry, pointsMaterial);
     scene.add(pointCloud);
 
-    // Initial Static Render
+    // 6. Subtle CAD Contour Wireframe Lines
+    const linesGeometry = new THREE.BufferGeometry();
+    linesGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    linesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    linesGeometry.setIndex(lineIndices);
+
+    const linesMaterial = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.11,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const contourLines = new THREE.LineSegments(linesGeometry, linesMaterial);
+    scene.add(contourLines);
+
+    // 7. Initial Static Render (0 animation loop overhead)
     const renderOnce = () => {
       renderer.render(scene, camera);
     };
     renderOnce();
 
-    // 5. Responsive Resize Observer (re-renders only on actual container resize)
+    // 8. Responsive Resize Observer (re-renders only on real window/container resize)
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const cr = entry.contentRect;
@@ -203,11 +258,13 @@ export function TopologicalFloorLandscape({ className = "w-full h-full" }: Topol
     });
     resizeObserver.observe(container);
 
-    // 6. Cleanup on unmount
+    // 9. Cleanup on unmount
     return () => {
       resizeObserver.disconnect();
-      geometry.dispose();
-      material.dispose();
+      pointsGeometry.dispose();
+      pointsMaterial.dispose();
+      linesGeometry.dispose();
+      linesMaterial.dispose();
       dotTexture.dispose();
       renderer.dispose();
     };
