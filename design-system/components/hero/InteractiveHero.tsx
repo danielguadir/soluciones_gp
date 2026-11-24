@@ -6,6 +6,7 @@ import { RubikController } from "@/lib/rubik/controller";
 import { useRubikSync } from "@/lib/rubik/useRubikSync";
 import { RubikCircularSvg } from "@/components/hero/RubikCircularSvg";
 import { RubikCube3D } from "@/components/hero/RubikCube3D";
+import { TopologicalFloorLandscape } from "@/components/hero/TopologicalFloorLandscape";
 import { FACES, invertMove } from "@/lib/rubik/engine";
 import { FACE_PALETTE } from "@/lib/rubik/palette";
 import { BaseMove, FaceId, Move } from "@/lib/rubik/types";
@@ -177,6 +178,11 @@ export function InteractiveHero() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Full-Width Static 3D Topological Floor (Digital Wave / Particle Terrain across entire screen) */}
+      <div className="absolute bottom-0 left-0 w-full h-[360px] sm:h-[440px] lg:h-[500px] pointer-events-none z-0 overflow-hidden select-none">
+        <TopologicalFloorLandscape className="w-full h-full" />
       </div>
 
       {/* Original Luminous Infinity Wave Background Layer (Positioned at bottom spanning full width) */}
