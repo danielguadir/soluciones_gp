@@ -288,17 +288,16 @@ export function InteractiveHero() {
 
         {/* Collapsible Controls Toolbar Drawer (Hidden by default, expandable on demand) */}
         <div className="w-full max-w-4xl mx-auto mt-6 lg:mt-8 flex flex-col items-center relative z-20">
-          {/* Discreet Toggle Button */}
+          {/* Discreet Toggle Button (Only gear icon) */}
           <button
             type="button"
             onClick={() => setShowControls((prev) => !prev)}
             aria-expanded={showControls}
-            className="px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 hover:border-cyan-500/40 shadow-sm backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer active:scale-95"
-            title={showControls ? "Ocultar barra de controles" : "Abrir barra de controles interactivos"}
+            aria-label={showControls ? "Ocultar controles del simulador" : "Controles del simulador"}
+            title={showControls ? "Ocultar controles del simulador" : "Controles del simulador"}
+            className="p-2 sm:px-3 sm:py-1.5 rounded-full text-sm font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 hover:border-cyan-500/40 shadow-sm backdrop-blur-md transition-all flex items-center justify-center cursor-pointer active:scale-95"
           >
             <span className="text-cyan-400">⚙</span>
-            <span>{showControls ? "Ocultar controles del simulador" : "Controles del simulador"}</span>
-            <span className="text-[10px] text-slate-400">{showControls ? "▲" : "▼"}</span>
           </button>
 
           {/* Collapsible Controls Panel */}
